@@ -6,6 +6,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 Render::Render(void)
 {
@@ -26,22 +27,8 @@ Render::Render(void)
   RenderCheckErrors();
 }
 
-
 Render::~Render(void)
 {
-}
-
-void perspective(GLdouble fovY,  GLdouble aspect,  GLdouble zNear,  GLdouble zFar)
-{
-  const GLdouble PI = 3.1415926535897932384626433832795;
-
-  GLdouble fW, fH;
-
-  fH = tan(fovY / 180.0 * PI) * zNear / 2.0;
-
-  fW = fH * aspect;
-
-  glFrustum(-fW, fW, -fH, fH, zNear, zFar);
 }
 
 void Render::Initialize()
@@ -51,16 +38,14 @@ void Render::Initialize()
   GLenum error = glewInit();
   if(error != GLEW_OK)
   {
-    printf("glew error: %s\n", glewGetErrorString(error));
-    throw new RenderException(RenderException::RENDER_NOT_INITIALIZED);
+    std::cout << "glew error: " << glewGetErrorString(error) << std::endl;
+    throw "GLEW not initialized.";
   }
   glGetError();
 
-  glMatrixMode(GL_MODELVIEW);     // Выбор матрицы вида модели
-  glLoadIdentity();               // Сброс матрицы вида модели
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 }
-
-
 
 void Render::UseCam(const PCamera &camera)
 {

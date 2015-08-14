@@ -2,8 +2,9 @@
 
 #include "Graphic/Window/Window.h"
 #include "Graphic/Render/RenderErrorChecker.h"
+#include <iostream>
 
-Registry & Registry::Instatce()
+Registry &Registry::Instatce()
 {
   static Registry registry;
   return registry;
@@ -12,29 +13,18 @@ Registry & Registry::Instatce()
 Registry::Registry()
 {
   Window::WindowSystemInitialize();
-
   try
   {
-    mWindow.reset(new Window);
+    mWindow = std::make_unique<Window>();
     mWindow->SetCurrentContext();
-  }
-  catch (WindowException *e)
-  {
-    printf("%s\n", e->what());
-    return;
-  }
-
-  try
-  {
     Render::Initialize();
   }
-  catch (RenderException *e)
+  catch (const char *)
   {
-    printf("%s\n", e->what());
-    return;
+    throw;
   }
 
-  mRender.reset(new Render);
+  mRender = std::make_unique<Render>();
 }
 
 Registry::~Registry()

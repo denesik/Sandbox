@@ -13,7 +13,16 @@
 
 Game::Game()
 {
-  REGISTRY;
+  try
+  {
+    REGISTRY;
+    Initialized = true;
+  }
+  catch (const char *e)
+  {
+    std::cout << e << std::endl;
+    return;
+  }
 }
 
 Game::~Game()
@@ -45,6 +54,12 @@ static void perspective(GLdouble fovY,  GLdouble aspect,  GLdouble zNear,  GLdou
 
 int Game::Run()
 {
+  if (!Initialized)
+  {
+    system("pause");
+    return -1;
+  }
+
   {
     glm::uvec2 size(600, 600);
 

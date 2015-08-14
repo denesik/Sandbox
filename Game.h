@@ -9,6 +9,10 @@ public:
 
   int Run();
 
+private:
+
+  bool Initialized = false;
+
 };
 
 #endif // GAME_H

@@ -7,30 +7,6 @@
 #include "Texture.h"
 #include "Camera.h"
 
-class RenderException: public std::exception
-{
-public:
-  RenderException(unsigned int id)
-    : mId(id)
-  {
-  }
-  virtual const char *what() const throw()
-  {
-    return "Render exception";
-  }
-
-  enum
-  {
-    RENDER_NOT_INITIALIZED,
-
-    COUNT,
-  };
-
-private:
-  const unsigned int mId;
-};
-
-
 
 class Render
 {
@@ -44,12 +20,9 @@ public:
   /// Рисовать с помощью данной камеры.
   void UseCam(const PCamera &camera);
 
-
-
 private:
 
   PCamera mCamera;
-
 };
 
 
