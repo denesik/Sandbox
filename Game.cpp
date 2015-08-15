@@ -39,19 +39,6 @@ std::string ToString( const T& val )
   return iss.str();
 }
 
-static void perspective(GLdouble fovY,  GLdouble aspect,  GLdouble zNear,  GLdouble zFar)
-{
-  const GLdouble PI = 3.1415926535897932384626433832795;
-
-  GLdouble fW, fH;
-
-  fH = tan(fovY / 180.0 * PI) * zNear / 2.0;
-
-  fW = fH * aspect;
-
-  glFrustum(-fW, fW, -fH, fH, zNear, zFar);
-}
-
 int Game::Run()
 {
   if (!Initialized)
@@ -61,12 +48,10 @@ int Game::Run()
   }
 
   {
-    glm::uvec2 size(600, 600);
 
     double tps = 10.0;
 
     PCamera cam = std::make_shared<Camera>();
-    cam->UpdateProjection();
 
     glShadeModel( GL_SMOOTH );
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);      
@@ -75,13 +60,13 @@ int Game::Run()
     glDepthFunc( GL_LEQUAL );            // Тип теста глубины
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );      // Улучшение в вычислении перспективы
 
-    glViewport( 0, 0, size.x, size.y );          // Сброс текущей области вывода
+    glViewport(0, 0, REGISTRY.GetWindow().GetSize().x, REGISTRY.GetWindow().GetSize().y);          // Сброс текущей области вывода
+    cam->Resize(REGISTRY.GetWindow().GetSize());
 
     glMatrixMode( GL_PROJECTION );            // Выбор матрицы проекций
     glLoadIdentity();              // Сброс матрицы проекции
 
     // Вычисление соотношения геометрических размеров для окна
-    //perspective( 45.0f, (GLfloat)size.x/(GLfloat)size.y, 0.1f, 100.0f );
     glLoadMatrixf(glm::value_ptr(cam->GetProject()));
 
     glMatrixMode( GL_MODELVIEW );            // Выбор матрицы вида модели
@@ -91,27 +76,19 @@ int Game::Run()
     {
       if(REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
       {
-        cam->MoveX(-0.1f);
+        cam->Move({ -0.1f, 0.0f, 0.0f });
       }
       if(REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
       {
-        cam->MoveX(0.1f);
+        cam->Move({  0.1f, 0.0f, 0.0f });
       }
       if(REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
       {
-        cam->MoveZ(0.1f);
+        cam->Move({ 0.0f, 0.0f, 0.1f });
       }
       if(REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
       {
-        cam->MoveZ(-0.1f);
-      }
-      if(REGISTRY.GetWindow().GetKeyboard().IsKeyPress(GLFW_KEY_MINUS))
-      {
-        tps = glm::clamp(tps - 1.0, 1.0, 20.0);
-      }
-      if(REGISTRY.GetWindow().GetKeyboard().IsKeyPress(GLFW_KEY_EQUAL))
-      {
-        tps = glm::clamp(tps + 1.0, 1.0, 20.0);
+        cam->Move({ 0.0f, 0.0f, -0.1f });
       }
       float ay = REGISTRY.GetWindow().GetMouse().IsMoveX() / 30.0f;
       float ax = REGISTRY.GetWindow().GetMouse().IsMoveY() / 30.0f;

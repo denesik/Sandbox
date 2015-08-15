@@ -3,19 +3,20 @@
 #include <assert.h>
 #include <iostream>
 
-Window::Window()
-  : mKeyboard(new Keyboard())
+Window::Window(const glm::uvec2 &size)
+  : mSize(size),
+    mKeyboard(new Keyboard())
 {
   std::cout << "Start window creating" << std::endl;
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
   //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   //glfwWindowHint(GLFW_SAMPLES, 4);
 
   GLFWmonitor *monitor = nullptr;
 
-  mWindow = (decltype(mWindow))(glfwCreateWindow(600, 600, "title", monitor, nullptr));
+  mWindow = (decltype(mWindow))(glfwCreateWindow(mSize.x, mSize.y, "title", monitor, nullptr));
 
   if (!mWindow)
   {
@@ -101,6 +102,11 @@ void Window::SwapBuffers()
 {
   assert(mWindow);
   glfwSwapBuffers(mWindow.get());
+}
+
+const glm::uvec2 & Window::GetSize() const
+{
+  return mSize;
 }
 
 Keyboard &Window::GetKeyboard()

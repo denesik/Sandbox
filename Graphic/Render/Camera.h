@@ -13,16 +13,15 @@ public:
   ~Camera();
 
   /// Получить матрицу вида.
-  const glm::mat4 &GetView();
+  const glm::mat4 &GetView() const;
 
   /// Получить матрицу проекции.
-  const glm::mat4 &GetProject();
+  const glm::mat4 &GetProject() const;
+
+  void Resize(const glm::uvec2 &size);
 
   /// Угол обзора.
   void SetFov(float fov);
-
-  /// Пропорции экрана.
-  void SetAspect(float aspect);
 
   void SetFar(float far);
 
@@ -31,9 +30,7 @@ public:
   void RotateX(float angle);
   void RotateY(float angle);
 
-  void MoveX(float dist);
-  void MoveY(float dist);
-  void MoveZ(float dist);
+  void Move(const glm::vec3 &dist);
 
   void Update();
 
@@ -55,9 +52,5 @@ private:
 
   glm::vec3 mPos;
   glm::vec3 mRot;
-
-public:
-
-  void UpdateProjection();
 
 };

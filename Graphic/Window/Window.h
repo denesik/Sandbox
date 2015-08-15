@@ -12,7 +12,7 @@
 class Window
 {
 public:
-  Window();
+  Window(const glm::uvec2 &size);
   ~Window();
 
   /// Инициализация оконной системы.
@@ -32,6 +32,8 @@ public:
 
   /// Переключить буферы.
   void SwapBuffers();
+
+  const glm::uvec2 &GetSize() const;
 
   void SetResizeCallback(std::function<void(glm::uvec2)> callback);
 
@@ -62,6 +64,8 @@ private:
   Mouse mMouse;
 
   std::function<void(glm::uvec2)> mResizeCallback;
+
+  glm::uvec2 mSize;
 
 };
 

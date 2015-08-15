@@ -15,7 +15,7 @@ Registry::Registry()
   Window::WindowSystemInitialize();
   try
   {
-    mWindow = std::make_unique<Window>();
+    mWindow = std::make_unique<Window>(glm::uvec2(600, 600));
     mWindow->SetCurrentContext();
     Render::Initialize();
   }

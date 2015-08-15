@@ -16,6 +16,7 @@ Camera::Camera(void)
   mAspect = 1.0f;
   mNear = 1.0f;
   mFar = 100.0f;
+  mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 }
 
 
@@ -23,24 +24,25 @@ Camera::~Camera(void)
 {
 }
 
-const glm::mat4 &Camera::GetView()
+const glm::mat4 &Camera::GetView() const
 {
   return mView;
 }
 
-const glm::mat4 &Camera::GetProject()
+const glm::mat4 &Camera::GetProject() const
 {
   return mProjection;
+}
+
+void Camera::Resize(const glm::uvec2 &size)
+{
+  mAspect = static_cast<float>(size.x) / static_cast<float>(size.y);
+  mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 }
 
 void Camera::SetFov(float fov)
 {
   mFov = fov;
-}
-
-void Camera::SetAspect(float aspect)
-{
-  mAspect = aspect;
 }
 
 void Camera::SetFar(float far)
@@ -53,11 +55,6 @@ void Camera::SetNear(float near)
   mNear = near;
 }
 
-void Camera::UpdateProjection()
-{
-  mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
-}
-
 void Camera::RotateX(float angle)
 {
   mRot.x += angle;
@@ -68,19 +65,9 @@ void Camera::RotateY(float angle)
   mRot.y += angle;
 }
 
-void Camera::MoveX(float dist)
+void Camera::Move(const glm::vec3 &dist)
 {
-  mPos.x -= dist;
-}
-
-void Camera::MoveY(float dist)
-{
-  mPos.y -= dist;
-}
-
-void Camera::MoveZ(float dist)
-{
-  mPos.z -= dist;
+  mPos -= dist;
 }
 
 void Camera::Update()
