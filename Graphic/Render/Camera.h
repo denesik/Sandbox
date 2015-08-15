@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <memory>
+#include <glm/gtc/quaternion.hpp>
 
 class Camera;
 typedef std::shared_ptr<Camera> PCamera;
@@ -20,14 +21,10 @@ public:
 
   void Resize(const glm::uvec2 &size);
 
-  /// Óדמכ מבחמנא.
-  void SetFov(float fov);
-
-  void SetFar(float far);
-
-  void SetNear(float near);
-
+  // (up, down)
   void RotateX(float angle);
+
+  // (left, right)
   void RotateY(float angle);
 
   void Move(const glm::vec3 &dist);
@@ -39,18 +36,16 @@ private:
   glm::mat4 mView;
   glm::mat4 mProjection;
 
-  glm::mat4 mViewCurr;
-  glm::mat4 mViewRotateY;
-
   float mFov;
   float mAspect;
   float mNear;
   float mFar;
 
-  glm::mat4 mPosMat;
-  glm::mat4 mRotMat;
-
-  glm::vec3 mPos;
-  glm::vec3 mRot;
-
+  glm::quat mQuat;
+  float camera_pitch = 0.0f;
+  float camera_heading = 0.0f;
+  glm::vec3 camera_position;
+  glm::vec3 camera_position_delta;
+  glm::vec3 camera_look_at;
+  glm::vec3 camera_direction;
 };
