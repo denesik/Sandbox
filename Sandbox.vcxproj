@@ -24,6 +24,7 @@
     <ClCompile Include="Graphic\Render\Bitmap.cpp" />
     <ClCompile Include="Graphic\Render\Camera.cpp" />
     <ClCompile Include="Graphic\Render\Color.cpp" />
+    <ClCompile Include="Graphic\Render\Cube.cpp" />
     <ClCompile Include="Graphic\Render\lodepng\lodepng.cpp" />
     <ClCompile Include="Graphic\Render\Render.cpp" />
     <ClCompile Include="Graphic\Render\RenderErrorChecker.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Graphic\Render\Bitmap.h" />
     <ClInclude Include="Graphic\Render\Camera.h" />
     <ClInclude Include="Graphic\Render\Color.h" />
+    <ClInclude Include="Graphic\Render\Cube.h" />
     <ClInclude Include="Graphic\Render\lodepng\lodepng.h" />
     <ClInclude Include="Graphic\Render\Render.h" />
     <ClInclude Include="Graphic\Render\RenderErrorChecker.h" />

@@ -15,10 +15,10 @@ Render::Render(void)
 
   RenderCheckErrors();
 
-  glEnable(GL_TEXTURE_2D); // Включаем текстурирование.
+//  glEnable(GL_TEXTURE_2D); // Включаем текстурирование.
 
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//   glEnable(GL_BLEND);
+//   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 //   glClearDepth(GL_TRUE);              // Разрешить очистку буфера глубины
 //   glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
@@ -42,9 +42,6 @@ void Render::Initialize()
     throw "GLEW not initialized.";
   }
   glGetError();
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
 }
 
 void Render::UseCam(const PCamera &camera)
