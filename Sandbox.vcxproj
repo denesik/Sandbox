@@ -40,6 +40,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphic\Render\Atlas.h" />
     <ClInclude Include="Graphic\Render\Bitmap.h" />
+    <ClInclude Include="Graphic\Render\BufferArray.h" />
     <ClInclude Include="Graphic\Render\Camera.h" />
     <ClInclude Include="Graphic\Render\Color.h" />
     <ClInclude Include="Graphic\Render\Cube.h" />

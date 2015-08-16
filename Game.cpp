@@ -14,6 +14,7 @@
 #include <fstream>
 #include "Graphic/Render/Cube.h"
 #include "Graphic/Render/RenderErrorChecker.h"
+#include "Graphic/Render/BufferArray.h"
 
 GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 {
@@ -162,15 +163,42 @@ int Game::Run()
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
-    Cube cube;
-
-    cube.TestCompile();
-
-//     glEnable(GL_BLEND);
-//     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//     glActiveTexture(GL_TEXTURE1);
+//     Cube cube;
 // 
-//     GLint textureLocation = glGetUniformLocation(programID, "colorTexture");
+//     cube.TestCompile();
+
+    BufferArray<glm::vec3> buffer;
+
+    static float vertexCube[][3] =
+    {
+      { -0.5f, -0.5f,  0.5f },{ -0.5f,  0.5f,  0.5f },{ 0.5f,  0.5f,  0.5f },{ 0.5f, -0.5f,  0.5f }, // front
+      { 0.5f, -0.5f,  0.5f },{ 0.5f,  0.5f,  0.5f },{ 0.5f,  0.5f, -0.5f },{ 0.5f, -0.5f, -0.5f }, // right
+      { 0.5f, -0.5f, -0.5f },{ 0.5f,  0.5f, -0.5f },{ -0.5f,  0.5f, -0.5f },{ -0.5f, -0.5f, -0.5f }, // back
+      { -0.5f, -0.5f, -0.5f },{ -0.5f,  0.5f, -0.5f },{ -0.5f,  0.5f,  0.5f },{ -0.5f, -0.5f,  0.5f }, // left
+      { -0.5f,  0.5f,  0.5f },{ -0.5f,  0.5f, -0.5f },{ 0.5f,  0.5f, -0.5f },{ 0.5f,  0.5f,  0.5f }, // top
+      { -0.5f, -0.5f, -0.5f },{ -0.5f, -0.5f,  0.5f },{ 0.5f, -0.5f,  0.5f },{ 0.5f, -0.5f, -0.5f }  // bot
+    };
+
+    static unsigned int indexCubeSide[] =
+    {
+      0, 3, 2, 2, 1, 0
+    };
+
+    for (unsigned int i = 0; i < 24; ++i)
+    {
+      buffer.Vertex().push_back({ vertexCube[i][0], vertexCube[i][1], vertexCube[i][2] });
+    }
+
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+      for (unsigned int j = 0; j < 6; ++j)
+      {
+        buffer.Index().push_back(i * 4 + indexCubeSide[j]);
+      }
+    }
+
+    buffer.Compile();
+    buffer.SetAttribute({ 1, 3, 0 });
 
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {
@@ -223,76 +251,11 @@ int Game::Run()
       //glUniform1i(textureLocation, 1);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
-      cube.TestDraw();
+      //cube.TestDraw();
+      buffer.Draw();
 
       RenderCheckErrors();
-      //map.Draw();
 
-//       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
-//                                                               // и буфера глубины
-//       glLoadIdentity();                               // Сброс просмотра
-// 
-//                                                       //glLoadMatrixf(glm::value_ptr(glm::translate(glm::mat4(), glm::vec3(-1.5f,0.0f, 0.0f)) * cam->GetView()));
-//       glLoadMatrixf(glm::value_ptr(cam->GetView()));
-// 
-//       glTranslatef(-1.5f, 0.0f, -6.0f);                 // Сдвиг влево и вглубь экрана
-//       glBegin(GL_TRIANGLES);                          // Начало рисования пирамиды
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Передняя)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(-1.0f, -1.0f, 1.0f);                  // Левая точка
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(1.0f, -1.0f, 1.0f);                  // Правая точка
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красная
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Правая)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синия
-//       glVertex3f(1.0f, -1.0f, 1.0f);                  // Лево треугольника (Правая)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленная
-//       glVertex3f(1.0f, -1.0f, -1.0f);                 // Право треугольника (Правая)
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Низ треугольника (Сзади)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(1.0f, -1.0f, -1.0f);                 // Лево треугольника (Сзади)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(-1.0f, -1.0f, -1.0f);                 // Право треугольника (Сзади)
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Лево)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(-1.0f, -1.0f, -1.0f);                  // Лево треугольника (Лево)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(-1.0f, -1.0f, 1.0f);                  // Право треугольника (Лево)
-//       glEnd();
-// 
-//       glLoadMatrixf(glm::value_ptr(cam->GetView() * glm::translate(glm::mat4(), glm::vec3(5.5f, 0.0f, 0.0f))));
-// 
-//       glTranslatef(-1.5f, 0.0f, -6.0f);                 // Сдвиг влево и вглубь экрана
-//       glBegin(GL_TRIANGLES);                          // Начало рисования пирамиды
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Передняя)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(-1.0f, -1.0f, 1.0f);                  // Левая точка
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(1.0f, -1.0f, 1.0f);                  // Правая точка
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красная
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Правая)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синия
-//       glVertex3f(1.0f, -1.0f, 1.0f);                  // Лево треугольника (Правая)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленная
-//       glVertex3f(1.0f, -1.0f, -1.0f);                 // Право треугольника (Правая)
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Низ треугольника (Сзади)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(1.0f, -1.0f, -1.0f);                 // Лево треугольника (Сзади)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(-1.0f, -1.0f, -1.0f);                 // Право треугольника (Сзади)
-//       glColor3f(1.0f, 0.0f, 0.0f);                      // Красный
-//       glVertex3f(0.0f, 1.0f, 0.0f);                  // Верх треугольника (Лево)
-//       glColor3f(0.0f, 0.0f, 1.0f);                      // Синий
-//       glVertex3f(-1.0f, -1.0f, -1.0f);                  // Лево треугольника (Лево)
-//       glColor3f(0.0f, 1.0f, 0.0f);                      // Зеленный
-//       glVertex3f(-1.0f, -1.0f, 1.0f);                  // Право треугольника (Лево)
-//       glEnd();
-      
       REGISTRY.GetWindow().SwapBuffers();
       REGISTRY.GetWindow().GetMouse().Update();
       Window::WindowSystemPollEvents();
