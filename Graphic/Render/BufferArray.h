@@ -11,12 +11,16 @@ struct VertexTest
   glm::vec2 texture;
 };
 
-struct Attribute
+enum AttributeType
 {
-  unsigned int index;     // Номер атрибута в шейдере.
-  unsigned int size;      // Размер атрибута в байтах.
-  unsigned int offset;    // Смещение атрибута относительно начала вершины в байтах.
+  ATTRIBUTE_VERTEX = 0,
+  ATTRIBUTE_COLOR = 1,
+  ATTRIBUTE_TEXTURE = 2,
+
+  ATTRIBUTE_LAST = ATTRIBUTE_TEXTURE
 };
+
+
 
 template<class VertexType>
 class BufferArray
@@ -25,7 +29,7 @@ public:
   BufferArray();
   ~BufferArray();
 
-  void SetAttribute(const Attribute &attribute);
+  void SetAttribute(AttributeType type, unsigned int size, unsigned int offset);
 
   void Compile();
 
@@ -44,6 +48,14 @@ private:
   unsigned int mVao = 0;
   unsigned int mVbo = 0;
   unsigned int mVbi = 0;
+
+  struct Attribute
+  {
+    AttributeType type;     // Номер атрибута в шейдере.
+    unsigned int size;      // Размер атрибута в байтах.
+    unsigned int offset;    // Смещение атрибута относительно начала вершины в байтах.
+  };
+
 };
 
 template<class VertexType>
@@ -54,11 +66,11 @@ void BufferArray<VertexType>::Draw()
 }
 
 template<class VertexType>
-void BufferArray<VertexType>::SetAttribute(const Attribute &attribute)
+void BufferArray<VertexType>::SetAttribute(AttributeType type, unsigned int size, unsigned int offset)
 {
   glBindVertexArray(mVao);
-  glEnableVertexAttribArray(attribute.index);
-  glVertexAttribPointer(attribute.index, attribute.size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (void*)(sizeof(float) * attribute.offset));
+  glEnableVertexAttribArray(type);
+  glVertexAttribPointer(type, size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (void*)(sizeof(float) * offset));
 }
 
 template<class VertexType>
@@ -92,9 +104,8 @@ void BufferArray<VertexType>::Compile()
 
   glGenBuffers(1, &mVbo);
   glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeof(VertexType), &mVertexBuffer[0], GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(VertexType) * mVertexBuffer.size(), &mVertexBuffer[0], GL_STATIC_DRAW);
 
-  unsigned int mVbi = 0;
   glGenBuffers(1, &mVbi);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mIndexBuffer.size(), &mIndexBuffer[0], GL_STATIC_DRAW);

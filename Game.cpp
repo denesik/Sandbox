@@ -163,9 +163,9 @@ int Game::Run()
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
-//     Cube cube;
-// 
-//     cube.TestCompile();
+    Cube cube;
+
+    cube.TestCompile();
 
     BufferArray<glm::vec3> buffer;
 
@@ -198,7 +198,7 @@ int Game::Run()
     }
 
     buffer.Compile();
-    buffer.SetAttribute({ 1, 3, 0 });
+    buffer.SetAttribute(ATTRIBUTE_VERTEX, 3, 0);
 
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {

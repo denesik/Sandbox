@@ -91,8 +91,8 @@ void Cube::TestCompile()
   glGenBuffers(1, &vbo);
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24 * 3, vertexCube, GL_STATIC_DRAW);
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 //   unsigned int tbo = 0;
 //   glGenBuffers(1, &tbo);
