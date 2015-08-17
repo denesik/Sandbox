@@ -4,8 +4,8 @@
 
 RenderSector::RenderSector()
 {
-  mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, 3, offsetof(VertexVT, vertex));
-  mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, 2, offsetof(VertexVT, texture));
+  mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
+  mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, sizeof(VertexVT::texture), offsetof(VertexVT, texture));
 
   memset(mMap, 0, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE);
   for (unsigned int z = 0; z < SECTOR_SIZE; ++z)

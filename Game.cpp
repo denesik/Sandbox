@@ -16,6 +16,7 @@
 #include "Graphic/Render/RenderErrorChecker.h"
 #include "Graphic/Render/BufferArray.h"
 #include "RenderSector.h"
+#include "FpsCounter.h"
 
 GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 {
@@ -164,18 +165,7 @@ int Game::Run()
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
-    Cube cube;
-
-    RenderCheckErrors();
-
-    auto t1 = offsetof(VertexVT, vertex);
-    auto t2 = offsetof(VertexVT, texture) / sizeof(float);
-    auto t3 = glGetAttribLocation(programID, "texcoord");
-
     RenderSector sector;
-
-    RenderCheckErrors();
-
     sector.Generate();
     sector.mBufferStatic.Compile();
 
@@ -185,8 +175,13 @@ int Game::Run()
     textureManager.LoadTexture("Graphic/Textures/tmp2.png");
     textureManager.GetTexture("Graphic/Textures/tmp2.png")->Set(TEXTURE_SLOT_0);
 
+    FpsCounter fps;
+
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {
+      fps.Update();
+      REGISTRY.GetWindow().SetTitle(ToString(fps.GetCount()) + " fps");
+
       if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
       {
         cam->Move({ -0.01f, 0.0f, 0.0f });
@@ -237,8 +232,8 @@ int Game::Run()
       glUniform1i(t, TEXTURE_SLOT_0);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
-      //cube.TestDraw();
-      //buffer.Draw();
+      //sector.Generate();
+      //sector.mBufferStatic.Compile();
       sector.mBufferStatic.Draw();
 
       RenderCheckErrors();

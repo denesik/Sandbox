@@ -80,7 +80,7 @@ void BufferArray<VertexType>::EnableAttribute(AttributeType type, unsigned int s
 {
   glBindVertexArray(mVao);
   glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-  glVertexAttribPointer(type, size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (char *)NULL + offset);
+  glVertexAttribPointer(type, size / sizeof(float), GL_FLOAT, GL_FALSE, sizeof(VertexType), (char *)NULL + offset);
   glEnableVertexAttribArray(type);
 }
 
