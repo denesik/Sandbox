@@ -165,37 +165,10 @@ int Game::Run()
 
     Cube cube;
 
-    cube.TestCompile();
+    BufferArray<VertexVT> buffer;
 
-    BufferArray<glm::vec3> buffer;
-
-    static float vertexCube[][3] =
-    {
-      { -0.5f, -0.5f,  0.5f },{ -0.5f,  0.5f,  0.5f },{ 0.5f,  0.5f,  0.5f },{ 0.5f, -0.5f,  0.5f }, // front
-      { 0.5f, -0.5f,  0.5f },{ 0.5f,  0.5f,  0.5f },{ 0.5f,  0.5f, -0.5f },{ 0.5f, -0.5f, -0.5f }, // right
-      { 0.5f, -0.5f, -0.5f },{ 0.5f,  0.5f, -0.5f },{ -0.5f,  0.5f, -0.5f },{ -0.5f, -0.5f, -0.5f }, // back
-      { -0.5f, -0.5f, -0.5f },{ -0.5f,  0.5f, -0.5f },{ -0.5f,  0.5f,  0.5f },{ -0.5f, -0.5f,  0.5f }, // left
-      { -0.5f,  0.5f,  0.5f },{ -0.5f,  0.5f, -0.5f },{ 0.5f,  0.5f, -0.5f },{ 0.5f,  0.5f,  0.5f }, // top
-      { -0.5f, -0.5f, -0.5f },{ -0.5f, -0.5f,  0.5f },{ 0.5f, -0.5f,  0.5f },{ 0.5f, -0.5f, -0.5f }  // bot
-    };
-
-    static unsigned int indexCubeSide[] =
-    {
-      0, 3, 2, 2, 1, 0
-    };
-
-    for (unsigned int i = 0; i < 24; ++i)
-    {
-      buffer.Vertex().push_back({ vertexCube[i][0], vertexCube[i][1], vertexCube[i][2] });
-    }
-
-    for (unsigned int i = 0; i < 6; ++i)
-    {
-      for (unsigned int j = 0; j < 6; ++j)
-      {
-        buffer.Index().push_back(i * 4 + indexCubeSide[j]);
-      }
-    }
+    buffer.Vertex() = cube.mVertex;
+    buffer.Index() = cube.mIndex;
 
     buffer.Compile();
     buffer.EnableAttribute(ATTRIBUTE_VERTEX, 3, 0);

@@ -5,11 +5,6 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-struct VertexTest
-{
-  glm::vec3 vertex;
-  glm::vec2 texture;
-};
 
 enum AttributeType
 {
@@ -19,7 +14,6 @@ enum AttributeType
 
   ATTRIBUTE_LAST = ATTRIBUTE_TEXTURE
 };
-
 
 
 template<class VertexType>
