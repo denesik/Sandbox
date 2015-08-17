@@ -6,28 +6,19 @@
 #include "Bitmap.h"
 #include "Color.h"
 
-class TextureException: public std::exception
+/// Описание текстурных слотов.
+enum TextureSlot
 {
-public:
-  TextureException(unsigned int id)
-    : mId(id)
-  {
-  }
-  virtual const char *what() const throw()
-  {
-    return "Texture exception";
-  }
+  TEXTURE_SLOT_0,
+  TEXTURE_SLOT_1,
+  TEXTURE_SLOT_2,
+  TEXTURE_SLOT_3,
+  TEXTURE_SLOT_4,
+  TEXTURE_SLOT_5,
+  TEXTURE_SLOT_6,
+  TEXTURE_SLOT_7,
 
-  enum
-  {
-    INCORRECT_SIZE,
-    TEXTURE_NOT_CREATED,
-
-    COUNT,
-  };
-
-private:
-  const unsigned int mId;
+  TEXTURE_SLOT_COUNT,
 };
 
 class Texture;
@@ -46,11 +37,8 @@ public:
   /// Вернуть размер текстуры.
   const glm::uvec2 &GetSize();
 
-  /// Установить текстуру.
-  void Set();
-
-  /// Установить текстуру и смешать с указанным цветом.
-  void Set(const Color &color);
+  /// Установить текстуру на заданный текстурный слот.
+  void Set(TextureSlot slot);
 
 private:
   // id текстуры. 0 - не существующая текстура.

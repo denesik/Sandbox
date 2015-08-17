@@ -8,9 +8,9 @@
 
 enum AttributeType
 {
-  ATTRIBUTE_VERTEX = 0,
-  ATTRIBUTE_COLOR = 1,
-  ATTRIBUTE_TEXTURE = 2,
+  ATTRIBUTE_VERTEX = 1,
+  ATTRIBUTE_COLOR = 2,
+  ATTRIBUTE_TEXTURE = 3,
 
   ATTRIBUTE_LAST = ATTRIBUTE_TEXTURE
 };
@@ -80,8 +80,8 @@ void BufferArray<VertexType>::EnableAttribute(AttributeType type, unsigned int s
 {
   glBindVertexArray(mVao);
   glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+  glVertexAttribPointer(type, size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (char *)NULL + offset);
   glEnableVertexAttribArray(type);
-  glVertexAttribPointer(type, size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (void*)(sizeof(float) * offset));
 }
 
 template<class VertexType>

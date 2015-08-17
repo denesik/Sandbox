@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 
 #include "Bitmap.h"
+#include <iostream>
 
 TextureManager::TextureManager(void)
 {
@@ -15,8 +16,8 @@ void TextureManager::LoadTexture(const std::string &name)
 {
   if(mTextures.find(name) != mTextures.end())
   {
-    printf("LoadTexture error\n");
     // Текстура уже существует.
+    std::cout << "LoadTexture error" << std::endl;
     return;
   }
 
@@ -26,15 +27,9 @@ void TextureManager::LoadTexture(const std::string &name)
     Bitmap bitmap(name);
     mTextures[name] = PTexture(new Texture(bitmap));
   }
-  catch(BitmapException *)
+  catch(char *msg)
   {
-    printf("LoadTexture error\n");
-  	// Ошибка создания текстуры.
-  }
-  catch(TextureException *)
-  {
-    printf("LoadTexture error\n");
-    // Ошибка создания текстуры.
+    std::cout << msg << std::endl;
   }
 }
 

@@ -10,7 +10,7 @@ Texture::Texture(const Bitmap &bitmap)
 {
   if(!mSize.x || !mSize.y || !IsPow2(mSize.x) || !IsPow2(mSize.y))
   {
-    throw new TextureException(TextureException::INCORRECT_SIZE);
+    throw "Texture not created. Incorrect size.";
   }
 
   bool smoothing = true; 
@@ -18,7 +18,7 @@ Texture::Texture(const Bitmap &bitmap)
   glGenTextures(1, &mTextureId);
   if(!mTextureId)
   {
-    throw new TextureException(TextureException::TEXTURE_NOT_CREATED);
+    throw "Texture not created. GL error.";
   }
 
   glBindTexture(GL_TEXTURE_2D, mTextureId);
@@ -42,15 +42,9 @@ const glm::uvec2 & Texture::GetSize()
   return mSize;
 }
 
-void Texture::Set()
+void Texture::Set(TextureSlot slot)
 {
+  glActiveTexture(GL_TEXTURE0 + slot);
   glBindTexture(GL_TEXTURE_2D, mTextureId);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-}
-
-void Texture::Set(const Color &color)
-{
-  glBindTexture(GL_TEXTURE_2D, mTextureId);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 }
 

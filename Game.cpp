@@ -132,6 +132,8 @@ int Game::Run()
 
   {
 
+    RenderCheckErrors();
+
     double tps = 10.0;
 
     PCamera cam = std::make_shared<Camera>();
@@ -143,20 +145,18 @@ int Game::Run()
     glDepthFunc(GL_LEQUAL);            // Тип теста глубины
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Улучшение в вычислении перспективы
 
+    glEnable(GL_TEXTURE_2D);
+
+    RenderCheckErrors();
+
     glViewport(0, 0, REGISTRY.GetWindow().GetSize().x, REGISTRY.GetWindow().GetSize().y);          // Сброс текущей области вывода
     cam->Resize(REGISTRY.GetWindow().GetSize());
 
-    glMatrixMode(GL_PROJECTION);            // Выбор матрицы проекций
-    glLoadIdentity();              // Сброс матрицы проекции
-
-                                   // Вычисление соотношения геометрических размеров для окна
-    glLoadMatrixf(glm::value_ptr(cam->GetProject()));
-
-    glMatrixMode(GL_MODELVIEW);            // Выбор матрицы вида модели
-    glLoadIdentity();              // Сброс матрицы вида модели
-
+    RenderCheckErrors();
 
     GLuint programID = LoadShaders("Graphic/Shaders/t.vs", "Graphic/Shaders/t.fs");
+
+    RenderCheckErrors();
 
     // Get a handle for our "MVP" uniform
     GLuint MatrixID = glGetUniformLocation(programID, "MVP");
@@ -166,18 +166,24 @@ int Game::Run()
 
     Cube cube;
 
-    BufferArray<VertexVT> buffer;
+    RenderCheckErrors();
 
-    buffer.Vertex() = cube.mVertex;
-    buffer.Index() = cube.mIndex;
-
-    buffer.Compile();
-    buffer.EnableAttribute(ATTRIBUTE_VERTEX, 3, 0);
+    auto t1 = offsetof(VertexVT, vertex);
+    auto t2 = offsetof(VertexVT, texture) / sizeof(float);
+    auto t3 = glGetAttribLocation(programID, "texcoord");
 
     RenderSector sector;
 
+    RenderCheckErrors();
+
     sector.Generate();
     sector.mBufferStatic.Compile();
+
+    RenderCheckErrors();
+
+    TextureManager textureManager;
+    textureManager.LoadTexture("Graphic/Textures/tmp2.png");
+    textureManager.GetTexture("Graphic/Textures/tmp2.png")->Set(TEXTURE_SLOT_0);
 
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {
@@ -227,7 +233,8 @@ int Game::Run()
 
       glUseProgram(programID);
       glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-      //glUniform1i(textureLocation, 1);
+      int t = glGetUniformLocation(programID, "colorTexture");
+      glUniform1i(t, TEXTURE_SLOT_0);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
       //cube.TestDraw();
