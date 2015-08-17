@@ -35,6 +35,7 @@
     <ClCompile Include="Graphic\Window\Window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Registry.cpp" />
+    <ClCompile Include="RenderSector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Graphic\Window\Mouse.h" />
     <ClInclude Include="Graphic\Window\Window.h" />
     <ClInclude Include="Registry.h" />
+    <ClInclude Include="RenderSector.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7703DB31-99E4-44B1-958A-98F60E8ED672}</ProjectGuid>

@@ -15,6 +15,7 @@
 #include "Graphic/Render/Cube.h"
 #include "Graphic/Render/RenderErrorChecker.h"
 #include "Graphic/Render/BufferArray.h"
+#include "RenderSector.h"
 
 GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 {
@@ -173,6 +174,11 @@ int Game::Run()
     buffer.Compile();
     buffer.EnableAttribute(ATTRIBUTE_VERTEX, 3, 0);
 
+    RenderSector sector;
+
+    sector.Generate();
+    sector.mBufferStatic.Compile();
+
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {
       if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
@@ -225,7 +231,8 @@ int Game::Run()
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
       //cube.TestDraw();
-      buffer.Draw();
+      //buffer.Draw();
+      sector.mBufferStatic.Draw();
 
       RenderCheckErrors();
 
