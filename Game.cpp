@@ -198,7 +198,7 @@ int Game::Run()
     }
 
     buffer.Compile();
-    buffer.SetAttribute(ATTRIBUTE_VERTEX, 3, 0);
+    buffer.EnableAttribute(ATTRIBUTE_VERTEX, 3, 0);
 
     while (!REGISTRY.GetWindow().WindowShouldClose())
     {
@@ -243,7 +243,7 @@ int Game::Run()
 
       cam->Update();
 
-      glm::mat4 model = glm::mat4(1.0f);
+      glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -6.0f));
       glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
       glUseProgram(programID);

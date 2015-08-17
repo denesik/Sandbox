@@ -29,14 +29,19 @@ public:
   BufferArray();
   ~BufferArray();
 
-  void SetAttribute(AttributeType type, unsigned int size, unsigned int offset);
+  /// Включить и настроить атрибут.
+  void EnableAttribute(AttributeType type, unsigned int size, unsigned int offset);
 
+  /// Скомпилировать буфер в видеопамяти.
   void Compile();
 
+  /// нарисовать буфер.
   void Draw();
 
+  /// Буфер вершин.
   std::vector<VertexType> &Vertex();
 
+  /// Буфер индексов.
   std::vector<unsigned int> &Index();
 
 private:
@@ -49,14 +54,25 @@ private:
   unsigned int mVbo = 0;
   unsigned int mVbi = 0;
 
-  struct Attribute
-  {
-    AttributeType type;     // Номер атрибута в шейдере.
-    unsigned int size;      // Размер атрибута в байтах.
-    unsigned int offset;    // Смещение атрибута относительно начала вершины в байтах.
-  };
-
 };
+
+template<class VertexType>
+BufferArray<VertexType>::BufferArray()
+{
+  glGenVertexArrays(1, &mVao);
+  glGenBuffers(1, &mVbo);
+  glGenBuffers(1, &mVbi);
+  glBindVertexArray(mVao);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
+}
+
+template<class VertexType>
+BufferArray<VertexType>::~BufferArray()
+{
+  glDeleteBuffers(1, &mVbi);
+  glDeleteBuffers(1, &mVbo);
+  glDeleteVertexArrays(1, &mVao);
+}
 
 template<class VertexType>
 void BufferArray<VertexType>::Draw()
@@ -66,23 +82,12 @@ void BufferArray<VertexType>::Draw()
 }
 
 template<class VertexType>
-void BufferArray<VertexType>::SetAttribute(AttributeType type, unsigned int size, unsigned int offset)
+void BufferArray<VertexType>::EnableAttribute(AttributeType type, unsigned int size, unsigned int offset)
 {
   glBindVertexArray(mVao);
+  glBindBuffer(GL_ARRAY_BUFFER, mVbo);
   glEnableVertexAttribArray(type);
   glVertexAttribPointer(type, size, GL_FLOAT, GL_FALSE, sizeof(VertexType), (void*)(sizeof(float) * offset));
-}
-
-template<class VertexType>
-BufferArray<VertexType>::BufferArray()
-{
-  glGenVertexArrays(1, &mVao);
-}
-
-template<class VertexType>
-BufferArray<VertexType>::~BufferArray()
-{
-
 }
 
 template<class VertexType>
@@ -100,13 +105,9 @@ std::vector<VertexType> & BufferArray<VertexType>::Vertex()
 template<class VertexType>
 void BufferArray<VertexType>::Compile()
 {
-  glBindVertexArray(mVao);
-
-  glGenBuffers(1, &mVbo);
   glBindBuffer(GL_ARRAY_BUFFER, mVbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(VertexType) * mVertexBuffer.size(), &mVertexBuffer[0], GL_STATIC_DRAW);
 
-  glGenBuffers(1, &mVbi);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mIndexBuffer.size(), &mIndexBuffer[0], GL_STATIC_DRAW);
 }
