@@ -138,40 +138,44 @@ std::string Shader::ReadTxtFile(const std::string &fileName)
   return code;
 }
 
-void Shader::SetUniform_(const glm::mat4 &val, const char *name)
+bool Shader::SetUniform_(const glm::mat4 &val, const char *name)
 {
   int location = GetUniformLocation(name);
   if (location >= 0)
   {
     glUniformMatrix4fv(location, 1, GL_FALSE, &val[0][0]);
   }
+  return (location >= 0);
 }
 
-void Shader::SetUniform_(int val, const char *name)
+bool Shader::SetUniform_(int val, const char *name)
 {
   int location = GetUniformLocation(name);
   if (location >= 0)
   {
     glUniform1i(location, val);
   }
+  return (location >= 0);
 }
 
-void Shader::SetUniform_(const glm::vec4 &val, const char *name)
+bool Shader::SetUniform_(const glm::vec4 &val, const char *name)
 {
   int location = GetUniformLocation(name);
   if (location >= 0)
   {
     glUniform4fv(location, 1, &val[0]);
   }
+  return (location >= 0);
 }
 
-void Shader::SetUniform_(const glm::vec3 &val, const char *name)
+bool Shader::SetUniform_(const glm::vec3 &val, const char *name)
 {
   int location = GetUniformLocation(name);
   if (location >= 0)
   {
     glUniform3fv(location, 1, &val[0]);
   }
+  return (location >= 0);
 }
 
 int Shader::GetUniformLocation(const char *name)

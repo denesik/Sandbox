@@ -22,9 +22,9 @@ public:
   void Use();
 
   template<class T>
-  void SetUniform(const T &val, const char *name = "")
+  bool SetUniform(const T &val, const char *name = "")
   {
-    SetUniform_(val, name);
+    return SetUniform_(val, name);
   };
 
 #define UNIFORM_QUOTE(name) #name
@@ -50,13 +50,13 @@ private:
 
 private:
 
-  void SetUniform_(const glm::mat4 &val, const char *name);
+  bool SetUniform_(const glm::mat4 &val, const char *name);
 
-  void SetUniform_(int val, const char *name);
+  bool SetUniform_(int val, const char *name);
 
-  void SetUniform_(const glm::vec4 &val, const char *name);
+  bool SetUniform_(const glm::vec4 &val, const char *name);
 
-  void SetUniform_(const glm::vec3 &val, const char *name);
+  bool SetUniform_(const glm::vec3 &val, const char *name);
 
 private:
 
