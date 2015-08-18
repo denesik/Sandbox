@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include "Texture.h"
 
 struct VertexVT
 {
@@ -17,5 +18,7 @@ public:
 
   std::vector<VertexVT> mVertex;
   std::vector<unsigned int> mIndex;
+
+  PTexture mTexture;
 };
 

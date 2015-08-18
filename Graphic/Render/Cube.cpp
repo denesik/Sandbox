@@ -5,6 +5,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <vector>
+#include "TextureManager.h"
 
 static glm::vec3 vertexCube[] =
 {
@@ -41,6 +42,10 @@ Cube::Cube()
       mIndex.push_back(i * 4 + indexCubeSide[j]);
     }
   }
+
+  TextureManager textureManager;
+  textureManager.LoadTexture("Graphic/Textures/tmp2.png");
+  mTexture = textureManager.GetTexture("Graphic/Textures/tmp2.png");
 }
 
 

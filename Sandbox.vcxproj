@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core\Block.cpp" />
+    <ClCompile Include="core\Map.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphic\Render\Atlas.cpp" />
@@ -40,6 +42,8 @@
     <ClCompile Include="RenderSector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\Block.h" />
+    <ClInclude Include="core\Map.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphic\Render\Atlas.h" />
