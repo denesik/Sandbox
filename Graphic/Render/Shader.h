@@ -10,11 +10,6 @@
 class Shader;
 typedef std::shared_ptr<Shader> PShader;
 
-#define QUOTE(name) #name
-#define MAKE_STR(macro) QUOTE(macro)
-
-#define SetUniform(val) SetUniform_(val, MAKE_STR(val))
-
 /// Шейдер.
 class Shader
 {
@@ -25,13 +20,15 @@ public:
   /// Установить шейдер.
   void Use();
 
-  void SetUniform_(const glm::mat4 &val, const char *name);
+  template<class T>
+  void SetUniform(const T &val, const char *name = "")
+  {
+    SetUniform_(val, name);
+  };
 
-  void SetUniform_(int val, const char *name);
-
-  void SetUniform_(const glm::vec4 &val, const char *name);
-
-  void SetUniform_(const glm::vec3 &val, const char *name);
+#define UNIFORM_QUOTE(name) #name
+#define UNIFORM_MAKE_STR(macro) UNIFORM_QUOTE(macro)
+#define SetUniform(val) SetUniform(val, UNIFORM_MAKE_STR(val))
 
 private:
 
@@ -47,6 +44,16 @@ private:
 
   /// Прочитать файл.
   std::string ReadTxtFile(const std::string &fileName);
+
+private:
+
+  void SetUniform_(const glm::mat4 &val, const char *name);
+
+  void SetUniform_(int val, const char *name);
+
+  void SetUniform_(const glm::vec4 &val, const char *name);
+
+  void SetUniform_(const glm::vec3 &val, const char *name);
 
 };
 
