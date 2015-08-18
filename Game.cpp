@@ -17,6 +17,7 @@
 #include "Graphic/Render/BufferArray.h"
 #include "RenderSector.h"
 #include "FpsCounter.h"
+#include "Graphic/Render/Shader.h"
 
 GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 {
@@ -156,6 +157,7 @@ int Game::Run()
     RenderCheckErrors();
 
     GLuint programID = LoadShaders("Graphic/Shaders/t.vs", "Graphic/Shaders/t.fs");
+    Shader shader("Graphic/Shaders/t");
 
     RenderCheckErrors();
 
@@ -228,6 +230,12 @@ int Game::Run()
 
       glUseProgram(programID);
       glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+
+      shader.Use();
+      shader.SetUniform(MVP);
+      int colorTexture = TEXTURE_SLOT_0;
+      shader.SetUniform(colorTexture);
+
       int t = glGetUniformLocation(programID, "colorTexture");
       glUniform1i(t, TEXTURE_SLOT_0);
 

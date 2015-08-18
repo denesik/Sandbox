@@ -29,6 +29,7 @@
     <ClCompile Include="Graphic\Render\lodepng\lodepng.cpp" />
     <ClCompile Include="Graphic\Render\Render.cpp" />
     <ClCompile Include="Graphic\Render\RenderErrorChecker.cpp" />
+    <ClCompile Include="Graphic\Render\Shader.cpp" />
     <ClCompile Include="Graphic\Render\Texture.cpp" />
     <ClCompile Include="Graphic\Render\TextureManager.cpp" />
     <ClCompile Include="Graphic\Window\Keyboard.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Graphic\Render\lodepng\lodepng.h" />
     <ClInclude Include="Graphic\Render\Render.h" />
     <ClInclude Include="Graphic\Render\RenderErrorChecker.h" />
+    <ClInclude Include="Graphic\Render\Shader.h" />
     <ClInclude Include="Graphic\Render\Texture.h" />
     <ClInclude Include="Graphic\Render\TextureManager.h" />
     <ClInclude Include="Graphic\Window\Keyboard.h" />
