@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <glm/glm.hpp>
+#include <unordered_map>
 
 class Shader;
 typedef std::shared_ptr<Shader> PShader;
@@ -45,6 +46,8 @@ private:
   /// Прочитать файл.
   std::string ReadTxtFile(const std::string &fileName);
 
+  int GetUniformLocation(const char *name);
+
 private:
 
   void SetUniform_(const glm::mat4 &val, const char *name);
@@ -54,6 +57,10 @@ private:
   void SetUniform_(const glm::vec4 &val, const char *name);
 
   void SetUniform_(const glm::vec3 &val, const char *name);
+
+private:
+
+  std::unordered_map<std::string, int> mUniforms;
 
 };
 

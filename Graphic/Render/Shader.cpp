@@ -77,26 +77,6 @@ void Shader::Use()
   glUseProgram(mProgram);
 }
 
-void Shader::SetUniform_(const glm::mat4 &val, const char *name)
-{
-  glUniformMatrix4fv(glGetUniformLocation(mProgram, name), 1, GL_FALSE, &val[0][0]);
-}
-
-void Shader::SetUniform_(int val, const char *name)
-{
-  glUniform1i(glGetUniformLocation(mProgram, name), val);
-}
-
-void Shader::SetUniform_(const glm::vec4 &val, const char *name)
-{
-  glUniform3fv(glGetUniformLocation(mProgram, name), 1, &val[0]);
-}
-
-void Shader::SetUniform_(const glm::vec3 &val, const char *name)
-{
-  glUniform3fv(glGetUniformLocation(mProgram, name), 1, &val[0]);
-}
-
 unsigned int Shader::CreateShader(const std::string &data, int type)
 {
   if (data.empty())
@@ -156,4 +136,56 @@ std::string Shader::ReadTxtFile(const std::string &fileName)
   }
 
   return code;
+}
+
+void Shader::SetUniform_(const glm::mat4 &val, const char *name)
+{
+  int location = GetUniformLocation(name);
+  if (location >= 0)
+  {
+    glUniformMatrix4fv(location, 1, GL_FALSE, &val[0][0]);
+  }
+}
+
+void Shader::SetUniform_(int val, const char *name)
+{
+  int location = GetUniformLocation(name);
+  if (location >= 0)
+  {
+    glUniform1i(location, val);
+  }
+}
+
+void Shader::SetUniform_(const glm::vec4 &val, const char *name)
+{
+  int location = GetUniformLocation(name);
+  if (location >= 0)
+  {
+    glUniform4fv(location, 1, &val[0]);
+  }
+}
+
+void Shader::SetUniform_(const glm::vec3 &val, const char *name)
+{
+  int location = GetUniformLocation(name);
+  if (location >= 0)
+  {
+    glUniform3fv(location, 1, &val[0]);
+  }
+}
+
+int Shader::GetUniformLocation(const char *name)
+{
+  auto it = mUniforms.find(name);
+  if (it == mUniforms.end())
+  {
+    int location = glGetUniformLocation(mProgram, name);
+    if (location >= 0)
+    {
+      mUniforms.insert({ name, location });
+    }
+    return location;
+  }
+  
+  return (*it).second;
 }
