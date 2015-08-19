@@ -21,7 +21,7 @@ Atlas::~Atlas()
 {
 }
 
-bool Atlas::Add(const std::string &fileName)
+glm::uvec4 Atlas::Add(const std::string &fileName)
 {
   Bitmap bitmap;
   try
@@ -32,7 +32,7 @@ bool Atlas::Add(const std::string &fileName)
   catch(char *msg)
   {
     std::cout << msg << std::endl;
-    return false;
+    return {};
   }
 
   const auto &size = bitmap.GetSize();
@@ -66,11 +66,11 @@ bool Atlas::Add(const std::string &fileName)
 
       mBitmap.Insert(node->pos, bitmap);
       mNodes.erase(it);
-      return true;
+      return { node->pos.x , node->pos.y, size.x, size.y };
     }
   }
 
-  return false;
+  return {};
 }
 
 bool Atlas::Remove(const std::string &fileName)

@@ -24,10 +24,14 @@ RegistryGraphic::RegistryGraphic()
   }
 
   mRender = std::make_unique<Render>();
+  mTextureManager = std::make_unique<TextureManager>();
 }
 
 RegistryGraphic::~RegistryGraphic()
 {
+  mTextureManager.reset();
+  mRender.reset();
+  mWindow.reset();
   Window::WindowSystemFinally();
 }
 
@@ -39,4 +43,9 @@ Window &RegistryGraphic::GetWindow()
 Render &RegistryGraphic::GetRender()
 {
   return *mRender;
+}
+
+TextureManager & RegistryGraphic::GetTextureManager()
+{
+  return *mTextureManager;
 }

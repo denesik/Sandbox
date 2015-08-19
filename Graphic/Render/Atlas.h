@@ -13,7 +13,7 @@ public:
   Atlas(const glm::uvec2 &size);
   ~Atlas();
 
-  bool Add(const std::string &fileName);
+  glm::uvec4 Add(const std::string &fileName);
 
   bool Remove(const std::string &fileName);
 

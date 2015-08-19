@@ -63,8 +63,8 @@ bool TextureManager::LoadToAtlas(unsigned int atlas, const std::vector<std::stri
   // TODO: Удаление из атласа, если не смогли вставить.
   for (auto &i : names)
   {
-    mMultiAtlas[atlas].atlas.Add(i);
-    mTextures[i] = { atlas, {} };
+    auto pos = mMultiAtlas[atlas].atlas.Add(i);
+    mTextures[i] = { atlas, pos };
   }
 
   return true;

@@ -6,6 +6,7 @@
 #include <memory>
 #include "Render/Render.h"
 #include "Window/Window.h"
+#include "Render/TextureManager.h"
 
 #define REGISTRY_GRAPHIC RegistryGraphic::Instatce()
 
@@ -18,6 +19,8 @@ public:
 
   Render &GetRender();
 
+  TextureManager &GetTextureManager();
+
 private:
   RegistryGraphic();
   ~RegistryGraphic();
@@ -28,6 +31,7 @@ private:
 
   std::unique_ptr<Window> mWindow;
   std::unique_ptr<Render> mRender;
+  std::unique_ptr<TextureManager> mTextureManager;
 
 };
 

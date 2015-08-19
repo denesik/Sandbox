@@ -67,14 +67,11 @@ int Game::Run()
 
     PCamera cam = std::make_shared<Camera>();
 
-    glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0f);              // Разрешить очистку буфера глубины
     glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
     glDepthFunc(GL_LEQUAL);            // Тип теста глубины
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Улучшение в вычислении перспективы
-
-    glEnable(GL_TEXTURE_2D);
+//     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Улучшение в вычислении перспективы
+// 
+//     glEnable(GL_TEXTURE_2D);
 
     RenderCheckErrors();
 
@@ -93,11 +90,10 @@ int Game::Run()
 
     RenderCheckErrors();
 
-    TextureManager textureManager;
-    textureManager.LoadTexture("Graphic/Textures/tmp2.png");
-    textureManager.Compile();
-    std::get<0>(textureManager.GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
-
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp2.png");
+    REGISTRY_GRAPHIC.GetTextureManager().Compile();
+    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
+    
     FpsCounter fps;
 
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
