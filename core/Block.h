@@ -4,15 +4,36 @@
 #include "..\Graphic\Render\Cube.h"
 
 
-class Block
+struct BlockBase
+{
+  BlockBase() {};
+  virtual ~BlockBase() {};
+  virtual BlockBase* Clone() const = 0;
+};
+
+template<typename T = Block>
+class Block : BlockBase
 {
 public:
+  /// Установить графическую модель блоку.
+  void SetModel(const std::shared_ptr<Cube> &model)
+  {
+    mModel = model;
+  }
 
-  void SetModel(const std::shared_ptr<Cube> &model);
+  /// Молучить графическую модель блока.
+  const Cube &GetModel()
+  {
+    return mModel;
+  }
 
-  const Cube &GetModel();
+  /// Клонировать блок.
+  BlockBase *Clone() const override
+  {
+    return new T(*static_cast<T*>(this));
+  }
 
-private:
+protected:
   std::shared_ptr<Cube> mModel;
 };
 
