@@ -47,7 +47,7 @@ Cube::Cube()
 
   TextureManager textureManager;
   textureManager.LoadTexture("Graphic/Textures/tmp2.png");
-  mTexture = textureManager.GetTexture("Graphic/Textures/tmp2.png");
+  mTexture = std::get<0>(textureManager.GetTexture("Graphic/Textures/tmp2.png"));
 }
 
 

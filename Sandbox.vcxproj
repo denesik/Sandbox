@@ -39,7 +39,7 @@
     <ClCompile Include="Graphic\Window\Mouse.cpp" />
     <ClCompile Include="Graphic\Window\Window.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Registry.cpp" />
+    <ClCompile Include="RegistryGraphic.cpp" />
     <ClCompile Include="RenderSector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +64,7 @@
     <ClInclude Include="Graphic\Window\Keyboard.h" />
     <ClInclude Include="Graphic\Window\Mouse.h" />
     <ClInclude Include="Graphic\Window\Window.h" />
-    <ClInclude Include="Registry.h" />
+    <ClInclude Include="RegistryGraphic.h" />
     <ClInclude Include="RenderSector.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -9,7 +9,7 @@
 #include "Graphic/Render/Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Registry.h"
+#include "RegistryGraphic.h"
 
 #include <fstream>
 #include "Graphic/Render/Cube.h"
@@ -101,24 +101,9 @@ GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 
 Game::Game()
 {
-  BlocksLibrary library;
-
-  BlockStatic *tblock1 = new BlockStatic;
-  tblock1->test = 1;
-  BlockStatic *tblock2 = new BlockStatic;
-  tblock2->test = 2;
-
-  library.Registry("t1", tblock1);
-  library.Registry("t2", tblock2);
-
-  BlockStatic *b1 = dynamic_cast<BlockStatic *>(library.Create("t1"));
-  BlockStatic *b2 = dynamic_cast<BlockStatic *>(library.Create("t2"));
-  BlockStatic *b3 = dynamic_cast<BlockStatic *>(library.Create("t1"));
-  BlockStatic *b4 = dynamic_cast<BlockStatic *>(library.Create("t2"));
-
   try
   {
-    REGISTRY;
+    REGISTRY_GRAPHIC;
     Initialized = true;
   }
   catch (const char *e)
@@ -169,21 +154,14 @@ int Game::Run()
 
     RenderCheckErrors();
 
-    glViewport(0, 0, REGISTRY.GetWindow().GetSize().x, REGISTRY.GetWindow().GetSize().y);          // —брос текущей области вывода
-    cam->Resize(REGISTRY.GetWindow().GetSize());
+    glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y);          // —брос текущей области вывода
+    cam->Resize(REGISTRY_GRAPHIC.GetWindow().GetSize());
 
     RenderCheckErrors();
 
-    GLuint programID = LoadShaders("Graphic/Shaders/t.vs", "Graphic/Shaders/t.fs");
     Shader shader("Graphic/Shaders/t");
 
     RenderCheckErrors();
-
-    // Get a handle for our "MVP" uniform
-    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
     RenderSector sector;
     sector.Generate();
@@ -193,50 +171,51 @@ int Game::Run()
 
     TextureManager textureManager;
     textureManager.LoadTexture("Graphic/Textures/tmp2.png");
-    textureManager.GetTexture("Graphic/Textures/tmp2.png")->Set(TEXTURE_SLOT_0);
+    textureManager.Compile();
+    std::get<0>(textureManager.GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
 
     FpsCounter fps;
 
-    while (!REGISTRY.GetWindow().WindowShouldClose())
+    while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
       fps.Update();
-      REGISTRY.GetWindow().SetTitle(ToString(fps.GetCount()) + " fps");
+      REGISTRY_GRAPHIC.GetWindow().SetTitle(ToString(fps.GetCount()) + " fps");
 
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
       {
         cam->Move({ -0.01f, 0.0f, 0.0f });
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
       {
         cam->Move({ 0.01f, 0.0f, 0.0f });
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
       {
         cam->Move({ 0.0f, 0.0f, 0.01f });
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
       {
         cam->Move({ 0.0f, 0.0f, -0.01f });
       }
 
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
       {
-        cam->RotateY(0.001f);
+        cam->RotateY(0.005f);
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
       {
-        cam->RotateY(-0.001f);
+        cam->RotateY(-0.005f);
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
       {
-        cam->RotateX(0.001f);
+        cam->RotateX(0.005f);
       }
-      if (REGISTRY.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
+      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
       {
-        cam->RotateX(-0.001f);
+        cam->RotateX(-0.005f);
       }
-      float ay = REGISTRY.GetWindow().GetMouse().IsMoveX() / 30.0f;
-      float ax = REGISTRY.GetWindow().GetMouse().IsMoveY() / 30.0f;
+      float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
+      float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
 
       //cam->RotateX(ax);
       //cam->RotateY(-ay);
@@ -246,16 +225,10 @@ int Game::Run()
       glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -6.0f));
       glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
-      glUseProgram(programID);
-      glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
       shader.Use();
       shader.SetUniform(MVP);
       int colorTexture = TEXTURE_SLOT_0;
       shader.SetUniform(colorTexture);
-
-      int t = glGetUniformLocation(programID, "colorTexture");
-      glUniform1i(t, TEXTURE_SLOT_0);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // ќчистка экрана
       //sector.Generate();
@@ -264,8 +237,8 @@ int Game::Run()
 
       RenderCheckErrors();
 
-      REGISTRY.GetWindow().SwapBuffers();
-      REGISTRY.GetWindow().GetMouse().Update();
+      REGISTRY_GRAPHIC.GetWindow().SwapBuffers();
+      REGISTRY_GRAPHIC.GetWindow().GetMouse().Update();
       Window::WindowSystemPollEvents();
     }
   }

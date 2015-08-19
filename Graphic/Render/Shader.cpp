@@ -29,7 +29,7 @@ Shader::Shader(const std::string &shaderName)
   }
 
   // Очищаем стек ошибок ogl.
-  while (!glGetError()) {};
+  while (glGetError()) {};
 
   // Пытаемся собрать программу из всех прочитанных шейдеров.
   mProgram = glCreateProgram();
@@ -85,7 +85,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   }
 
   // Очищаем стек ошибок ogl.
-  while (!glGetError()) {};
+  while (glGetError()) {};
 
   GLuint shader = glCreateShader(type);
 

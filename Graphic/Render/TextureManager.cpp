@@ -14,33 +14,58 @@ TextureManager::~TextureManager(void)
 
 void TextureManager::LoadTexture(const std::string &name)
 {
-  if(mTextures.find(name) != mTextures.end())
-  {
-    // Текстура уже существует.
-    std::cout << "LoadTexture error" << std::endl;
-    return;
-  }
+  LoadTexture(std::vector<std::string>({name}));
+}
 
-  try
+
+void TextureManager::LoadTexture(const std::vector<std::string> &names)
+{
+  for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
   {
-    // Грузим текстуру с фс.
-    Bitmap bitmap(name);
-    mTextures[name] = PTexture(new Texture(bitmap));
+    if (LoadToAtlas(i, names))
+    {
+      // Кажется мы смогли загрузить все текстуры в один атлас.
+      return;
+    }
   }
-  catch(char *msg)
+  // Мы пытались, но не смоги...
+  // Попробуем создать еще один атлас.
+  mMultiAtlas.resize(mMultiAtlas.size() + 1);
+  if (!LoadToAtlas(mMultiAtlas.size() - 1, names))
   {
-    std::cout << msg << std::endl;
+    // Ошибка.
+    std::cout << "TextureManager. Load texture error." << std::endl;
   }
 }
 
-PTexture TextureManager::GetTexture(const std::string &name) const
+std::tuple<PTexture, glm::uvec4> TextureManager::GetTexture(const std::string &name) const
 {
   auto itTexture = mTextures.find(name);
-  if(itTexture == mTextures.end())
+  if (itTexture == mTextures.end())
   {
     // Текстура не найдена.
-    return nullptr;
+    return std::make_tuple<PTexture, glm::uvec4>(nullptr, {});
   }
 
-  return (*itTexture).second;
+  return std::tuple<PTexture, glm::uvec4>(mMultiAtlas[(*itTexture).second.index].texture, (*itTexture).second.pos);
+}
+
+void TextureManager::Compile()
+{
+  for (auto &i : mMultiAtlas)
+  {
+    i.texture = std::make_shared<Texture>(i.atlas.GetAtlas());
+  }
+}
+
+bool TextureManager::LoadToAtlas(unsigned int atlas, const std::vector<std::string> &names)
+{
+  // TODO: Удаление из атласа, если не смогли вставить.
+  for (auto &i : names)
+  {
+    mMultiAtlas[atlas].atlas.Add(i);
+    mTextures[i] = { atlas, {} };
+  }
+
+  return true;
 }

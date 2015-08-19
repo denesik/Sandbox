@@ -1,16 +1,16 @@
-#include "Registry.h"
+#include "RegistryGraphic.h"
 
 #include "Graphic/Window/Window.h"
 #include "Graphic/Render/RenderErrorChecker.h"
 #include <iostream>
 
-Registry &Registry::Instatce()
+RegistryGraphic &RegistryGraphic::Instatce()
 {
-  static Registry registry;
+  static RegistryGraphic registry;
   return registry;
 }
 
-Registry::Registry()
+RegistryGraphic::RegistryGraphic()
 {
   Window::WindowSystemInitialize();
   try
@@ -27,17 +27,17 @@ Registry::Registry()
   mRender = std::make_unique<Render>();
 }
 
-Registry::~Registry()
+RegistryGraphic::~RegistryGraphic()
 {
   Window::WindowSystemFinally();
 }
 
-Window &Registry::GetWindow()
+Window &RegistryGraphic::GetWindow()
 {
   return *mWindow.get();
 }
 
-Render &Registry::GetRender()
+Render &RegistryGraphic::GetRender()
 {
   return *mRender;
 }
