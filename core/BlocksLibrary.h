@@ -3,6 +3,7 @@
 #define BlocksLibrary_h__
 
 #include <unordered_map>
+#include <string>
 #include "Block.h"
 
 class BlocksLibrary
@@ -11,14 +12,18 @@ public:
   BlocksLibrary();
   ~BlocksLibrary();
 
-  unsigned int Registry(const BlockBase *block);
+  /// Зарегистрировать блок.
+  void Registry(const std::string &id, IBlock *block);
 
-  BlockBase *Create(unsigned int blockId);
+  /// Создать блок.
+  /// Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
+  /// Если блок динамический, создается копия блока.
+  /// @param blockId Идентификатор блока.
+  IBlock *Create(const std::string &id);
 
 private:
 
-  std::unordered_map<unsigned int, const BlockBase *> mBlocks;
-
+  std::unordered_map<std::string, IBlock *> mBlocks;
 };
 
 

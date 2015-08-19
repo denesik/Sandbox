@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include "TextureManager.h"
+#include <algorithm>
 
 static glm::vec3 vertexCube[] =
 {
@@ -28,6 +29,7 @@ static glm::vec2 textureCube[] =
 };
 
 Cube::Cube()
+  : mTextures(6)
 {
   mVertex.reserve(24);
   for (unsigned int i = 0; i < 24; ++i)
@@ -51,5 +53,33 @@ Cube::Cube()
 
 Cube::~Cube()
 {
+}
+
+void Cube::SetTexture(Side side, const std::string &name)
+{
+  std::shared_ptr<Bitmap> bitmap = std::make_shared<Bitmap>(name);
+
+  unsigned int s = 1;
+  for (unsigned int i = 0; i < 6; ++i)
+  {
+    if (side & (s << i))
+    {
+      mTextures[i] = bitmap;
+    }
+  }
+}
+
+void Cube::Compile()
+{
+  auto textures = mTextures;
+  std::sort(textures.begin(), textures.end());
+  unsigned int count = 0;
+  for (unsigned int i = 0; i < 5; i++)
+  {
+    if (textures[i] != textures[i + 1])
+    {
+      ++count;
+    }
+  }
 }
 

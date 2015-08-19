@@ -18,6 +18,9 @@
 #include "RenderSector.h"
 #include "FpsCounter.h"
 #include "Graphic/Render/Shader.h"
+#include "core/BlockSimple.h"
+#include "core/BlocksLibrary.h"
+#include <memory>
 
 GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 {
@@ -98,6 +101,21 @@ GLuint LoadShaders(std::string vertex_file_path, std::string fragment_file_path)
 
 Game::Game()
 {
+  BlocksLibrary library;
+
+  BlockStatic *tblock1 = new BlockStatic;
+  tblock1->test = 1;
+  BlockStatic *tblock2 = new BlockStatic;
+  tblock2->test = 2;
+
+  library.Registry("t1", tblock1);
+  library.Registry("t2", tblock2);
+
+  BlockStatic *b1 = dynamic_cast<BlockStatic *>(library.Create("t1"));
+  BlockStatic *b2 = dynamic_cast<BlockStatic *>(library.Create("t2"));
+  BlockStatic *b3 = dynamic_cast<BlockStatic *>(library.Create("t1"));
+  BlockStatic *b4 = dynamic_cast<BlockStatic *>(library.Create("t2"));
+
   try
   {
     REGISTRY;

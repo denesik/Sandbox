@@ -11,13 +11,13 @@ BlocksLibrary::~BlocksLibrary()
 {
 }
 
-unsigned int BlocksLibrary::Registry(const BlockBase *block)
+void BlocksLibrary::Registry(const std::string &id, IBlock *block)
 {
-
-  return 0;
+  mBlocks[id] = block;
 }
 
-BlockBase * BlocksLibrary::Create(unsigned int blockId)
+IBlock * BlocksLibrary::Create(const std::string &id)
 {
-  return mBlocks[blockId]->Clone();
+  IBlock *block = mBlocks[id];
+  return block->IsStatic() ? block : block->Clone();
 }

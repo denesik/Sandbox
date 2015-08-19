@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core\BlockSimple.cpp" />
     <ClCompile Include="core\BlocksLibrary.cpp" />
     <ClCompile Include="core\Map.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h" />
+    <ClInclude Include="core\BlockSimple.h" />
     <ClInclude Include="core\BlocksLibrary.h" />
     <ClInclude Include="core\Map.h" />
     <ClInclude Include="FpsCounter.h" />
