@@ -24,6 +24,7 @@
     <ClCompile Include="core\Map.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Graphic\RegistryGraphic.cpp" />
     <ClCompile Include="Graphic\Render\Atlas.cpp" />
     <ClCompile Include="Graphic\Render\Bitmap.cpp" />
     <ClCompile Include="Graphic\Render\Camera.cpp" />
@@ -39,7 +40,7 @@
     <ClCompile Include="Graphic\Window\Mouse.cpp" />
     <ClCompile Include="Graphic\Window\Window.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RegistryGraphic.cpp" />
+    <ClCompile Include="RegistryCore.cpp" />
     <ClCompile Include="RenderSector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="core\Map.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Graphic\RegistryGraphic.h" />
     <ClInclude Include="Graphic\Render\Atlas.h" />
     <ClInclude Include="Graphic\Render\Bitmap.h" />
     <ClInclude Include="Graphic\Render\BufferArray.h" />
@@ -64,7 +66,7 @@
     <ClInclude Include="Graphic\Window\Keyboard.h" />
     <ClInclude Include="Graphic\Window\Mouse.h" />
     <ClInclude Include="Graphic\Window\Window.h" />
-    <ClInclude Include="RegistryGraphic.h" />
+    <ClInclude Include="RegistryCore.h" />
     <ClInclude Include="RenderSector.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,7 +1,6 @@
 #include "RegistryGraphic.h"
 
-#include "Graphic/Window/Window.h"
-#include "Graphic/Render/RenderErrorChecker.h"
+#include "Render/RenderErrorChecker.h"
 #include <iostream>
 
 RegistryGraphic &RegistryGraphic::Instatce()

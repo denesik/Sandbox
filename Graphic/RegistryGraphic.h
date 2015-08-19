@@ -4,8 +4,8 @@
 #define RegistryGraphic_h__
 
 #include <memory>
-#include "Graphic/Render/Render.h"
-#include "Graphic/Window/Window.h"
+#include "Render/Render.h"
+#include "Window/Window.h"
 
 #define REGISTRY_GRAPHIC RegistryGraphic::Instatce()
 
