@@ -13,7 +13,7 @@ Texture::Texture(const Bitmap &bitmap)
     throw "Texture not created. Incorrect size.";
   }
 
-  bool smoothing = true; 
+  bool smoothing = false; 
 
   glGenTextures(1, &mTextureId);
   if(!mTextureId)

@@ -2,12 +2,9 @@
 
 #include "Graphic\Render\Cube.h"
 #include "Graphic\Render\BufferArray.h"
+#include "core\Map.h"
 
 
-enum 
-{
-  SECTOR_SIZE = 32,
-};
 
 
 class RenderSector
@@ -18,8 +15,7 @@ public:
 
   void Generate();
 
-  char mMap[SECTOR_SIZE][SECTOR_SIZE][SECTOR_SIZE];
-
+  Map mMap;
 
 public:
 

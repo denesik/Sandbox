@@ -7,6 +7,8 @@
 #include <vector>
 #include "TextureManager.h"
 #include <algorithm>
+#include "../RegistryGraphic.h"
+#include <iostream>
 
 static glm::vec3 vertexCube[] =
 {
@@ -29,7 +31,6 @@ static glm::vec2 textureCube[] =
 };
 
 Cube::Cube()
-  : mTextures(6)
 {
   mVertex.reserve(24);
   for (unsigned int i = 0; i < 24; ++i)
@@ -44,10 +45,6 @@ Cube::Cube()
       mIndex.push_back(i * 4 + indexCubeSide[j]);
     }
   }
-
-  TextureManager textureManager;
-  textureManager.LoadTexture("Graphic/Textures/tmp2.png");
-  mTexture = std::get<0>(textureManager.GetTexture("Graphic/Textures/tmp2.png"));
 }
 
 
@@ -57,29 +54,33 @@ Cube::~Cube()
 
 void Cube::SetTexture(Side side, const std::string &name)
 {
-  std::shared_ptr<Bitmap> bitmap = std::make_shared<Bitmap>(name);
+  auto texture = REGISTRY_GRAPHIC.GetTextureManager().GetTexture(name);
+  if (!mTexture)
+  {
+    mTexture = std::get<0>(texture);
+  }
+  else if (mTexture != std::get<0>(texture))
+  {
+    // Текстуры должны совпадать.
+    std::cout << "Block set texture error" << std::endl;
+    return;
+  }
 
-  unsigned int s = 1;
+  const auto &pos = std::get<1>(texture);
+  
+  glm::vec2 scale(1.0f / static_cast<glm::vec2>(mTexture->GetSize()));
+  glm::vec4 coord(pos.x * scale.x, pos.y * scale.y, pos.z * scale.x, pos.w * scale.y);
+
   for (unsigned int i = 0; i < 6; ++i)
   {
-    if (side & (s << i))
+    if (side & (1 << i))
     {
-      mTextures[i] = bitmap;
+      mVertex[i * 4 + 0].texture = { coord.x, coord.y };
+      mVertex[i * 4 + 1].texture = { coord.x, coord.w };
+      mVertex[i * 4 + 2].texture = { coord.z, coord.w };
+      mVertex[i * 4 + 3].texture = { coord.z, coord.y };
     }
   }
 }
 
-void Cube::Compile()
-{
-  auto textures = mTextures;
-  std::sort(textures.begin(), textures.end());
-  unsigned int count = 0;
-  for (unsigned int i = 0; i < 5; i++)
-  {
-    if (textures[i] != textures[i + 1])
-    {
-      ++count;
-    }
-  }
-}
 

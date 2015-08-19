@@ -69,9 +69,6 @@ int Game::Run()
 
     glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
     glDepthFunc(GL_LEQUAL);            // Тип теста глубины
-//     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Улучшение в вычислении перспективы
-// 
-//     glEnable(GL_TEXTURE_2D);
 
     RenderCheckErrors();
 
@@ -84,16 +81,20 @@ int Game::Run()
 
     RenderCheckErrors();
 
+
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp2.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp.png");
+    REGISTRY_GRAPHIC.GetTextureManager().Compile();
+    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
+
+    RenderCheckErrors();
+
     RenderSector sector;
     sector.Generate();
     sector.mBufferStatic.Compile();
 
     RenderCheckErrors();
 
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp2.png");
-    REGISTRY_GRAPHIC.GetTextureManager().Compile();
-    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
-    
     FpsCounter fps;
 
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())

@@ -18,13 +18,13 @@ public:
   enum
   {
     FRONT   = 1 << 0,
-    BACK    = 1 << 1,
-    LEFT    = 1 << 2,
-    RIGHT   = 1 << 3,
+    RIGHT   = 1 << 1,
+    BACK    = 1 << 2,
+    LEFT    = 1 << 3,
     TOP     = 1 << 4,
     BOTTOM  = 1 << 5,
 
-    t = (RIGHT&-RIGHT),
+    ALL = 0x3F,
   };
   typedef unsigned int Side;
 
@@ -35,20 +35,13 @@ public:
   std::vector<VertexVT> mVertex;
   std::vector<unsigned int> mIndex;
 
-  PTexture mTexture;
-
   void SetTexture(Side side, const std::string &name);
 
   void Compile();
 
 private:
 
-  enum 
-  {
-    SIDE_SIZE = 32
-  };
-
-  std::vector<std::shared_ptr<Bitmap>> mTextures;
+  PTexture mTexture;
 
 };
 
