@@ -5,7 +5,7 @@
 
 enum
 {
-  SECTOR_SIZE = 32,
+  SECTOR_SIZE = 16,
 };
 
 class Sector

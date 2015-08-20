@@ -95,4 +95,32 @@ void Cube::FillBuffer(BufferArray<VertexVT> &buffer, const glm::vec3 &pos) const
   }
 }
 
+void Cube::FillBuffer(BufferArray<VertexVT> &buffer, const glm::vec3 &pos, Side sides) const
+{
+  for (unsigned int i = 0; i < 6; ++i)
+  {
+    if (sides & (1 << i))
+    {
+      FillBufferSide(buffer, pos, i);
+    }
+  }
+}
+
+void Cube::FillBufferSide(BufferArray<VertexVT> &buffer, const glm::vec3 &pos, unsigned int side) const
+{
+  auto &vertex = buffer.Vertex();
+  auto &index = buffer.Index();
+
+  auto vertexIndex = vertex.size();
+  vertex.insert(vertex.end(), &mVertex[side * 4], &mVertex[side * 4] + 4);
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    vertex[vertexIndex + i].vertex += pos;
+  }
+
+  for (unsigned int i = 0; i < 6; ++i)
+  {
+    index.push_back(vertexIndex + indexCubeSide[i]);
+  }
+}
 
