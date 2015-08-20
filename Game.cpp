@@ -102,9 +102,11 @@ int Game::Run()
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
 
+    auto currentTime = glfwGetTime();
     Sector sector;
     RenderSector renderSector(sector);
     renderSector.Generate();
+    std::cout << "GenAll: " << glfwGetTime() - currentTime << std::endl;
 
     RenderCheckErrors();
 

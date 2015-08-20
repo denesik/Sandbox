@@ -1,6 +1,8 @@
 #include "RenderSector.h"
 
 
+#include <GLFW\glfw3.h>
+#include <iostream>
 
 RenderSector::RenderSector(const Sector &sector)
   : mSector(sector)
@@ -19,10 +21,13 @@ void RenderSector::Generate()
   auto &vertex = mBufferStatic.Vertex();
   auto &index = mBufferStatic.Index();
 
+  auto currentTime = glfwGetTime();
+
   vertex.clear();
   index.clear();
 
-
+//   vertex.reserve(80000);
+//   index.reserve(1120000);
 
   const auto &map = mSector.mMap;
 
@@ -33,28 +38,34 @@ void RenderSector::Generate()
     if (map[z][y][x])
     {
       const Model &model = map[z][y][x]->GetModel();
-      
+      const auto &blockVertex = model.GetVertex();
+      const auto &blockIndex = model.GetIndex();
+
       unsigned int vertexIndex = vertex.size();
-      for (unsigned int i = 0; i < model.GetVertex().size(); ++i)
+      for (unsigned int i = 0; i < blockVertex.size(); ++i)
       {
         vertex.push_back(
         {
           {
-            model.GetVertex()[i].vertex.x + x,
-            model.GetVertex()[i].vertex.y + y,
-            model.GetVertex()[i].vertex.z + z
+            blockVertex[i].vertex.x + x,
+            blockVertex[i].vertex.y + y,
+            blockVertex[i].vertex.z + z
           } ,
-          model.GetVertex()[i].texture
+          blockVertex[i].texture
         });
       }
-      for (unsigned int i = 0; i < model.GetIndex().size(); ++i)
+      for (unsigned int i = 0; i < blockIndex.size(); ++i)
       {
-        index.push_back(vertexIndex + model.GetIndex()[i]);
+        index.push_back(vertexIndex + blockIndex[i]);
       }
     }
   }
 
+  std::cout << "RenderGen: " << glfwGetTime() - currentTime << std::endl;
+
+  currentTime = glfwGetTime();
   mBufferStatic.Compile();
+  std::cout << "RenderCompile: " << glfwGetTime() - currentTime << std::endl;
 }
 
 BufferArray<VertexVT> & RenderSector::GetBuffer()
