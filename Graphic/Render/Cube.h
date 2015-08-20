@@ -27,6 +27,6 @@ public:
 
   void SetTexture(Side side, const std::string &name);
 
-
+  void FillBuffer(BufferArray<VertexVT> &buffer, const glm::vec3 &pos) const override;
 };
 

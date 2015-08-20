@@ -77,4 +77,22 @@ void Cube::SetTexture(Side side, const std::string &name)
   }
 }
 
+void Cube::FillBuffer(BufferArray<VertexVT> &buffer, const glm::vec3 &pos) const
+{
+  auto &vertex = buffer.Vertex();
+  auto &index = buffer.Index();
+
+  auto vertexIndex = vertex.size();
+  vertex.insert(vertex.end(), mVertex.begin(), mVertex.end());
+  for (unsigned int i = 0; i < 24; ++i)
+  {
+    vertex[vertexIndex + i].vertex += pos;
+  }
+
+  for (unsigned int i = 0; i < 36; ++i)
+  {
+    index.push_back(vertexIndex + mIndex[i]);
+  }
+}
+
 

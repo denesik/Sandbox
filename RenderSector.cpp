@@ -26,40 +26,27 @@ void RenderSector::Generate()
   vertex.clear();
   index.clear();
 
-//   vertex.reserve(80000);
-//   index.reserve(1120000);
-
   const auto &map = mSector.mMap;
 
-  for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
-  for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
-  for (unsigned int x = 0; x < SECTOR_SIZE; ++x)
-  {
-    if (map[z][y][x])
-    {
-      const Model &model = map[z][y][x]->GetModel();
-      const auto &blockVertex = model.GetVertex();
-      const auto &blockIndex = model.GetIndex();
+  glm::uvec3 pos;
 
-      unsigned int vertexIndex = vertex.size();
-      for (unsigned int i = 0; i < blockVertex.size(); ++i)
+  for (; pos.z < SECTOR_SIZE; ++pos.z)
+  {
+    for (; pos.y < SECTOR_SIZE; ++pos.y)
+    {
+      for (; pos.x < SECTOR_SIZE; ++pos.x)
       {
-        vertex.push_back(
+        const auto block = map[pos.z][pos.y][pos.x];
+        if (block)
         {
-          {
-            blockVertex[i].vertex.x + x,
-            blockVertex[i].vertex.y + y,
-            blockVertex[i].vertex.z + z
-          } ,
-          blockVertex[i].texture
-        });
+          block->GetModel().FillBuffer(mBufferStatic, pos);
+        }
       }
-      for (unsigned int i = 0; i < blockIndex.size(); ++i)
-      {
-        index.push_back(vertexIndex + blockIndex[i]);
-      }
+      pos.x = 0;
     }
+    pos.y = 0;
   }
+
 
   std::cout << "RenderGen: " << glfwGetTime() - currentTime << std::endl;
 

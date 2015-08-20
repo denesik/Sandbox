@@ -6,9 +6,14 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "Texture.h"
+#include "BufferArray.h"
 
 struct VertexVT
 {
+  VertexVT() {};
+  VertexVT(const glm::vec3 &v, const glm::vec2 &t)
+    : vertex(v), texture(t)
+  {};
   glm::vec3 vertex;
   glm::vec2 texture;
 };
@@ -19,11 +24,9 @@ public:
   Model();
   virtual ~Model();
 
-  virtual const std::vector<VertexVT> &GetVertex() const;
-
-  virtual const std::vector<unsigned int> &GetIndex() const;
-
   virtual const PTexture &GetTexture() const;
+
+  virtual void FillBuffer(BufferArray<VertexVT> &buffer, const glm::vec3 &pos) const = 0;
 
 protected:
 
