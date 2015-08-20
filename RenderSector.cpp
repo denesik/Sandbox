@@ -30,7 +30,7 @@ void RenderSector::Generate()
   for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
   for (unsigned int x = 0; x < SECTOR_SIZE; ++x)
   {
-    if (map[z][y][x] > 0)
+    if (map[z][y][x])
     {
       const Model &model = map[z][y][x]->GetModel();
       
