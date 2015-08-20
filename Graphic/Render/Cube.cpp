@@ -1,12 +1,6 @@
 #include "Cube.h"
 
 
-#include <glm/glm.hpp>
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <vector>
-#include "TextureManager.h"
-#include <algorithm>
 #include "../RegistryGraphic.h"
 #include <iostream>
 

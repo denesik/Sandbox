@@ -2,17 +2,21 @@
 
 
 
-BlockStatic::BlockStatic()
-{
-  mModel = std::make_shared<Cube>();
-}
-
-
-BlockStatic::~BlockStatic()
+BlockSimple::BlockSimple()
 {
 }
 
-bool BlockStatic::IsStatic() const
+
+BlockSimple::~BlockSimple()
+{
+}
+
+void BlockSimple::SetModel(Model *model)
+{
+  mModel.reset(model);
+}
+
+bool BlockSimple::IsStatic() const
 {
   return true;
 }

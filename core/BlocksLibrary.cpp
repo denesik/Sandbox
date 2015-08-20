@@ -9,6 +9,10 @@ BlocksLibrary::BlocksLibrary()
 
 BlocksLibrary::~BlocksLibrary()
 {
+  for (auto &i : mBlocks)
+  {
+    delete i.second;
+  }
 }
 
 void BlocksLibrary::Registry(const std::string &id, IBlock *block)

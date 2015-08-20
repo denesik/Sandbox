@@ -1,8 +1,8 @@
 #pragma once
-
 #ifndef RegistryCore_h__
 #define RegistryCore_h__
 
+#include "core\BlocksLibrary.h"
 
 #define REGISTRY_CORE RegistryCore::Instatce()
 
@@ -11,6 +11,8 @@ class RegistryCore
 public:
   static RegistryCore &Instatce();
 
+  BlocksLibrary &GetBlocksLibrary();
+
 private:
   RegistryCore();
   ~RegistryCore();
@@ -18,6 +20,8 @@ private:
   RegistryCore& operator=(const RegistryCore &);
 
 private:
+
+  BlocksLibrary mBlocksLibrary;
 
 };
 

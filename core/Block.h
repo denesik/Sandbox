@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "..\Graphic\Render\Cube.h"
+#include "..\Graphic\Render\Model.h"
 
 
 struct IBlock
@@ -14,6 +14,10 @@ struct IBlock
 
   /// Является ли блок статическим?
   virtual bool IsStatic() const = 0;
+
+  /// Получить графическую модель блока.
+  virtual const Model &GetModel() const = 0;
+
 };
 
 template<class T>
@@ -21,10 +25,10 @@ class Block : public IBlock
 {
 public:
 
-  /// Молучить графическую модель блока.
-  const Cube &GetModel()
+  /// Получить графическую модель блока.
+  const Model &GetModel() const override
   {
-    return mModel;
+    return *mModel.get();
   }
 
   /// Клонировать блок.
@@ -34,7 +38,7 @@ public:
   }
 
 protected:
-  std::shared_ptr<Cube> mModel;
+  std::shared_ptr<Model> mModel;
 };
 
 

@@ -21,6 +21,7 @@
 #include "core/BlockSimple.h"
 #include "core/BlocksLibrary.h"
 #include <memory>
+#include "RegistryCore.h"
 
 
 Game::Game()
@@ -89,9 +90,21 @@ int Game::Run()
 
     RenderCheckErrors();
 
-    RenderSector sector;
-    sector.Generate();
-    sector.mBufferStatic.Compile();
+    BlockSimple *block1 = new BlockSimple;
+    Cube *cube1 = new Cube;
+    cube1->SetTexture(Cube::ALL, "Graphic/Textures/tmp.png");
+    block1->SetModel(cube1);
+    REGISTRY_CORE.GetBlocksLibrary().Registry("block1", block1);
+
+    BlockSimple *block2 = new BlockSimple;
+    Cube *cube2 = new Cube;
+    cube2->SetTexture(Cube::ALL, "Graphic/Textures/tmp2.png");
+    block2->SetModel(cube2);
+    REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
+
+    Sector sector;
+    RenderSector renderSector(sector);
+    renderSector.Generate();
 
     RenderCheckErrors();
 
@@ -154,7 +167,7 @@ int Game::Run()
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
       //sector.Generate();
       //sector.mBufferStatic.Compile();
-      sector.mBufferStatic.Draw();
+      renderSector.GetBuffer().Draw();
 
       RenderCheckErrors();
 

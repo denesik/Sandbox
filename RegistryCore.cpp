@@ -6,6 +6,11 @@ RegistryCore &RegistryCore::Instatce()
   return registry;
 }
 
+BlocksLibrary & RegistryCore::GetBlocksLibrary()
+{
+  return mBlocksLibrary;
+}
+
 RegistryCore::RegistryCore()
 {
 

@@ -2,7 +2,7 @@
 
 #include "Graphic\Render\Cube.h"
 #include "Graphic\Render\BufferArray.h"
-#include "core\Map.h"
+#include "core\Sector.h"
 
 
 
@@ -10,14 +10,16 @@
 class RenderSector
 {
 public:
-  RenderSector();
+  RenderSector(const Sector &sector);
   ~RenderSector();
 
   void Generate();
 
-  Map mMap;
+  BufferArray<VertexVT> &GetBuffer();
 
-public:
+private:
+
+  const Sector &mSector;
 
   BufferArray<VertexVT> mBufferStatic;
 

@@ -2,7 +2,8 @@
 
 
 
-RenderSector::RenderSector()
+RenderSector::RenderSector(const Sector &sector)
+  : mSector(sector)
 {
   mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
   mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, sizeof(VertexVT::texture), offsetof(VertexVT, texture));
@@ -21,12 +22,9 @@ void RenderSector::Generate()
   vertex.clear();
   index.clear();
 
-  Cube cube1;
-  cube1.SetTexture(Cube::ALL, "Graphic/Textures/tmp2.png");
-  Cube cube2;
-  cube2.SetTexture(Cube::ALL, "Graphic/Textures/tmp.png");
 
-  const auto &map = mMap.mMap;
+
+  const auto &map = mSector.mMap;
 
   for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
   for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
@@ -34,25 +32,32 @@ void RenderSector::Generate()
   {
     if (map[z][y][x] > 0)
     {
-      Cube &cube = map[z][y][x] == 1 ? cube1 : cube2;
+      const Model &model = map[z][y][x]->GetModel();
       
       unsigned int vertexIndex = vertex.size();
-      for (unsigned int i = 0; i < cube.mVertex.size(); ++i)
+      for (unsigned int i = 0; i < model.GetVertex().size(); ++i)
       {
         vertex.push_back(
         {
           {
-            cube.mVertex[i].vertex.x + x,
-            cube.mVertex[i].vertex.y + y,
-            cube.mVertex[i].vertex.z + z
+            model.GetVertex()[i].vertex.x + x,
+            model.GetVertex()[i].vertex.y + y,
+            model.GetVertex()[i].vertex.z + z
           } ,
-          cube.mVertex[i].texture
+          model.GetVertex()[i].texture
         });
       }
-      for (unsigned int i = 0; i < cube.mIndex.size(); ++i)
+      for (unsigned int i = 0; i < model.GetIndex().size(); ++i)
       {
-        index.push_back(vertexIndex + cube.mIndex[i]);
+        index.push_back(vertexIndex + model.GetIndex()[i]);
       }
     }
   }
+
+  mBufferStatic.Compile();
+}
+
+BufferArray<VertexVT> & RenderSector::GetBuffer()
+{
+  return mBufferStatic;
 }

@@ -1,20 +1,21 @@
 #pragma once
-#ifndef BlockSimple_h__
-#define BlockSimple_h__
+#ifndef BlockStatic_h__
+#define BlockStatic_h__
 
 #include "Block.h"
 
-class BlockStatic : public Block<BlockStatic>
+class BlockSimple : public Block<BlockSimple>
 {
 public:
-  BlockStatic();
-  ~BlockStatic();
+  BlockSimple();
+  ~BlockSimple();
+
+  void SetModel(Model *model);
 
   bool IsStatic() const override;
 
-  int test = 0;
 };
 
 
 
-#endif // BlockSimple_h__
+#endif // BlockStatic_h__

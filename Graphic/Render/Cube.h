@@ -1,18 +1,11 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <vector>
-#include "Texture.h"
-#include <memory>
-#include "Bitmap.h"
+#include <string>
+#include "Model.h"
 
-struct VertexVT
-{
-  glm::vec3 vertex;
-  glm::vec2 texture;
-};
 
-class Cube
+
+class Cube : public Model
 {
 public:
   enum
@@ -32,16 +25,8 @@ public:
   Cube();
   ~Cube();
 
-  std::vector<VertexVT> mVertex;
-  std::vector<unsigned int> mIndex;
-
   void SetTexture(Side side, const std::string &name);
 
-  void Compile();
-
-private:
-
-  PTexture mTexture;
 
 };
 
