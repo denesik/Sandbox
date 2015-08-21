@@ -6,42 +6,57 @@
 #include <assert.h>
 
 
-struct RenderSectorFaceIndexing  
+class SectorFaceGenerator  
 {
-  RenderSectorFaceIndexing()
-  {
-    unsigned int index = 0;
-    // left, right
-    for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
-    for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
-    {
-      data[index++] = { 0, y, z };
-      data[index++] = { SECTOR_SIZE - 1, y, z };
-    }
-    // front, back
-    for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
-    for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
-    {
-      data[index++] = { x, y, SECTOR_SIZE - 1 };
-      data[index++] = { x, y, 0 };
-    }
-    // top, bottom
-    for (unsigned int z = 1; z < SECTOR_SIZE - 1; ++z)
-    for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
-    {
-      data[index++] = { x, SECTOR_SIZE - 1, z };
-      data[index++] = { x, 0, z };
-    }
-    assert(index == SIZE);
-  };
+public:
   enum 
   {
     SIZE = SECTOR_SIZE * SECTOR_SIZE * 2 + 
     SECTOR_SIZE * (SECTOR_SIZE - 2) * 2 +
     (SECTOR_SIZE - 2) * (SECTOR_SIZE - 2) * 2,
   };
+public:
+
+  static const glm::uvec3 *Data() 
+  {
+    static SectorFaceGenerator generator;
+    return generator.data;
+  }
+
+private:
   glm::uvec3 data[SIZE];
-} static faceIndexing;
+private:
+  SectorFaceGenerator()
+  {
+    unsigned int index = 0;
+    // left, right
+    for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
+      for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
+      {
+        data[index++] = { 0, y, z };
+        data[index++] = { SECTOR_SIZE - 1, y, z };
+      }
+    // front, back
+    for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
+      for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
+      {
+        data[index++] = { x, y, SECTOR_SIZE - 1 };
+        data[index++] = { x, y, 0 };
+      }
+    // top, bottom
+    for (unsigned int z = 1; z < SECTOR_SIZE - 1; ++z)
+      for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
+      {
+        data[index++] = { x, SECTOR_SIZE - 1, z };
+        data[index++] = { x, 0, z };
+      }
+    assert(index == SIZE);
+  }
+  ~SectorFaceGenerator() {};
+  SectorFaceGenerator(const SectorFaceGenerator &);
+  SectorFaceGenerator& operator=(const SectorFaceGenerator &);
+};
+
 
 
 RenderSector::RenderSector(const Sector &sector)
@@ -98,9 +113,11 @@ void RenderSector::Generate()
     pos.y = 1;
   }
 
-  for (unsigned int i = 0; i < RenderSectorFaceIndexing::SIZE; ++i)
+  //map[0][0][0]->GetModel().FillBuffer(mBufferStatic, {0, 0, 0});
+
+  for (unsigned int i = 0; i < SectorFaceGenerator::SIZE; ++i)
   {
-    const auto &pos = faceIndexing.data[i];
+    const auto &pos = SectorFaceGenerator::Data()[i];
     const auto block = map[pos.z][pos.y][pos.x];
     if (block)
     {
