@@ -117,6 +117,8 @@ int Game::Run()
 
     FpsCounter fps;
 
+    float speed = 0.01f;
+
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
       fps.Update();
@@ -124,36 +126,36 @@ int Game::Run()
 
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
       {
-        cam->Move({ -0.01f, 0.0f, 0.0f });
+        cam->Move({ -speed, 0.0f, 0.0f });
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
       {
-        cam->Move({ 0.01f, 0.0f, 0.0f });
+        cam->Move({ speed, 0.0f, 0.0f });
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
       {
-        cam->Move({ 0.0f, 0.0f, 0.01f });
+        cam->Move({ 0.0f, 0.0f, speed });
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
       {
-        cam->Move({ 0.0f, 0.0f, -0.01f });
+        cam->Move({ 0.0f, 0.0f, -speed });
       }
 
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
       {
-        cam->RotateY(0.005f);
+        cam->RotateY(speed / 2.0f);
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
       {
-        cam->RotateY(-0.005f);
+        cam->RotateY(-speed / 2.0f);
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
       {
-        cam->RotateX(0.005f);
+        cam->RotateX(speed / 2.0f);
       }
       if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
       {
-        cam->RotateX(-0.005f);
+        cam->RotateX(-speed / 2.0f);
       }
       float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
       float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
