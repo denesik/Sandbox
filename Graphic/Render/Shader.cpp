@@ -177,6 +177,16 @@ bool Shader::SetUniform_(const glm::vec3 &val, const char *name)
   return (location >= 0);
 }
 
+bool Shader::SetUniform_(const glm::vec2 &val, const char *name)
+{
+  int location = GetUniformLocation(name);
+  if (location >= 0)
+  {
+    glUniform2fv(location, 1, &val[0]);
+  }
+  return (location >= 0);
+}
+
 int Shader::GetUniformLocation(const char *name)
 {
   auto it = mUniforms.find(name);

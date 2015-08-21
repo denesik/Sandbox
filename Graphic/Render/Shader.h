@@ -58,6 +58,8 @@ private:
 
   bool SetUniform_(const glm::vec3 &val, const char *name);
 
+  bool SetUniform_(const glm::vec2 &val, const char *name);
+
 private:
 
   std::unordered_map<std::string, int> mUniforms;

@@ -5,7 +5,6 @@ layout(location = 1) in vec3 position;
 layout(location = 3) in vec2 texcoord;
 
 out vec2 fragTexcoord;
-out vec3 testPos;
 
 uniform mat4 MVP;
 
@@ -16,5 +15,4 @@ void main()
 	gl_Position =  MVP * vec4(position, 1.0);
 
 	fragTexcoord = texcoord;
-	testPos = normalize(position);
 }

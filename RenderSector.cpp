@@ -62,22 +62,22 @@ void RenderSector::Generate()
   for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
   for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
   {
-    map[z][y][0]->GetModel().FillBuffer(mBufferStatic, {z, y, 0});
-    map[z][y][SECTOR_SIZE - 1]->GetModel().FillBuffer(mBufferStatic, {z, y, SECTOR_SIZE - 1});
+    if (map[z][y][0]) map[z][y][0]->GetModel().FillBuffer(mBufferStatic, {0, y, z});
+    if (map[z][y][SECTOR_SIZE - 1]) map[z][y][SECTOR_SIZE - 1]->GetModel().FillBuffer(mBufferStatic, {SECTOR_SIZE - 1, y, z});
   }
   // front, back
   for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
   for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
   {
-    map[0][y][x]->GetModel().FillBuffer(mBufferStatic, { 0, y, x });
-    map[SECTOR_SIZE - 1][y][x]->GetModel().FillBuffer(mBufferStatic, { SECTOR_SIZE - 1, y, x });
+    if (map[0][y][x]) map[0][y][x]->GetModel().FillBuffer(mBufferStatic, { x, y, 0});
+    if (map[SECTOR_SIZE - 1][y][x]) map[SECTOR_SIZE - 1][y][x]->GetModel().FillBuffer(mBufferStatic, { x, y, SECTOR_SIZE - 1 });
   }
   // top, bottom
   for (unsigned int z = 1; z < SECTOR_SIZE - 1; ++z)
   for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
   {
-    map[z][0][x]->GetModel().FillBuffer(mBufferStatic, { z, 0, x });
-    map[z][SECTOR_SIZE - 1][x]->GetModel().FillBuffer(mBufferStatic, { z, SECTOR_SIZE - 1, x });
+    if (map[z][0][x]) map[z][0][x]->GetModel().FillBuffer(mBufferStatic, { x, 0, z });
+    if (map[z][SECTOR_SIZE - 1][x]) map[z][SECTOR_SIZE - 1][x]->GetModel().FillBuffer(mBufferStatic, { x, SECTOR_SIZE - 1, z });
   }
 
 

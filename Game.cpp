@@ -61,6 +61,7 @@ int Game::Run()
 
   {
     glfwSwapInterval(0);
+    glfwWindowHint(GLFW_SAMPLES, 16);
 
     RenderCheckErrors();
 
@@ -70,6 +71,8 @@ int Game::Run()
 
     glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
     glDepthFunc(GL_LEQUAL);            // Тип теста глубины
+
+    glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
 
     RenderCheckErrors();
 
@@ -83,24 +86,26 @@ int Game::Run()
     RenderCheckErrors();
 
 
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp2.png");
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/tmp.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/stone.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/sandstone_top.png");
     REGISTRY_GRAPHIC.GetTextureManager().Compile();
-    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/tmp2.png"))->Set(TEXTURE_SLOT_0);
+    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/sandstone_top.png"))->Set(TEXTURE_SLOT_0);
 
     RenderCheckErrors();
 
     BlockSimple *block1 = new BlockSimple;
     Cube *cube1 = new Cube;
-    cube1->SetTexture(Cube::ALL, "Graphic/Textures/tmp.png");
+    cube1->SetTexture(Cube::ALL, "Graphic/Textures/stone.png");
     block1->SetModel(cube1);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block1", block1);
 
     BlockSimple *block2 = new BlockSimple;
     Cube *cube2 = new Cube;
-    cube2->SetTexture(Cube::ALL, "Graphic/Textures/tmp2.png");
+    cube2->SetTexture(Cube::ALL, "Graphic/Textures/sandstone_top.png");
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
+
+    glm::vec2 textSize(std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/sandstone_top.png"))->GetSize());
 
     auto currentTime = glfwGetTime();
     Sector sector;
@@ -158,18 +163,17 @@ int Game::Run()
 
       cam->Update();
 
-      glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -6.0f));
+      glm::mat4 model; // = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -6.0f));
       glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
 
       shader.Use();
       shader.SetUniform(MVP);
+      shader.SetUniform(textSize);
       int colorTexture = TEXTURE_SLOT_0;
       shader.SetUniform(colorTexture);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
-      //sector.Generate();
-      //sector.mBufferStatic.Compile();
-      //renderSector.Generate();
+
       renderSector.GetBuffer().Draw();
 
       RenderCheckErrors();

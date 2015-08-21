@@ -42,7 +42,7 @@ private:
   struct AtlasTexture
   {
     AtlasTexture()
-      : atlas({ 128, 1024 })
+      : atlas({ 64, 64 })
     {};
     Atlas atlas;
     PTexture texture;

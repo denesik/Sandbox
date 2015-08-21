@@ -12,12 +12,12 @@
 Camera::Camera(void)
   : mView(glm::lookAt
     (
-      glm::vec3(0.0f, 0.0f, 0.0f), // eye
-      glm::vec3(0.0f, 0.0f, -1.0f), // center
-      glm::vec3(0.0f, 1.0f, 0.0f)  // up
+      glm::vec3(-1.0f, 0.0f, 0.0f), // eye
+      glm::vec3(0.0f, 0.0f, 0.0f), // center
+      glm::vec3(0.0f, 0.0f, 1.0f)  // up
     ))
 {
-  camera_look_at = glm::vec3(0.0f, 0.0f, -1.0f);
+  camera_look_at = glm::vec3(0.0f, 0.0f, 0.0f);
   mFov = 45.0f;
   mAspect = 1.0f;
   mNear = 1.0f;
@@ -76,7 +76,7 @@ void Camera::RotateY(float degrees)
 void Camera::Move(const glm::vec3 &dist)
 {
   camera_position_delta += camera_direction * dist.z + 
-    glm::cross(camera_direction, glm::vec3(0, 1, 0)) * dist.x;
+    glm::cross(camera_direction, glm::vec3(0, 0, 1)) * dist.x;
 }
 
 void Camera::Update()
@@ -85,11 +85,11 @@ void Camera::Update()
 
 
   //detmine axis for pitch rotation
-  glm::vec3 axis = glm::cross(camera_direction, glm::vec3(0, 1, 0));
+  glm::vec3 axis = glm::cross(camera_direction, glm::vec3(0, 0, 1));
   //compute quaternion for pitch based on the camera pitch angle
   glm::quat pitch_quat = glm::angleAxis(camera_pitch, axis);
   //determine heading quaternion from the camera up vector and the heading angle
-  glm::quat heading_quat = glm::angleAxis(camera_heading, glm::vec3(0, 1, 0));
+  glm::quat heading_quat = glm::angleAxis(camera_heading, glm::vec3(0, 0, 1));
   //add the two quaternions
   glm::quat temp = glm::cross(pitch_quat, heading_quat);
   temp = glm::normalize(temp);
@@ -105,6 +105,12 @@ void Camera::Update()
   camera_position_delta *= 0.0f;
 
   //compute the MVP
-  mView = glm::lookAt(camera_position, camera_look_at, glm::vec3(0, 1, 0));
+  mView = glm::lookAt(camera_position, camera_look_at, glm::vec3(0, 0, 1));
+  mView = glm::lookAt
+    (
+      glm::vec3(10.0f, -15.0f, 0.0f), // eye
+      glm::vec3(0.0f, 0.0f, 5.0f), // center
+      glm::vec3(0.0f, 0.0f, 1.0f)  // up
+      );
 }
 
