@@ -1,6 +1,7 @@
 #include "Bitmap.h"
 
 #include "lodepng/lodepng.h"
+#include <map>
 
 
 Bitmap::Bitmap()
@@ -10,6 +11,8 @@ Bitmap::Bitmap()
 Bitmap::Bitmap(const std::string &fileName)
 {
   unsigned error = lodepng::decode(mData, mSize.x, mSize.y, fileName);
+
+  Mirror();
 
   if(error)
   {
@@ -43,13 +46,16 @@ const std::vector<unsigned char> &Bitmap::GetRaw() const
 
 void Bitmap::Save(const std::string &fileName) const
 {
-  unsigned error = lodepng::encode(fileName, mData, mSize.x, mSize.y);
+  Bitmap tmp(*this);
+  tmp.Mirror();
+  unsigned error = lodepng::encode(fileName, tmp.mData, tmp.mSize.x, tmp.mSize.y);
 
   if(error)
   {
     throw new BitmapException(BitmapException::FILE_NOT_SAVE);
   }
 }
+
 
 void Bitmap::Insert(const glm::uvec2 &pos, const Bitmap &bitmap)
 {
@@ -70,14 +76,45 @@ void Bitmap::Insert(const glm::uvec2 &pos, const Bitmap &bitmap)
 
 }
 
+void Bitmap::Mirror(bool direction)
+{
+  if (direction)
+  {
+    for (unsigned int y = 0; y < mSize.y / 2; ++y)
+    {
+      // Ѕерем первую строку и мен€ем с последней.
+      // —трока посередине не должна копировать сама себ€.
+      for (unsigned int x = 0; x < mSize.x * sizeof(Color); ++x)
+      {
+        std::swap(mData[y * mSize.x * sizeof(Color) + x], 
+          mData[(mSize.y - 1 - y) * mSize.x * sizeof(Color) + x]);
+      }
+    }
+  }
+  else
+  {
+    for (unsigned int x = 0; x < mSize.x / 2; ++x)
+    {
+      for (unsigned int y = 0; y < mSize.y; ++y)
+      {
+        for (unsigned int k = 0; k < sizeof(Color); ++k)
+        {
+          std::swap(mData[y * mSize.x * sizeof(Color) + x * sizeof(Color) + k],
+            mData[y * mSize.x * sizeof(Color) + (mSize.x - 1 - x) * sizeof(Color) + k]);
+        }
+      }
+    }
+  }
+}
+
 void Bitmap::Set(const glm::uvec2 &pos, Color color)
 {
-  memcpy(&mData[pos.y * mSize.x * 4 + pos.x * 4], &color.raw.abgr, sizeof(color));
+  memcpy(&mData[pos.y * mSize.x * sizeof(color) + pos.x * sizeof(color)], &color.raw.abgr, sizeof(color));
 }
 
 Color Bitmap::Get(const glm::uvec2 &pos) const
 {
   Color color;
-  memcpy(&color.raw.abgr, &mData[pos.y * mSize.x * 4 + pos.x * 4], sizeof(color));
+  memcpy(&color.raw.abgr, &mData[pos.y * mSize.x * sizeof(color) + pos.x * sizeof(color)], sizeof(color));
   return color;
 }

@@ -65,6 +65,10 @@ public:
   /// Вставить битмапу.
   void Insert(const glm::uvec2 &pos, const Bitmap &bitmap);
 
+  /// Зеркалирование.
+  /// direction Направление. true - по горизонтали. false - по вертикали.
+  void Mirror(bool direction = true);
+
 private:
 
   std::vector<unsigned char> mData;
