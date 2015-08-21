@@ -12,15 +12,15 @@
 Camera::Camera(void)
   : mView(glm::lookAt
     (
-      glm::vec3(-1.0f, 0.0f, 0.0f), // eye
-      glm::vec3(0.0f, 0.0f, 0.0f), // center
+      glm::vec3(0.0f, 0.0f, 0.0f), // eye
+      glm::vec3(0.0f, 1.0f, 0.0f), // center
       glm::vec3(0.0f, 0.0f, 1.0f)  // up
     ))
 {
-  camera_look_at = glm::vec3(0.0f, 0.0f, 0.0f);
+  camera_look_at = glm::vec3(0.0f, 1.0f, 0.0f);
   mFov = 45.0f;
   mAspect = 1.0f;
-  mNear = 1.0f;
+  mNear = 0.1f;
   mFar = 100.0f;
   mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 }
@@ -106,11 +106,5 @@ void Camera::Update()
 
   //compute the MVP
   mView = glm::lookAt(camera_position, camera_look_at, glm::vec3(0, 0, 1));
-  mView = glm::lookAt
-    (
-      glm::vec3(10.0f, -15.0f, 0.0f), // eye
-      glm::vec3(0.0f, 0.0f, 5.0f), // center
-      glm::vec3(0.0f, 0.0f, 1.0f)  // up
-      );
 }
 

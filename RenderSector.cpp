@@ -3,6 +3,46 @@
 
 #include <GLFW\glfw3.h>
 #include <iostream>
+#include <assert.h>
+
+
+struct RenderSectorFaceIndexing  
+{
+  RenderSectorFaceIndexing()
+  {
+    unsigned int index = 0;
+    // left, right
+    for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
+    for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
+    {
+      data[index++] = { 0, y, z };
+      data[index++] = { SECTOR_SIZE - 1, y, z };
+    }
+    // front, back
+    for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
+    for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
+    {
+      data[index++] = { x, y, SECTOR_SIZE - 1 };
+      data[index++] = { x, y, 0 };
+    }
+    // top, bottom
+    for (unsigned int z = 1; z < SECTOR_SIZE - 1; ++z)
+    for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
+    {
+      data[index++] = { x, SECTOR_SIZE - 1, z };
+      data[index++] = { x, 0, z };
+    }
+    assert(index == SIZE);
+  };
+  enum 
+  {
+    SIZE = SECTOR_SIZE * SECTOR_SIZE * 2 + 
+    SECTOR_SIZE * (SECTOR_SIZE - 2) * 2 +
+    (SECTOR_SIZE - 2) * (SECTOR_SIZE - 2) * 2,
+  };
+  glm::uvec3 data[SIZE];
+} static faceIndexing;
+
 
 RenderSector::RenderSector(const Sector &sector)
   : mSector(sector)
@@ -58,26 +98,14 @@ void RenderSector::Generate()
     pos.y = 1;
   }
 
-  // left, right
-  for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
-  for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
+  for (unsigned int i = 0; i < RenderSectorFaceIndexing::SIZE; ++i)
   {
-    if (map[z][y][0]) map[z][y][0]->GetModel().FillBuffer(mBufferStatic, {0, y, z});
-    if (map[z][y][SECTOR_SIZE - 1]) map[z][y][SECTOR_SIZE - 1]->GetModel().FillBuffer(mBufferStatic, {SECTOR_SIZE - 1, y, z});
-  }
-  // front, back
-  for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
-  for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
-  {
-    if (map[0][y][x]) map[0][y][x]->GetModel().FillBuffer(mBufferStatic, { x, y, 0});
-    if (map[SECTOR_SIZE - 1][y][x]) map[SECTOR_SIZE - 1][y][x]->GetModel().FillBuffer(mBufferStatic, { x, y, SECTOR_SIZE - 1 });
-  }
-  // top, bottom
-  for (unsigned int z = 1; z < SECTOR_SIZE - 1; ++z)
-  for (unsigned int x = 1; x < SECTOR_SIZE - 1; ++x)
-  {
-    if (map[z][0][x]) map[z][0][x]->GetModel().FillBuffer(mBufferStatic, { x, 0, z });
-    if (map[z][SECTOR_SIZE - 1][x]) map[z][SECTOR_SIZE - 1][x]->GetModel().FillBuffer(mBufferStatic, { x, SECTOR_SIZE - 1, z });
+    const auto &pos = faceIndexing.data[i];
+    const auto block = map[pos.z][pos.y][pos.x];
+    if (block)
+    {
+      block->GetModel().FillBuffer(mBufferStatic, pos);
+    }
   }
 
 
