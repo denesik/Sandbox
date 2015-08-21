@@ -21,20 +21,8 @@ Atlas::~Atlas()
 {
 }
 
-glm::uvec4 Atlas::Add(const std::string &fileName)
+glm::uvec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
 {
-  Bitmap bitmap;
-  try
-  {
-    // Грузим текстуру с фс.
-    bitmap = Bitmap(fileName);
-  }
-  catch(char *msg)
-  {
-    std::cout << msg << std::endl;
-    return {};
-  }
-
   const auto &size = bitmap.GetSize();
   // Ищем самый маленький контейнер, в который может влезть битмапа.
   for (auto it = mNodes.lower_bound(bitmap.GetSize()); it != mNodes.end(); ++it)
@@ -73,7 +61,7 @@ glm::uvec4 Atlas::Add(const std::string &fileName)
   return {};
 }
 
-bool Atlas::Remove(const std::string &fileName)
+bool Atlas::Remove(const std::string &name)
 {
   assert(false); // Заглушка.
   return true;

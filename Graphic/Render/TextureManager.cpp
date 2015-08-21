@@ -61,10 +61,20 @@ void TextureManager::Compile()
 bool TextureManager::LoadToAtlas(unsigned int atlas, const std::vector<std::string> &names)
 {
   // TODO: Удаление из атласа, если не смогли вставить.
-  for (auto &i : names)
+  for (auto &name : names)
   {
-    auto pos = mMultiAtlas[atlas].atlas.Add(i);
-    mTextures[i] = { atlas, pos };
+    Bitmap bitmap;
+    try
+    {
+      bitmap = Bitmap(name);
+    }
+    catch (char *msg)
+    {
+      std::cout << msg << std::endl;
+      continue;
+    }
+    auto pos = mMultiAtlas[atlas].atlas.Add(name, bitmap);
+    mTextures[name] = { atlas, pos };
   }
 
   return true;
