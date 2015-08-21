@@ -3,7 +3,6 @@
 #ifndef RenderErrorChecker_h__
 #define RenderErrorChecker_h__
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 
 template<class T>

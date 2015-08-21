@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#define GLEW_STATIC
 #include <gl/glew.h>
 #include "Graphic/Window/Window.h"
 #include <iostream>

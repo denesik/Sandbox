@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{70f2721a-19f3-4c9f-87ed-979474273194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{eca4cb86-9387-4261-af83-51321fe852c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Render">
+      <UniqueIdentifier>{9ed7be15-e82d-4140-87de-ea37b9e91c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Window">
+      <UniqueIdentifier>{45b94841-6599-4c91-9413-e5753e4a6c3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="core\Sector.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\BlocksLibrary.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\BlockSimple.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\RegistryGraphic.cpp">
+      <Filter>Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Atlas.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Bitmap.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Camera.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Color.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Cube.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\lodepng\lodepng.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Model.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Render.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\RenderErrorChecker.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSector.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Shader.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\Texture.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\TextureManager.cpp">
+      <Filter>Graphic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Window\Keyboard.cpp">
+      <Filter>Graphic\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Window\Mouse.cpp">
+      <Filter>Graphic\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Window\Window.cpp">
+      <Filter>Graphic\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCounter.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RegistryCore.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\Block.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\BlocksLibrary.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Sector.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\BlockSimple.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\RegistryGraphic.h">
+      <Filter>Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Window\Keyboard.h">
+      <Filter>Graphic\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Window\Mouse.h">
+      <Filter>Graphic\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Window\Window.h">
+      <Filter>Graphic\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Atlas.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Bitmap.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\BufferArray.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Camera.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Color.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Cube.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\lodepng\lodepng.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Model.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Render.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\RenderErrorChecker.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSector.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Shader.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\Texture.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\TextureManager.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCounter.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="RegistryCore.h" />
+  </ItemGroup>
+</Project>

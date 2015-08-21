@@ -1,7 +1,6 @@
 #include "Render.h"
 
 #include "RenderErrorChecker.h"
-#define GLEW_STATIC
 #include <GL/glew.h>
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>

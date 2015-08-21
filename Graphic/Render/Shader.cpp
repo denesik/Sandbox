@@ -1,7 +1,6 @@
 #include "Shader.h"
 
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <vector>
 #include <assert.h>

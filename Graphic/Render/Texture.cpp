@@ -1,7 +1,6 @@
 #include "Texture.h"
 
 #include "RenderErrorChecker.h"
-#define GLEW_STATIC
 #include <GL/glew.h>
 
 
