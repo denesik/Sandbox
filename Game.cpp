@@ -174,6 +174,7 @@ int Game::Run()
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
 
+      //renderSector.Generate();
       renderSector.GetBuffer().Draw();
 
       RenderCheckErrors();

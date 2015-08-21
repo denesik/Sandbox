@@ -104,7 +104,8 @@ void RenderSector::Generate()
           
           if (sides)
           {
-            block->GetModel().FillBuffer(mBufferStatic, pos, sides);
+            sides == Model::ALL ? block->GetModel().FillBuffer(mBufferStatic, pos) :
+                                  block->GetModel().FillBuffer(mBufferStatic, pos, sides);
           }
         }
       }
@@ -113,15 +114,25 @@ void RenderSector::Generate()
     pos.y = 1;
   }
 
-  //map[0][0][0]->GetModel().FillBuffer(mBufferStatic, {0, 0, 0});
-
   for (unsigned int i = 0; i < SectorFaceGenerator::SIZE; ++i)
   {
-    const auto &pos = SectorFaceGenerator::Data()[i];
+    const auto &pos = static_cast<glm::ivec3>(SectorFaceGenerator::Data()[i]);
     const auto block = map[pos.z][pos.y][pos.x];
+    Model::Side sides = Model::EMPTY;
     if (block)
     {
-      block->GetModel().FillBuffer(mBufferStatic, pos);
+      if (!GetBlock({ pos.x + 1, pos.y, pos.z })) sides |= Model::RIGHT;
+      if (!GetBlock({ pos.x - 1, pos.y, pos.z })) sides |= Model::LEFT;
+      if (!GetBlock({ pos.x, pos.y + 1, pos.z })) sides |= Model::TOP;
+      if (!GetBlock({ pos.x, pos.y - 1, pos.z })) sides |= Model::BOTTOM;
+      if (!GetBlock({ pos.x, pos.y, pos.z + 1 })) sides |= Model::FRONT;
+      if (!GetBlock({ pos.x, pos.y, pos.z - 1 })) sides |= Model::BACK;
+
+      if (sides)
+      {
+        sides == Model::ALL ? block->GetModel().FillBuffer(mBufferStatic, pos) : 
+                              block->GetModel().FillBuffer(mBufferStatic, pos, sides);
+      }
     }
   }
 
@@ -136,4 +147,15 @@ void RenderSector::Generate()
 BufferArray<VertexVT> & RenderSector::GetBuffer()
 {
   return mBufferStatic;
+}
+
+const IBlock * RenderSector::GetBlock(const glm::ivec3 &pos)
+{
+  if (pos.x >= 0 && pos.x < SECTOR_SIZE &&
+      pos.y >= 0 && pos.y < SECTOR_SIZE && 
+      pos.z >= 0 && pos.z < SECTOR_SIZE)
+  {
+    return mSector.mMap[pos.z][pos.y][pos.x];
+  }
+  return nullptr;
 }

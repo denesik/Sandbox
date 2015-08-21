@@ -23,5 +23,9 @@ private:
 
   BufferArray<VertexVT> mBufferStatic;
 
+private:
+
+  const IBlock *GetBlock(const glm::ivec3 &pos);
+
 };
 
