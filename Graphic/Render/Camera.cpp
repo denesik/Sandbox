@@ -1,6 +1,7 @@
 #include "Camera.h"
 
 
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -10,19 +11,19 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera(void)
-  : mView(glm::lookAt
-    (
-      glm::vec3(0.0f, 0.0f, 0.0f), // eye
-      glm::vec3(0.0f, 1.0f, 0.0f), // center
-      glm::vec3(0.0f, 0.0f, 1.0f)  // up
-    ))
 {
-  camera_look_at = glm::vec3(0.0f, 1.0f, 0.0f);
   mFov = 45.0f;
   mAspect = 1.0f;
   mNear = 0.1f;
   mFar = 100.0f;
   mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
+
+  mQuat = glm::quat_cast(glm::lookAt
+    (
+      glm::vec3(0.0f, 0.0f, 0.0f), // eye
+      glm::vec3(0.0f, 1.0f, 0.0f), // center
+      glm::vec3(0.0f, 0.0f, 1.0f)  // up
+      ));
 }
 
 
@@ -46,65 +47,25 @@ void Camera::Resize(const glm::uvec2 &size)
   mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 }
 
-
-void Camera::RotateX(float degrees)
+void Camera::Rotate(const glm::vec3 &degrees)
 {
-  camera_pitch -= degrees;
-
-  //Check bounds for the camera pitch
-  if (camera_pitch > 360.0f) {
-    camera_pitch -= 360.0f;
-  }
-  else if (camera_pitch < -360.0f) {
-    camera_pitch += 360.0f;
-  }
-}
-
-void Camera::RotateY(float degrees)
-{
-  camera_heading += degrees;
-
-  //Check bounds for the camera heading
-  if (camera_heading > 360.0f) {
-    camera_heading -= 360.0f;
-  }
-  else if (camera_heading < -360.0f) {
-    camera_heading += 360.0f;
-  }
+  mDir += degrees;
 }
 
 void Camera::Move(const glm::vec3 &dist)
 {
-  camera_position_delta += camera_direction * dist.z + 
-    glm::cross(camera_direction, glm::vec3(0, 0, 1)) * dist.x;
+  mPos += glm::vec3(dist.x, dist.y, dist.z) * mQuat;
 }
 
 void Camera::Update()
 {
-  camera_direction = glm::normalize(camera_look_at - camera_position);
+  const auto &yaw = glm::angleAxis(mDir.x, glm::vec3(1, 0, 0));
+  const auto &pitch = glm::angleAxis(mDir.y, glm::vec3(0, 0, 1));
+  const auto &roll = glm::angleAxis(mDir.z, glm::vec3(0, 1, 0));
+  mDir = {};
 
+  mQuat = glm::normalize(yaw * mQuat * pitch);
 
-  //detmine axis for pitch rotation
-  glm::vec3 axis = glm::cross(camera_direction, glm::vec3(0, 0, 1));
-  //compute quaternion for pitch based on the camera pitch angle
-  glm::quat pitch_quat = glm::angleAxis(camera_pitch, axis);
-  //determine heading quaternion from the camera up vector and the heading angle
-  glm::quat heading_quat = glm::angleAxis(camera_heading, glm::vec3(0, 0, 1));
-  //add the two quaternions
-  glm::quat temp = glm::cross(pitch_quat, heading_quat);
-  temp = glm::normalize(temp);
-  //update the direction from the quaternion
-  camera_direction = glm::rotate(temp, camera_direction);
-  //add the camera delta
-  camera_position += camera_position_delta;
-  //set the look at to be infront of the camera
-  camera_look_at = camera_position + camera_direction * 1.0f;
-
-  camera_pitch = 0.0f;
-  camera_heading = 0.0f;
-  camera_position_delta *= 0.0f;
-
-  //compute the MVP
-  mView = glm::lookAt(camera_position, camera_look_at, glm::vec3(0, 0, 1));
+  mView = glm::translate(glm::mat4_cast(mQuat), mPos);
 }
 

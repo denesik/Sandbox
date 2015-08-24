@@ -21,11 +21,7 @@ public:
 
   void Resize(const glm::uvec2 &size);
 
-  // (up, down)
-  void RotateX(float angle);
-
-  // (left, right)
-  void RotateY(float angle);
+  void Rotate(const glm::vec3 &angle);
 
   void Move(const glm::vec3 &dist);
 
@@ -41,11 +37,7 @@ private:
   float mNear;
   float mFar;
 
+  glm::vec3 mDir;
+  glm::vec3 mPos;
   glm::quat mQuat;
-  float camera_pitch = 0.0f;
-  float camera_heading = 0.0f;
-  glm::vec3 camera_position;
-  glm::vec3 camera_position_delta;
-  glm::vec3 camera_look_at;
-  glm::vec3 camera_direction;
 };
