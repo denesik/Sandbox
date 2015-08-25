@@ -35,6 +35,18 @@ Game::Game()
     std::cout << e << std::endl;
     return;
   }
+
+  glfwSwapInterval(0);
+  glfwWindowHint(GLFW_SAMPLES, 16);
+  RenderCheckErrors();
+
+  glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
+  glDepthFunc(GL_LEQUAL);            // Тип теста глубины
+
+  glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
+
+  RenderCheckErrors();
+  glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y); 
 }
 
 Game::~Game()
@@ -42,14 +54,6 @@ Game::~Game()
 
 }
 
-
-template< typename T >
-std::string ToString(const T& val)
-{
-  std::stringstream iss;
-  iss << val;
-  return iss.str();
-}
 
 int Game::Run()
 {
@@ -60,31 +64,9 @@ int Game::Run()
   }
 
   {
-    glfwSwapInterval(0);
-    glfwWindowHint(GLFW_SAMPLES, 16);
-
-    RenderCheckErrors();
-
-    double tps = 10.0;
-
-    PCamera cam = std::make_shared<Camera>();
-
-    glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
-    glDepthFunc(GL_LEQUAL);            // Тип теста глубины
-
-    glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
-
-    RenderCheckErrors();
-
-    glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y);          // Сброс текущей области вывода
-    cam->Resize(REGISTRY_GRAPHIC.GetWindow().GetSize());
-
-    RenderCheckErrors();
+    REGISTRY_GRAPHIC.GetCamera().Resize(REGISTRY_GRAPHIC.GetWindow().GetSize());
 
     Shader shader("Graphic/Shaders/t");
-
-    RenderCheckErrors();
-
 
     REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/stone.png");
     REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/sand.png");
@@ -105,8 +87,7 @@ int Game::Run()
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
 
-    glm::vec2 textSize(std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Textures/stone.png"))->GetSize());
-
+    
     auto currentTime = glfwGetTime();
     Sector sector;
     RenderSector renderSector(sector);
@@ -115,62 +96,38 @@ int Game::Run()
 
     RenderCheckErrors();
 
+    const unsigned int TICKS_PER_SECOND = 50;
+    const unsigned int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+    const unsigned int MAX_FRAMESKIP = 10;
+
+    double tick = glfwGetTime();
+
     FpsCounter fps;
-
-    float speed = 0.01f;
-
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
       fps.Update();
-      REGISTRY_GRAPHIC.GetWindow().SetTitle(ToString(fps.GetCount()) + " fps");
+      REGISTRY_GRAPHIC.GetWindow().SetTitle(std::to_string(fps.GetCount()) + " fps");
 
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
+//       int loops = 0;
+//       double dt = glfwGetTime();
+//       while (dt > tick && loops < MAX_FRAMESKIP)
+//       {
+//         Update();
+//         tick += SKIP_TICKS / 1000.0;
+//         ++loops;
+//       }
+
+      for (int loops = 0; glfwGetTime() > tick && loops < MAX_FRAMESKIP; ++loops)
       {
-        cam->Move({ speed, 0.0f, 0.0f });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
-      {
-        cam->Move({ -speed, 0.0f, 0.0f });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
-      {
-        cam->Move({ 0.0f, 0.0f, speed });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
-      {
-        cam->Move({ 0.0f, 0.0f, -speed });
+        Update();
+        tick += SKIP_TICKS / 1000.0;
       }
 
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
-      {
-        cam->Rotate({ 0.0f, -speed / 4.0f, 0.0f });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
-      {
-        cam->Rotate({ 0.0f, speed / 4.0f, 0.0f });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
-      {
-        cam->Rotate({ speed / 4.0f, 0.0f, 0.0f });
-      }
-      if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
-      {
-        cam->Rotate({ -speed / 4.0f, 0.0f, 0.0f });
-      }
-      float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
-      float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
-
-      //cam->RotateX(ax);
-      //cam->RotateY(-ay);
-
-      cam->Update();
-
-      glm::mat4 model; // = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -6.0f));
-      glm::mat4 MVP = cam->GetProject() * cam->GetView() * model;
+      glm::mat4 model; 
+      glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * REGISTRY_GRAPHIC.GetCamera().GetView() * model;
 
       shader.Use();
       shader.SetUniform(MVP);
-      shader.SetUniform(textSize);
       int colorTexture = TEXTURE_SLOT_0;
       shader.SetUniform(colorTexture);
 
@@ -188,4 +145,54 @@ int Game::Run()
   }
 
   return 0;
+}
+
+void Game::Update()
+{
+  const float speed = 0.01f;
+
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Move({ speed, 0.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Move({ -speed, 0.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Move({ 0.0f, 0.0f, speed });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Move({ 0.0f, 0.0f, -speed });
+  }
+
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, -speed / 4.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, speed / 4.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ speed / 4.0f, 0.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_UP))
+  {
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ -speed / 4.0f, 0.0f, 0.0f });
+  }
+  float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
+  float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
+  //REGISTRY_GRAPHIC.GetCamera().RotateX(ax);
+  //REGISTRY_GRAPHIC.GetCamera().RotateY(-ay);
+
+  REGISTRY_GRAPHIC.GetCamera().Update();
+}
+
+void Game::Draw()
+{
+
 }

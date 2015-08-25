@@ -9,6 +9,12 @@ public:
 
   int Run();
 
+  void Initialize();
+
+  void Update();
+
+  void Draw();
+
 private:
 
   bool Initialized = false;

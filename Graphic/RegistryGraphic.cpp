@@ -45,7 +45,12 @@ Render &RegistryGraphic::GetRender()
   return *mRender;
 }
 
-TextureManager & RegistryGraphic::GetTextureManager()
+TextureManager &RegistryGraphic::GetTextureManager()
 {
   return *mTextureManager;
+}
+
+Camera &RegistryGraphic::GetCamera()
+{
+  return *mCamera;
 }
