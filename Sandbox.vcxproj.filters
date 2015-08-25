@@ -79,6 +79,10 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RegistryCore.cpp" />
+    <ClCompile Include="Core\Creature.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h">
@@ -150,5 +154,9 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="RegistryCore.h" />
+    <ClInclude Include="Core\Creature.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Physics.h" />
   </ItemGroup>
 </Project>

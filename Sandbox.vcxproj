@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="core\BlockSimple.cpp" />
     <ClCompile Include="core\BlocksLibrary.cpp" />
+    <ClCompile Include="Core\Creature.cpp" />
+    <ClCompile Include="Core\Physics.cpp" />
     <ClCompile Include="core\Sector.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -48,6 +50,8 @@
     <ClInclude Include="core\Block.h" />
     <ClInclude Include="core\BlockSimple.h" />
     <ClInclude Include="core\BlocksLibrary.h" />
+    <ClInclude Include="Core\Creature.h" />
+    <ClInclude Include="Core\Physics.h" />
     <ClInclude Include="core\Sector.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />

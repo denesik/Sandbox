@@ -86,26 +86,26 @@ int Game::Run()
     RenderCheckErrors();
 
 
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/stone.png");
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Graphic/Textures/sandstone_top.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/stone.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/sand.png");
     REGISTRY_GRAPHIC.GetTextureManager().Compile();
-    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/sandstone_top.png"))->Set(TEXTURE_SLOT_0);
+    std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Textures/stone.png"))->Set(TEXTURE_SLOT_0);
 
     RenderCheckErrors();
 
     BlockSimple *block1 = new BlockSimple;
     Cube *cube1 = new Cube;
-    cube1->SetTexture(Cube::ALL, "Graphic/Textures/stone.png");
+    cube1->SetTexture(Cube::ALL, "Textures/stone.png");
     block1->SetModel(cube1);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block1", block1);
 
     BlockSimple *block2 = new BlockSimple;
     Cube *cube2 = new Cube;
-    cube2->SetTexture(Cube::ALL, "Graphic/Textures/sandstone_top.png");
+    cube2->SetTexture(Cube::ALL, "Textures/sand.png");
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
 
-    glm::vec2 textSize(std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Graphic/Textures/sandstone_top.png"))->GetSize());
+    glm::vec2 textSize(std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Textures/stone.png"))->GetSize());
 
     auto currentTime = glfwGetTime();
     Sector sector;
