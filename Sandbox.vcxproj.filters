@@ -82,7 +82,9 @@
     <ClCompile Include="Core\Creature.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Physics.cpp" />
+    <ClCompile Include="Core\Physics.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h">
@@ -157,6 +159,8 @@
     <ClInclude Include="Core\Creature.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Physics.h" />
+    <ClInclude Include="Core\Physics.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

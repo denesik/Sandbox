@@ -14,11 +14,11 @@ TextureManager::~TextureManager(void)
 
 void TextureManager::LoadTexture(const std::string &name)
 {
-  LoadTexture(std::vector<std::string>({name}));
+  LoadTexture({name});
 }
 
 
-void TextureManager::LoadTexture(const std::vector<std::string> &names)
+void TextureManager::LoadTexture(const std::initializer_list<std::string> &names)
 {
   for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
   {
@@ -59,7 +59,7 @@ void TextureManager::Compile()
   }
 }
 
-bool TextureManager::LoadToAtlas(unsigned int atlas, const std::vector<std::string> &names)
+bool TextureManager::LoadToAtlas(unsigned int atlas, const std::initializer_list<std::string> &names)
 {
   // TODO: Удаление из атласа, если не смогли вставить.
   for (auto &name : names)

@@ -40,7 +40,6 @@ Window::Window(const glm::uvec2 &size)
     window->mMouse.SetPos(glm::vec2(static_cast<float>(x), static_cast<float>(y)));
   });
 
-  //glfwSwapInterval(0);
   std::cout << "Window created" << std::endl;
 }
 

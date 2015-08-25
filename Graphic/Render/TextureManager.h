@@ -22,7 +22,7 @@ public:
 
   /// Загрузить набор текстур.
   /// Все текстуры будут добавлены в один текстурный атлас.
-  void LoadTexture(const std::vector<std::string> &names);
+  void LoadTexture(const std::initializer_list<std::string> &names);
 
   /// Получить текстуру по имени.
   /// Если текстуры не существует, возвращается нулевой указатель.
@@ -54,7 +54,7 @@ private:
 
 private:
 
-  bool LoadToAtlas(unsigned int atlas, const std::vector<std::string> &names);
+  bool LoadToAtlas(unsigned int atlas, const std::initializer_list<std::string> &names);
 
 };
 

@@ -68,8 +68,7 @@ int Game::Run()
 
     Shader shader("Graphic/Shaders/t");
 
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/stone.png");
-    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture("Textures/sand.png");
+    REGISTRY_GRAPHIC.GetTextureManager().LoadTexture({ "Textures/stone.png", "Textures/sand.png" });
     REGISTRY_GRAPHIC.GetTextureManager().Compile();
     std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Textures/stone.png"))->Set(TEXTURE_SLOT_0);
 
@@ -108,15 +107,6 @@ int Game::Run()
       fps.Update();
       REGISTRY_GRAPHIC.GetWindow().SetTitle(std::to_string(fps.GetCount()) + " fps");
 
-//       int loops = 0;
-//       double dt = glfwGetTime();
-//       while (dt > tick && loops < MAX_FRAMESKIP)
-//       {
-//         Update();
-//         tick += SKIP_TICKS / 1000.0;
-//         ++loops;
-//       }
-
       for (int loops = 0; glfwGetTime() > tick && loops < MAX_FRAMESKIP; ++loops)
       {
         Update();
@@ -139,7 +129,6 @@ int Game::Run()
       RenderCheckErrors();
 
       REGISTRY_GRAPHIC.GetWindow().SwapBuffers();
-      REGISTRY_GRAPHIC.GetWindow().GetMouse().Update();
       Window::WindowSystemPollEvents();
     }
   }
@@ -149,7 +138,7 @@ int Game::Run()
 
 void Game::Update()
 {
-  const float speed = 0.01f;
+  const float speed = 0.2f;
 
   if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
   {
@@ -186,9 +175,9 @@ void Game::Update()
   }
   float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
   float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
-  //REGISTRY_GRAPHIC.GetCamera().RotateX(ax);
-  //REGISTRY_GRAPHIC.GetCamera().RotateY(-ay);
+  REGISTRY_GRAPHIC.GetCamera().Rotate(glm::vec3(ax, ay, 0.0f) / 2.0f);
 
+  REGISTRY_GRAPHIC.GetWindow().GetMouse().Update();
   REGISTRY_GRAPHIC.GetCamera().Update();
 }
 
