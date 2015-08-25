@@ -55,7 +55,7 @@ void TextureManager::Compile()
   for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
   {
     mMultiAtlas[i].texture = std::make_shared<Texture>(mMultiAtlas[i].atlas.GetAtlas());
-    mMultiAtlas[i].atlas.GetAtlas().Save("Atlas_" + std::to_string(i) + ".png");
+//    mMultiAtlas[i].atlas.GetAtlas().Save("Atlas_" + std::to_string(i) + ".png");
   }
 }
 

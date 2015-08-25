@@ -20,6 +20,10 @@ public:
   /// Получить матрицу проекции.
   const glm::mat4 &GetProject() const;
 
+  const glm::mat3 &GetDirection() const;
+
+  void SetPos(const glm::vec3 &pos);
+
   void Resize(const glm::uvec2 &size);
 
   void Rotate(const glm::vec3 &angle);
@@ -32,6 +36,7 @@ private:
 
   glm::mat4 mView;
   glm::mat4 mProjection;
+  glm::mat3 mDirection;
 
   float mFov;
   float mAspect;

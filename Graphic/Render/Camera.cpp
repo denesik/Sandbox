@@ -34,6 +34,16 @@ const glm::mat4 &Camera::GetProject() const
   return mProjection;
 }
 
+const glm::mat3 &Camera::GetDirection() const
+{
+  return mDirection;
+}
+
+void Camera::SetPos(const glm::vec3 &pos)
+{
+  mPos = pos;
+}
+
 void Camera::Resize(const glm::uvec2 &size)
 {
   mAspect = static_cast<float>(size.x) / static_cast<float>(size.y);
@@ -57,8 +67,10 @@ void Camera::Update()
   const auto &roll = glm::angleAxis(mDir.z, glm::vec3(0, 1, 0));
   mDir = {};
 
-  mQuat = glm::normalize(yaw * mQuat * pitch);
+  mQuat = yaw * mQuat * pitch;
+  mQuat = glm::normalize(mQuat);
 
   mView = glm::translate(glm::mat4_cast(mQuat), mPos);
+  mDirection = glm::mat3_cast(mQuat);
 }
 

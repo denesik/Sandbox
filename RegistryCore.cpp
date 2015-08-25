@@ -11,6 +11,11 @@ BlocksLibrary & RegistryCore::GetBlocksLibrary()
   return mBlocksLibrary;
 }
 
+Creature & RegistryCore::GetPlayer()
+{
+  return mPlayer;
+}
+
 RegistryCore::RegistryCore()
 {
 

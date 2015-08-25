@@ -35,10 +35,12 @@ glm::vec3 Creature::GetPosition() const
 
 void Creature::Move(const glm::vec3 &dist)
 {
-  auto dir = static_cast<glm::vec3>(mModel[1]);
-  auto dirp = glm::cross(dir, glm::vec3(0, 0, 1));
+  glm::vec3 back = { mModel[0][2], mModel[1][2], mModel[2][2] };
+  back.z = 0;
+  glm::vec3 right = { mModel[0][0], mModel[1][0], mModel[2][0] };
+  right.z = 0;
 
-  Forse(dir * dist.x);
-  Forse(dirp * dist.y);
+  Forse(back * dist.y);
+  Forse(right * dist.x);
 }
 

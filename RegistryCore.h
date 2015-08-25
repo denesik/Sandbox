@@ -3,6 +3,7 @@
 #define RegistryCore_h__
 
 #include "core\BlocksLibrary.h"
+#include "Core\Creature.h"
 
 #define REGISTRY_CORE RegistryCore::Instatce()
 
@@ -13,6 +14,8 @@ public:
 
   BlocksLibrary &GetBlocksLibrary();
 
+  Creature &GetPlayer();
+
 private:
   RegistryCore();
   ~RegistryCore();
@@ -22,6 +25,7 @@ private:
 private:
 
   BlocksLibrary mBlocksLibrary;
+  Creature mPlayer;
 
 };
 

@@ -140,23 +140,6 @@ void Game::Update()
 {
   const float speed = 0.2f;
 
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
-  {
-    REGISTRY_GRAPHIC.GetCamera().Move({ speed, 0.0f, 0.0f });
-  }
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
-  {
-    REGISTRY_GRAPHIC.GetCamera().Move({ -speed, 0.0f, 0.0f });
-  }
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
-  {
-    REGISTRY_GRAPHIC.GetCamera().Move({ 0.0f, 0.0f, speed });
-  }
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
-  {
-    REGISTRY_GRAPHIC.GetCamera().Move({ 0.0f, 0.0f, -speed });
-  }
-
   if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
   {
     REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, -speed / 4.0f, 0.0f });
@@ -173,12 +156,34 @@ void Game::Update()
   {
     REGISTRY_GRAPHIC.GetCamera().Rotate({ -speed / 4.0f, 0.0f, 0.0f });
   }
+
   float ay = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveX() / 30.0f;
   float ax = REGISTRY_GRAPHIC.GetWindow().GetMouse().IsMoveY() / 30.0f;
-  REGISTRY_GRAPHIC.GetCamera().Rotate(glm::vec3(ax, ay, 0.0f) / 2.0f);
+  //REGISTRY_GRAPHIC.GetCamera().Rotate(glm::vec3(ax, ay, 0.0f) / 2.0f);
+
+  REGISTRY_GRAPHIC.GetCamera().SetPos(REGISTRY_CORE.GetPlayer().GetPosition());
+
+  REGISTRY_GRAPHIC.GetCamera().Update();
+  REGISTRY_CORE.GetPlayer().SetDirection(REGISTRY_GRAPHIC.GetCamera().GetDirection());
+
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
+  {
+    REGISTRY_CORE.GetPlayer().Move({ speed, 0.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
+  {
+    REGISTRY_CORE.GetPlayer().Move({ -speed, 0.0f, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_W))
+  {
+    REGISTRY_CORE.GetPlayer().Move({ 0.0f, speed, 0.0f });
+  }
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_S))
+  {
+    REGISTRY_CORE.GetPlayer().Move({ 0.0f, -speed, 0.0f });
+  }
 
   REGISTRY_GRAPHIC.GetWindow().GetMouse().Update();
-  REGISTRY_GRAPHIC.GetCamera().Update();
 }
 
 void Game::Draw()
