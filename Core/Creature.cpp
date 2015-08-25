@@ -36,7 +36,6 @@ glm::vec3 Creature::GetPosition() const
 void Creature::Move(const glm::vec3 &dist)
 {
   glm::vec3 back(mModel[0][2], mModel[1][2], mModel[2][2]);
-  //back.z = 0;
   glm::vec3 right(mModel[0][0], mModel[1][0], 0);
 
   Forse(-back * dist.y);

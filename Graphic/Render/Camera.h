@@ -38,12 +38,13 @@ private:
   glm::mat4 mProjection;
   glm::mat3 mDirection;
 
+  glm::quat mQuat;
+
+  glm::vec3 mDir;
+  glm::vec3 mPos;
+
   float mFov;
   float mAspect;
   float mNear;
   float mFar;
-
-  glm::vec3 mDir;
-  glm::vec3 mPos;
-  glm::quat mQuat;
 };

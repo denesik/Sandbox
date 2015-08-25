@@ -62,12 +62,12 @@ void Camera::Move(const glm::vec3 &dist)
 
 void Camera::Update()
 {
-  const auto &yaw = glm::angleAxis(mDir.x, glm::vec3(1, 0, 0));
-  const auto &pitch = glm::angleAxis(mDir.y, glm::vec3(0, 0, 1));
-  const auto &roll = glm::angleAxis(mDir.z, glm::vec3(0, 1, 0));
+  const auto &pitch = glm::angleAxis(mDir.x, glm::vec3(1, 0, 0));
+  const auto &yaw = glm::angleAxis(mDir.z, glm::vec3(0, 0, 1));
+  const auto &roll = glm::angleAxis(mDir.y, glm::vec3(0, 1, 0));
   mDir = {};
 
-  mQuat = yaw * mQuat * pitch;
+  mQuat = pitch * mQuat * yaw;
   mQuat = glm::normalize(mQuat);
 
   mView = glm::translate(glm::mat4_cast(mQuat), -mPos);

@@ -107,7 +107,7 @@ void RenderSector::Generate()
             sides == Model::ALL ? block->GetModel().FillBuffer(mBufferStatic, pos) :
                                   block->GetModel().FillBuffer(mBufferStatic, pos, sides);
           }
-          //block->GetModel().FillBuffer(mBufferStatic, pos);
+//          block->GetModel().FillBuffer(mBufferStatic, pos);
         }
       }
       pos.x = 1;

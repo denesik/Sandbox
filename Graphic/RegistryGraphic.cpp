@@ -25,7 +25,6 @@ RegistryGraphic::RegistryGraphic()
 
   mRender = std::make_unique<Render>();
   mTextureManager = std::make_unique<TextureManager>();
-  mCamera = std::make_unique<Camera>();
 }
 
 RegistryGraphic::~RegistryGraphic()
@@ -53,5 +52,5 @@ TextureManager &RegistryGraphic::GetTextureManager()
 
 Camera &RegistryGraphic::GetCamera()
 {
-  return *mCamera;
+  return mCamera;
 }

@@ -142,11 +142,11 @@ void Game::Update()
 
   if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
   {
-    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, -speed / 4.0f, 0.0f });
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, 0.0f, -speed / 4.0f });
   }
   if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
   {
-    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, speed / 4.0f, 0.0f });
+    REGISTRY_GRAPHIC.GetCamera().Rotate({ 0.0f, 0.0f, speed / 4.0f });
   }
   if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
   {

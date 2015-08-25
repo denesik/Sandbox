@@ -35,7 +35,8 @@ private:
   std::unique_ptr<Window> mWindow;
   std::unique_ptr<Render> mRender;
   std::unique_ptr<TextureManager> mTextureManager;
-  std::unique_ptr<Camera> mCamera;
+
+  Camera mCamera;
 };
 
 #endif // RegistryGraphic_h__
