@@ -1,7 +1,7 @@
 #include "Bitmap.h"
 
-#include "lodepng/lodepng.h"
 #include <map>
+#include "..\..\lodepng\lodepng.h"
 
 
 Bitmap::Bitmap()

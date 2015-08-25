@@ -42,9 +42,6 @@
     <ClCompile Include="Graphic\Render\Cube.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
-    <ClCompile Include="Graphic\Render\lodepng\lodepng.cpp">
-      <Filter>Graphic\Render</Filter>
-    </ClCompile>
     <ClCompile Include="Graphic\Render\Model.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="Core\Physics.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng\lodepng.cpp">
+      <Filter>Graphic\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClInclude Include="Graphic\Render\Cube.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic\Render\lodepng\lodepng.h">
-      <Filter>Graphic\Render</Filter>
-    </ClInclude>
     <ClInclude Include="Graphic\Render\Model.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Core\Physics.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="lodepng\lodepng.h">
+      <Filter>Graphic\Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
