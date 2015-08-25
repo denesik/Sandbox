@@ -166,11 +166,11 @@ void Game::Update()
   REGISTRY_GRAPHIC.GetCamera().Update();
   REGISTRY_CORE.GetPlayer().SetDirection(REGISTRY_GRAPHIC.GetCamera().GetDirection());
 
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
   {
     REGISTRY_CORE.GetPlayer().Move({ speed, 0.0f, 0.0f });
   }
-  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_D))
+  if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyDown(GLFW_KEY_A))
   {
     REGISTRY_CORE.GetPlayer().Move({ -speed, 0.0f, 0.0f });
   }

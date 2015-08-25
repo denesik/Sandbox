@@ -70,7 +70,7 @@ void Camera::Update()
   mQuat = yaw * mQuat * pitch;
   mQuat = glm::normalize(mQuat);
 
-  mView = glm::translate(glm::mat4_cast(mQuat), mPos);
+  mView = glm::translate(glm::mat4_cast(mQuat), -mPos);
   mDirection = glm::mat3_cast(mQuat);
 }
 
