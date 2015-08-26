@@ -88,7 +88,9 @@
     <ClCompile Include="Core\World.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SectorLoader.cpp" />
+    <ClCompile Include="Core\SectorLoader.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h">
@@ -169,6 +171,8 @@
     <ClInclude Include="Core\World.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\SectorLoader.h" />
+    <ClInclude Include="Core\SectorLoader.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

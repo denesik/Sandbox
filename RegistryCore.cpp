@@ -16,6 +16,11 @@ Creature & RegistryCore::GetPlayer()
   return mPlayer;
 }
 
+World &RegistryCore::GetWorld()
+{
+  return mWorld;
+}
+
 RegistryCore::RegistryCore()
 {
 

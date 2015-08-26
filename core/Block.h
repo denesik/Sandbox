@@ -17,7 +17,6 @@ struct IBlock
 
   /// Получить графическую модель блока.
   virtual const Model &GetModel() const = 0;
-
 };
 
 template<class T>

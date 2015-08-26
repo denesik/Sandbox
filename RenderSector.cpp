@@ -61,7 +61,7 @@ private:
 
 
 RenderSector::RenderSector(const Sector &sector)
-  : mSector(sector), mModel(glm::translate({}, sector.GetPos()))
+  : mSector(sector), mModel(glm::translate({}, sector.GetPos() * static_cast<int>(SECTOR_SIZE)))
 {
   mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
   mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, sizeof(VertexVT::texture), offsetof(VertexVT, texture));

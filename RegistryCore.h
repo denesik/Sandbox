@@ -4,6 +4,7 @@
 
 #include "core\BlocksLibrary.h"
 #include "Core\Creature.h"
+#include "Core\World.h"
 
 #define REGISTRY_CORE RegistryCore::Instatce()
 
@@ -16,6 +17,8 @@ public:
 
   Creature &GetPlayer();
 
+  World &GetWorld();
+
 private:
   RegistryCore();
   ~RegistryCore();
@@ -26,6 +29,7 @@ private:
 
   BlocksLibrary mBlocksLibrary;
   Creature mPlayer;
+  World mWorld;
 
 };
 

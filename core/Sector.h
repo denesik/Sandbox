@@ -25,5 +25,8 @@ private:
 
   glm::ivec3 mPos;
 
+private:
+  Sector(const Sector &) = delete;
+  Sector& operator=(const Sector &) = delete;
 };
 

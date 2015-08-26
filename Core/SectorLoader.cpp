@@ -2,7 +2,8 @@
 
 
 
-SectorLoader::SectorLoader()
+SectorLoader::SectorLoader(World &world)
+  : mWorld(world)
 {
 }
 
@@ -35,12 +36,12 @@ void SectorLoader::SetPos(const glm::ivec3 &pos)
   // Пробегаем по всем загруженным на данный момент секторам и выгружаем их.
   for (const auto &site : mSite)
   {
-
+    mWorld.UnloadSector(site);
   }
 
   // Загружаем нужные сектора.
   for (const auto &site : mSite)
   {
-
+    mWorld.LoadSector(site);
   }
 }

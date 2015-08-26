@@ -13,7 +13,6 @@ public:
   void SetModel(Model *model);
 
   bool IsStatic() const override;
-
 };
 
 

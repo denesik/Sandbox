@@ -49,9 +49,17 @@ private:
     Sector sector;
     RenderSector renderSector;
     unsigned int refCount = 1;
+
+  private:
+    WorldSector(const WorldSector &) = delete;
+    WorldSector& operator=(const WorldSector &) = delete;
   };
 
   std::unordered_map<glm::ivec3, WorldSector> mMap;
+
+private:
+  World(const World &) = delete;
+  World& operator=(const World &) = delete;
 
 };
 
