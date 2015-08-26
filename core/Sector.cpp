@@ -9,7 +9,8 @@
 
 
 
-Sector::Sector()
+Sector::Sector(const glm::ivec3 &pos)
+  : mPos(pos)
 {
   auto currentTime = glfwGetTime();
   for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
@@ -43,5 +44,15 @@ Sector::Sector()
 
 Sector::~Sector()
 {
+}
+
+const glm::ivec3 & Sector::GetPos() const
+{
+  return mPos;
+}
+
+const IBlock * Sector::GetBlock(const glm::uvec3 &pos) const
+{
+  return mMap[pos.z][pos.y][pos.x];
 }
 

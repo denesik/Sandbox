@@ -17,6 +17,8 @@ public:
 
   BufferArray<VertexVT> &GetBuffer();
 
+  const glm::mat4 &GetModel() const;
+
 private:
 
   const Sector &mSector;
@@ -26,6 +28,8 @@ private:
 private:
 
   const IBlock *GetBlock(const glm::ivec3 &pos);
+
+  glm::mat4 mModel;
 
 };
 

@@ -6,6 +6,8 @@
 #include "Color.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Shader.h"
+#include "..\..\RenderSector.h"
 
 
 class Render
@@ -17,12 +19,12 @@ public:
 
   static void Initialize();
 
-  /// Рисовать с помощью данной камеры.
-  void UseCam(const PCamera &camera);
+  void DrawSector(RenderSector &sector);
 
 private:
 
-  PCamera mCamera;
+  std::unique_ptr<Shader> mShader;
+
 };
 
 

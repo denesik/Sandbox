@@ -4,6 +4,7 @@
 #include <GLFW\glfw3.h>
 #include <iostream>
 #include <assert.h>
+#include <glm\gtc\matrix_transform.hpp>
 
 
 class SectorFaceGenerator  
@@ -60,7 +61,7 @@ private:
 
 
 RenderSector::RenderSector(const Sector &sector)
-  : mSector(sector)
+  : mSector(sector), mModel(glm::translate({}, sector.GetPos()))
 {
   mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
   mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, sizeof(VertexVT::texture), offsetof(VertexVT, texture));
@@ -81,8 +82,6 @@ void RenderSector::Generate()
   vertex.clear();
   index.clear();
 
-  const auto &map = mSector.mMap;
-
   glm::uvec3 pos(1);
 
   for (; pos.z < SECTOR_SIZE - 1; ++pos.z)
@@ -91,16 +90,16 @@ void RenderSector::Generate()
     {
       for (; pos.x < SECTOR_SIZE - 1; ++pos.x)
       {
-        const auto block = map[pos.z][pos.y][pos.x];
+        const auto block = mSector.GetBlock(pos);
         Model::Side sides = Model::EMPTY;
         if (block)
         {
-          if (!map[pos.z][pos.y][pos.x + 1]) sides |= Model::RIGHT;
-          if (!map[pos.z][pos.y][pos.x - 1]) sides |= Model::LEFT;
-          if (!map[pos.z][pos.y + 1][pos.x]) sides |= Model::TOP;
-          if (!map[pos.z][pos.y - 1][pos.x]) sides |= Model::BOTTOM;
-          if (!map[pos.z + 1][pos.y][pos.x]) sides |= Model::FRONT;
-          if (!map[pos.z - 1][pos.y][pos.x]) sides |= Model::BACK;
+          if (!mSector.GetBlock({ pos.z, pos.y, pos.x + 1 })) sides |= Model::RIGHT;
+          if (!mSector.GetBlock({ pos.z, pos.y, pos.x - 1 })) sides |= Model::LEFT;
+          if (!mSector.GetBlock({ pos.z, pos.y + 1, pos.x })) sides |= Model::TOP;
+          if (!mSector.GetBlock({ pos.z, pos.y - 1, pos.x })) sides |= Model::BOTTOM;
+          if (!mSector.GetBlock({ pos.z + 1, pos.y, pos.x })) sides |= Model::FRONT;
+          if (!mSector.GetBlock({ pos.z - 1, pos.y, pos.x })) sides |= Model::BACK;
           
           if (sides)
           {
@@ -118,7 +117,7 @@ void RenderSector::Generate()
   for (unsigned int i = 0; i < SectorFaceGenerator::SIZE; ++i)
   {
     const auto &pos = static_cast<glm::ivec3>(SectorFaceGenerator::Data()[i]);
-    const auto block = map[pos.z][pos.y][pos.x];
+    const auto block = mSector.GetBlock(pos);
     Model::Side sides = Model::EMPTY;
     if (block)
     {
@@ -150,13 +149,18 @@ BufferArray<VertexVT> & RenderSector::GetBuffer()
   return mBufferStatic;
 }
 
+const glm::mat4 & RenderSector::GetModel() const
+{
+  return mModel;
+}
+
 const IBlock * RenderSector::GetBlock(const glm::ivec3 &pos)
 {
   if (pos.x >= 0 && pos.x < SECTOR_SIZE &&
       pos.y >= 0 && pos.y < SECTOR_SIZE && 
       pos.z >= 0 && pos.z < SECTOR_SIZE)
   {
-    return mSector.mMap[pos.z][pos.y][pos.x];
+    return mSector.GetBlock(pos);
   }
   return nullptr;
 }

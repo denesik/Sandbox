@@ -85,6 +85,10 @@
     <ClCompile Include="lodepng\lodepng.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
+    <ClCompile Include="Core\World.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SectorLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h">
@@ -162,5 +166,9 @@
     <ClInclude Include="lodepng\lodepng.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
+    <ClInclude Include="Core\World.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SectorLoader.h" />
   </ItemGroup>
 </Project>

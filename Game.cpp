@@ -36,17 +36,9 @@ Game::Game()
     return;
   }
 
-  glfwSwapInterval(0);
-  glfwWindowHint(GLFW_SAMPLES, 16);
-  RenderCheckErrors();
-
-  glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
-  glDepthFunc(GL_LEQUAL);            // Тип теста глубины
-
-  glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
-
-  RenderCheckErrors();
   glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y); 
+
+  RenderCheckErrors();
 }
 
 Game::~Game()
@@ -88,7 +80,7 @@ int Game::Run()
 
     
     auto currentTime = glfwGetTime();
-    Sector sector;
+    Sector sector({});
     RenderSector renderSector(sector);
     renderSector.Generate();
     std::cout << "GenAll: " << glfwGetTime() - currentTime << std::endl;

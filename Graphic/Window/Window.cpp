@@ -12,7 +12,7 @@ Window::Window(const glm::uvec2 &size)
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  //glfwWindowHint(GLFW_SAMPLES, 4);
+  glfwWindowHint(GLFW_SAMPLES, 4);
 
   GLFWmonitor *monitor = nullptr;
 
@@ -39,6 +39,8 @@ Window::Window(const glm::uvec2 &size)
     assert(window);
     window->mMouse.SetPos(glm::vec2(static_cast<float>(x), static_cast<float>(y)));
   });
+
+  glfwSwapInterval(0);
 
   std::cout << "Window created" << std::endl;
 }
