@@ -50,7 +50,7 @@ private:
 template<class VertexType>
 BufferArray<VertexType>::BufferArray()
 {
-  mBuffer.reset(new BufferArrayGL1<VertexType>(mVertexBuffer, mIndexBuffer));
+  mBuffer.reset(new BufferArrayGL3<VertexType>(mVertexBuffer, mIndexBuffer));
 }
 
 template<class VertexType>

@@ -81,6 +81,7 @@ int Game::Run()
 
     glEnable(GL_TEXTURE_2D);
 
+    REGISTRY_CORE.GetWorld().AddPlayer(&REGISTRY_CORE.GetPlayer());
     FpsCounter fps;
 
     RenderCheckErrors();

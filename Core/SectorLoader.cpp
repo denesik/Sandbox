@@ -4,7 +4,8 @@
 // ============================================================================
 #include "SectorLoader.h"
 #include "World.h"
-
+#include <GLFW\glfw3.h>
+#include <iostream>
 
 SectorLoader::SectorLoader(World &world, const glm::ivec3 &pos, unsigned int radius)
   : mWorld(world), mPos(pos)
@@ -26,9 +27,9 @@ void SectorLoader::SetRadius(unsigned int radius)
   int begin = -static_cast<int>(radius);
   int end = static_cast<int>(radius);
   glm::ivec3 pos(begin); pos.z = -2;
-//  for (pos.z = 0; pos.z != end; ++pos.z)
-  for (pos.y = 0; pos.y != end; ++pos.y)
-  for (pos.x = 0; pos.x != end; ++pos.x)
+//  for (pos.z = begin; pos.z != end; ++pos.z)
+  for (pos.y = begin; pos.y <= end; ++pos.y)
+  for (pos.x = begin; pos.x <= end; ++pos.x)
   {
     mSite.push_back(pos);
   }
@@ -48,11 +49,13 @@ void SectorLoader::SetPos(const glm::ivec3 &pos)
     mWorld.UnloadSector(mPos + site);
   }
 
+  auto currentTime = glfwGetTime();
   mPos = pos;
-  mPos.z = 0;
   // Загружаем нужные сектора.
   for (const auto &site : mSite)
   {
     mWorld.LoadSector(mPos + site);
   }
+
+  std::cout << "MapGen. Count: " << mSite.size() << " time: " << glfwGetTime() - currentTime << std::endl;
 }

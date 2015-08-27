@@ -51,7 +51,10 @@ void World::UnloadSector(const glm::ivec3 &pos)
 
 void World::Update()
 {
-
+  for (auto &i : mPlayers)
+  {
+    i.sectorLoader.SetPos(GetSectorPos(i.player->GetPosition()));
+  }
 }
 
 void World::Draw()
@@ -60,5 +63,15 @@ void World::Draw()
   {
     REGISTRY_GRAPHIC.GetRender().DrawSector(sector.second.renderSector);
   }
+}
+
+void World::AddPlayer(Player *player)
+{
+  mPlayers.emplace_back(player, *this);
+}
+
+glm::ivec3 World::GetSectorPos(const glm::vec3 &pos)
+{
+  return glm::round(pos / static_cast<float>(SECTOR_SIZE));
 }
 

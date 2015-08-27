@@ -42,7 +42,7 @@ Sector::Sector(const glm::ivec3 &pos)
 //   mMap[0][0][2] = REGISTRY_CORE.GetBlocksLibrary().Create("block2");
 //   mMap[0][0][3] = REGISTRY_CORE.GetBlocksLibrary().Create("block2");
 
-  std::cout << "MapGen: " << glfwGetTime() - currentTime << std::endl;
+  std::cout << "SectorGen: " << glfwGetTime() - currentTime << std::endl;
 }
 
 
