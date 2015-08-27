@@ -105,6 +105,8 @@ int Game::Run()
 
     double tick = glfwGetTime();
 
+    glEnable(GL_TEXTURE);
+
     FpsCounter fps;
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
@@ -117,11 +119,12 @@ int Game::Run()
         tick += SKIP_TICKS / 1000.0;
       }
 
-      glm::mat4 model; 
-      glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * REGISTRY_GRAPHIC.GetCamera().GetView() * model;
-
+      
       if (shader)
       {
+        glm::mat4 model; 
+        glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * REGISTRY_GRAPHIC.GetCamera().GetView() * model;
+
         shader->Use();
         shader->SetUniform(MVP);
         int colorTexture = TEXTURE_SLOT_0;
@@ -129,6 +132,13 @@ int Game::Run()
       }
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
+
+      glMatrixMode(GL_PROJECTION);            
+      glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
+      glMatrixMode(GL_MODELVIEW);
+      glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView()));
+
+      //glColor3f(1, 0, 0);
 
       //renderSector.Generate();
       renderSector.GetBuffer().Draw();
