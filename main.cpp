@@ -1,3 +1,7 @@
+﻿// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Game.h"
 #include <stdlib.h>
 #include <time.h>

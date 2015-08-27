@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "World.h"
 #include "..\Graphic\RegistryGraphic.h"
 
@@ -13,12 +17,12 @@ World::~World()
 
 void World::LoadSector(const glm::ivec3 &pos)
 {
-  // Проверяем, загружен ли сектор.
+  // РџСЂРѕРІРµСЂСЏРµРј, Р·Р°РіСЂСѓР¶РµРЅ Р»Рё СЃРµРєС‚РѕСЂ.
 
   const auto sector = mMap.find(pos);
   if (sector == mMap.end())
   {
-    // Не нашли сектор, создадим его.
+    // РќРµ РЅР°С€Р»Рё СЃРµРєС‚РѕСЂ, СЃРѕР·РґР°РґРёРј РµРіРѕ.
     mMap.emplace(pos, pos);
   }
   else

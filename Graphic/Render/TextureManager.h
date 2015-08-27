@@ -1,5 +1,8 @@
+﻿// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
-
 #ifndef TextureManager_h__
 #define TextureManager_h__
 

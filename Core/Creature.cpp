@@ -1,3 +1,7 @@
+﻿// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Creature.h"
 
 #include <glm/gtc/matrix_transform.hpp>

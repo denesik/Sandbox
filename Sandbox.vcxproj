@@ -37,6 +37,7 @@
     <ClCompile Include="Graphic\Render\Model.cpp" />
     <ClCompile Include="Graphic\Render\Render.cpp" />
     <ClCompile Include="Graphic\Render\RenderErrorChecker.cpp" />
+    <ClCompile Include="Graphic\Render\RenderSector.cpp" />
     <ClCompile Include="Graphic\Render\Shader.cpp" />
     <ClCompile Include="Graphic\Render\Texture.cpp" />
     <ClCompile Include="Graphic\Render\TextureManager.cpp" />
@@ -46,7 +47,6 @@
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RegistryCore.cpp" />
-    <ClCompile Include="RenderSector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h" />
@@ -69,6 +69,7 @@
     <ClInclude Include="Graphic\Render\Model.h" />
     <ClInclude Include="Graphic\Render\Render.h" />
     <ClInclude Include="Graphic\Render\RenderErrorChecker.h" />
+    <ClInclude Include="Graphic\Render\RenderSector.h" />
     <ClInclude Include="Graphic\Render\Shader.h" />
     <ClInclude Include="Graphic\Render\Texture.h" />
     <ClInclude Include="Graphic\Render\TextureManager.h" />
@@ -77,7 +78,6 @@
     <ClInclude Include="Graphic\Window\Window.h" />
     <ClInclude Include="lodepng\lodepng.h" />
     <ClInclude Include="RegistryCore.h" />
-    <ClInclude Include="RenderSector.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7703DB31-99E4-44B1-958A-98F60E8ED672}</ProjectGuid>

@@ -1,3 +1,7 @@
+﻿// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
 #ifndef World_h__
 #define World_h__
@@ -5,7 +9,7 @@
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include "Sector.h"
-#include "../RenderSector.h"
+#include "../Graphic/Render/RenderSector.h"
 
 namespace std
 {

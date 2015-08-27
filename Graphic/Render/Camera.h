@@ -1,4 +1,11 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
+#ifndef Camera_h__
+#define Camera_h__
+
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -14,10 +21,10 @@ public:
   Camera();
   ~Camera();
 
-  /// Получить матрицу вида.
+  /// РџРѕР»СѓС‡РёС‚СЊ РјР°С‚СЂРёС†Сѓ РІРёРґР°.
   const glm::mat4 &GetView() const;
 
-  /// Получить матрицу проекции.
+  /// РџРѕР»СѓС‡РёС‚СЊ РјР°С‚СЂРёС†Сѓ РїСЂРѕРµРєС†РёРё.
   const glm::mat4 &GetProject() const;
 
   const glm::mat3 &GetDirection() const;
@@ -48,3 +55,5 @@ private:
   float mNear;
   float mFar;
 };
+
+#endif // Camera_h__

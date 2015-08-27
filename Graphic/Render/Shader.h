@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
 #ifndef Shader_h__
 #define Shader_h__
@@ -11,14 +15,14 @@
 class Shader;
 typedef std::shared_ptr<Shader> PShader;
 
-/// Шейдер.
+/// РЁРµР№РґРµСЂ.
 class Shader
 {
 public:
   Shader(const std::string &shaderName);
   ~Shader();
 
-  /// Установить шейдер.
+  /// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С€РµР№РґРµСЂ.
   void Use();
 
   template<class T>
@@ -37,13 +41,13 @@ private:
 
 private:
 
-  /// Загрузить шейдер.
+  /// Р—Р°РіСЂСѓР·РёС‚СЊ С€РµР№РґРµСЂ.
   unsigned int CreateShader(const std::string &data, int type);
 
-  /// Удалить шейдер
+  /// РЈРґР°Р»РёС‚СЊ С€РµР№РґРµСЂ
   void DeleteShader(unsigned int shader);
 
-  /// Прочитать файл.
+  /// РџСЂРѕС‡РёС‚Р°С‚СЊ С„Р°Р№Р».
   std::string ReadTxtFile(const std::string &fileName);
 
   int GetUniformLocation(const char *name);

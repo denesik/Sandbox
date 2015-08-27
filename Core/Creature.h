@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
 #ifndef Creature_h__
 #define Creature_h__
@@ -6,7 +10,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include "Physics.h"
 
-/// Существо. Может перемещаться и вращаться.
+/// РЎСѓС‰РµСЃС‚РІРѕ. РњРѕР¶РµС‚ РїРµСЂРµРјРµС‰Р°С‚СЊСЃСЏ Рё РІСЂР°С‰Р°С‚СЊСЃСЏ.
 class Creature : public Physics
 {
 public:

@@ -1,4 +1,11 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
+#ifndef Sector_h__
+#define Sector_h__
+
 
 #include "Block.h"
 
@@ -14,10 +21,10 @@ public:
   Sector(const glm::ivec3 &pos);
   ~Sector();
 
-  /// Вернуть позицию сектора.
+  /// Р’РµСЂРЅСѓС‚СЊ РїРѕР·РёС†РёСЋ СЃРµРєС‚РѕСЂР°.
   const glm::ivec3 &GetPos() const;
 
-  /// Вернуть позицию сектора в системе координат сектора.
+  /// Р’РµСЂРЅСѓС‚СЊ РїРѕР·РёС†РёСЋ СЃРµРєС‚РѕСЂР° РІ СЃРёСЃС‚РµРјРµ РєРѕРѕСЂРґРёРЅР°С‚ СЃРµРєС‚РѕСЂР°.
   const IBlock *GetBlock(const glm::uvec3 &pos) const;
 
 private:
@@ -29,4 +36,7 @@ private:
   Sector(const Sector &) = delete;
   Sector& operator=(const Sector &) = delete;
 };
+
+
+#endif // Sector_h__
 

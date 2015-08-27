@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Cube.h"
 
 
@@ -55,7 +59,7 @@ void Cube::SetTexture(Side side, const std::string &name)
   }
   else if (mTexture != std::get<0>(texture))
   {
-    // Текстуры должны совпадать.
+    // РўРµРєСЃС‚СѓСЂС‹ РґРѕР»Р¶РЅС‹ СЃРѕРІРїР°РґР°С‚СЊ.
     std::cout << "Block set texture error" << std::endl;
     return;
   }

@@ -1,4 +1,11 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
+#ifndef BufferArray_h__
+#define BufferArray_h__
+
 
 #include <gl/glew.h>
 #include <glm/glm.hpp>
@@ -22,19 +29,19 @@ public:
   BufferArray();
   ~BufferArray();
 
-  /// Включить и настроить атрибут.
+  /// Р’РєР»СЋС‡РёС‚СЊ Рё РЅР°СЃС‚СЂРѕРёС‚СЊ Р°С‚СЂРёР±СѓС‚.
   void EnableAttribute(AttributeType type, unsigned int size, unsigned int offset);
 
-  /// Скомпилировать буфер в видеопамяти.
+  /// РЎРєРѕРјРїРёР»РёСЂРѕРІР°С‚СЊ Р±СѓС„РµСЂ РІ РІРёРґРµРѕРїР°РјСЏС‚Рё.
   void Compile();
 
-  /// нарисовать буфер.
+  /// РЅР°СЂРёСЃРѕРІР°С‚СЊ Р±СѓС„РµСЂ.
   void Draw();
 
-  /// Буфер вершин.
+  /// Р‘СѓС„РµСЂ РІРµСЂС€РёРЅ.
   std::vector<VertexType> &Vertex();
 
-  /// Буфер индексов.
+  /// Р‘СѓС„РµСЂ РёРЅРґРµРєСЃРѕРІ.
   std::vector<unsigned int> &Index();
 
 private:
@@ -105,4 +112,7 @@ void BufferArray<VertexType>::Compile()
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mIndexBuffer.size(), &mIndexBuffer[0], GL_STATIC_DRAW);
 }
 
+
+
+#endif // BufferArray_h__
 

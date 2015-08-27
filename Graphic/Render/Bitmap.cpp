@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Bitmap.h"
 
 #include <map>
@@ -59,7 +63,7 @@ void Bitmap::Save(const std::string &fileName) const
 
 void Bitmap::Insert(const glm::uvec2 &pos, const Bitmap &bitmap)
 {
-  // Вставляемая битмапа должна полностью влазить в текущую.
+  // Р’СЃС‚Р°РІР»СЏРµРјР°СЏ Р±РёС‚РјР°РїР° РґРѕР»Р¶РЅР° РїРѕР»РЅРѕСЃС‚СЊСЋ РІР»Р°Р·РёС‚СЊ РІ С‚РµРєСѓС‰СѓСЋ.
   //assert(); 
 
   const auto &bSize = bitmap.GetSize();
@@ -82,8 +86,8 @@ void Bitmap::Mirror(bool direction)
   {
     for (unsigned int y = 0; y < mSize.y / 2; ++y)
     {
-      // Берем первую строку и меняем с последней.
-      // Строка посередине не должна копировать сама себя.
+      // Р‘РµСЂРµРј РїРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ Рё РјРµРЅСЏРµРј СЃ РїРѕСЃР»РµРґРЅРµР№.
+      // РЎС‚СЂРѕРєР° РїРѕСЃРµСЂРµРґРёРЅРµ РЅРµ РґРѕР»Р¶РЅР° РєРѕРїРёСЂРѕРІР°С‚СЊ СЃР°РјР° СЃРµР±СЏ.
       for (unsigned int x = 0; x < mSize.x * sizeof(Color); ++x)
       {
         std::swap(mData[y * mSize.x * sizeof(Color) + x], 

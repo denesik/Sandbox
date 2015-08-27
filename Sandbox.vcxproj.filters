@@ -51,9 +51,6 @@
     <ClCompile Include="Graphic\Render\RenderErrorChecker.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSector.cpp">
-      <Filter>Graphic\Render</Filter>
-    </ClCompile>
     <ClCompile Include="Graphic\Render\Shader.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
@@ -90,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="Core\SectorLoader.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic\Render\RenderSector.cpp">
+      <Filter>Graphic\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,9 +144,6 @@
     <ClInclude Include="Graphic\Render\RenderErrorChecker.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSector.h">
-      <Filter>Graphic\Render</Filter>
-    </ClInclude>
     <ClInclude Include="Graphic\Render\Shader.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Core\SectorLoader.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\RenderSector.h">
+      <Filter>Graphic\Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

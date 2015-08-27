@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Atlas.h"
 #include <iostream>
 
@@ -7,7 +11,7 @@ Atlas::Atlas(const glm::uvec2 &size)
     mRoot({0, 0}, size),
     mNodes([](const glm::uvec2 &n1, const glm::uvec2 &n2)
       {
-        // Периметр.
+        // РџРµСЂРёРјРµС‚СЂ.
         return n1.x + n1.y < 
                n2.x + n2.y;
       })
@@ -24,17 +28,17 @@ Atlas::~Atlas()
 glm::uvec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
 {
   const auto &size = bitmap.GetSize();
-  // Ищем самый маленький контейнер, в который может влезть битмапа.
+  // РС‰РµРј СЃР°РјС‹Р№ РјР°Р»РµРЅСЊРєРёР№ РєРѕРЅС‚РµР№РЅРµСЂ, РІ РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РµС‚ РІР»РµР·С‚СЊ Р±РёС‚РјР°РїР°.
   for (auto it = mNodes.lower_bound(bitmap.GetSize()); it != mNodes.end(); ++it)
   {
     const auto &nodeSize = (*it).first;
     if (nodeSize.x >= size.x && nodeSize.y >= size.y)
     {
       auto node = (*it).second;
-      // Вставляем битмапу.
+      // Р’СЃС‚Р°РІР»СЏРµРј Р±РёС‚РјР°РїСѓ.
       mBitmap.Insert(node->pos, bitmap);
 
-      // Разбиваем контейнер на два поменьше.
+      // Р Р°Р·Р±РёРІР°РµРј РєРѕРЅС‚РµР№РЅРµСЂ РЅР° РґРІР° РїРѕРјРµРЅСЊС€Рµ.
       if (node->size.x - size.x)
       {
         node->right = new Node(
@@ -63,7 +67,7 @@ glm::uvec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
 
 bool Atlas::Remove(const std::string &name)
 {
-  assert(false); // Заглушка.
+  assert(false); // Р—Р°РіР»СѓС€РєР°.
   return true;
 }
 

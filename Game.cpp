@@ -1,3 +1,7 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #include "Game.h"
 
 #include <gl/glew.h>
@@ -14,7 +18,6 @@
 #include "Graphic/Render/Cube.h"
 #include "Graphic/Render/RenderErrorChecker.h"
 #include "Graphic/Render/BufferArray.h"
-#include "RenderSector.h"
 #include "FpsCounter.h"
 #include "Graphic/Render/Shader.h"
 #include "core/BlockSimple.h"
@@ -113,7 +116,7 @@ int Game::Run()
       int colorTexture = TEXTURE_SLOT_0;
       shader.SetUniform(colorTexture);
 
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // РћС‡РёСЃС‚РєР° СЌРєСЂР°РЅР°
 
       //renderSector.Generate();
       renderSector.GetBuffer().Draw();

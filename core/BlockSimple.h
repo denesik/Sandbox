@@ -1,6 +1,11 @@
+﻿// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
-#ifndef BlockStatic_h__
-#define BlockStatic_h__
+#ifndef BlockSimple_h__
+#define BlockSimple_h__
+
 
 #include "Block.h"
 
@@ -15,6 +20,4 @@ public:
   bool IsStatic() const override;
 };
 
-
-
-#endif // BlockStatic_h__
+#endif // BlockSimple_h__

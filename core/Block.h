@@ -1,4 +1,11 @@
+п»ї// ============================================================================
+// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
+#ifndef Block_h__
+#define Block_h__
+
 
 #include <memory>
 #include "..\Graphic\Render\Model.h"
@@ -9,13 +16,13 @@ struct IBlock
   IBlock() {};
   virtual ~IBlock() {};
 
-  /// Создать копию блока.
+  /// РЎРѕР·РґР°С‚СЊ РєРѕРїРёСЋ Р±Р»РѕРєР°.
   virtual IBlock* Clone() const = 0;
 
-  /// Является ли блок статическим?
+  /// РЇРІР»СЏРµС‚СЃСЏ Р»Рё Р±Р»РѕРє СЃС‚Р°С‚РёС‡РµСЃРєРёРј?
   virtual bool IsStatic() const = 0;
 
-  /// Получить графическую модель блока.
+  /// РџРѕР»СѓС‡РёС‚СЊ РіСЂР°С„РёС‡РµСЃРєСѓСЋ РјРѕРґРµР»СЊ Р±Р»РѕРєР°.
   virtual const Model &GetModel() const = 0;
 };
 
@@ -24,13 +31,13 @@ class Block : public IBlock
 {
 public:
 
-  /// Получить графическую модель блока.
+  /// РџРѕР»СѓС‡РёС‚СЊ РіСЂР°С„РёС‡РµСЃРєСѓСЋ РјРѕРґРµР»СЊ Р±Р»РѕРєР°.
   const Model &GetModel() const override
   {
     return *mModel.get();
   }
 
-  /// Клонировать блок.
+  /// РљР»РѕРЅРёСЂРѕРІР°С‚СЊ Р±Р»РѕРє.
   IBlock *Clone() const override
   {
     return new T(*static_cast<const T*>(this));
@@ -39,6 +46,9 @@ public:
 protected:
   std::shared_ptr<Model> mModel;
 };
+
+#endif // Block_h__
+
 
 
 
