@@ -4,6 +4,7 @@
 // ============================================================================
 #include "World.h"
 #include "..\Graphic\RegistryGraphic.h"
+#include "..\RegistryCore.h"
 
 
 World::World()
@@ -40,7 +41,8 @@ void World::UnloadSector(const glm::ivec3 &pos)
     {
       --sector->second.refCount;
     }
-    else
+
+    if (!sector->second.refCount)
     {
       mMap.erase(sector);
     }
@@ -59,3 +61,4 @@ void World::Draw()
     REGISTRY_GRAPHIC.GetRender().DrawSector(sector.second.renderSector);
   }
 }
+

@@ -46,3 +46,5 @@ void Creature::Move(const glm::vec3 &dist)
   Forse(right * dist.x);
 }
 
+
+

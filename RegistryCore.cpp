@@ -15,14 +15,14 @@ BlocksLibrary & RegistryCore::GetBlocksLibrary()
   return mBlocksLibrary;
 }
 
-Creature & RegistryCore::GetPlayer()
-{
-  return mPlayer;
-}
-
 World &RegistryCore::GetWorld()
 {
   return mWorld;
+}
+
+Player & RegistryCore::GetPlayer()
+{
+  return mPlayer;
 }
 
 RegistryCore::RegistryCore()

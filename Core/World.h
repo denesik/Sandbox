@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include "Sector.h"
 #include "../Graphic/Render/RenderSector.h"
+#include "SectorLoader.h"
 
 namespace std
 {
@@ -41,6 +42,7 @@ public:
 
   void Draw();
 
+
 private:
 
   struct WorldSector
@@ -60,6 +62,7 @@ private:
   };
 
   std::unordered_map<glm::ivec3, WorldSector> mMap;
+
 
 private:
   World(const World &) = delete;

@@ -8,25 +8,27 @@
 
 #include <glm/glm.hpp>
 #include <vector>
-#include "World.h"
+class World;
 
 class SectorLoader
 {
 public:
-  SectorLoader(World &world);
+  SectorLoader(World &world, const glm::ivec3 &pos = {}, unsigned int radius = 3);
   ~SectorLoader();
 
+  /// Радиус зоны загрузки секторов.
   void SetRadius(unsigned int radius);
 
+  /// Позиция сектора.
   void SetPos(const glm::ivec3 &pos);
 
 private:
 
   World &mWorld;
 
-  unsigned int mRadius = 0;
-
   glm::ivec3 mPos;
+
+  unsigned int mRadius;
 
   std::vector<glm::ivec3> mSite;
 

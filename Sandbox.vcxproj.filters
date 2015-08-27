@@ -91,6 +91,9 @@
     <ClCompile Include="Graphic\Render\RenderSector.cpp">
       <Filter>Graphic\Render</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Player.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Block.h">
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="Graphic\Render\BufferArrayGL1.h">
       <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Player.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,17 +61,6 @@ int Game::Run()
   {
     REGISTRY_GRAPHIC.GetCamera().Resize(REGISTRY_GRAPHIC.GetWindow().GetSize());
 
-    std::unique_ptr<Shader> shader;
-
-    try
-    {
-      shader.reset(new Shader("Graphic/Shaders/t"));
-    }
-    catch (const char* msg)
-    {
-      std::cout << msg << std::endl;
-    }
-
     REGISTRY_GRAPHIC.GetTextureManager().LoadTexture({ "Textures/stone.png", "Textures/sand.png" });
     REGISTRY_GRAPHIC.GetTextureManager().Compile();
     std::get<0>(REGISTRY_GRAPHIC.GetTextureManager().GetTexture("Textures/stone.png"))->Set(TEXTURE_SLOT_0);
@@ -90,12 +79,9 @@ int Game::Run()
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
 
-    
-    auto currentTime = glfwGetTime();
-    Sector sector({});
-    RenderSector renderSector(sector);
-    renderSector.Generate();
-    std::cout << "GenAll: " << glfwGetTime() - currentTime << std::endl;
+    glEnable(GL_TEXTURE_2D);
+
+    FpsCounter fps;
 
     RenderCheckErrors();
 
@@ -104,12 +90,6 @@ int Game::Run()
     const unsigned int MAX_FRAMESKIP = 10;
 
     double tick = glfwGetTime();
-
-    glEnable(GL_TEXTURE_2D);
-
-    RenderCheckErrors();
-
-    FpsCounter fps;
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
       fps.Update();
@@ -121,29 +101,9 @@ int Game::Run()
         tick += SKIP_TICKS / 1000.0;
       }
 
-      
-      if (shader)
-      {
-        glm::mat4 model; 
-        glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * REGISTRY_GRAPHIC.GetCamera().GetView() * model;
-
-        shader->Use();
-        shader->SetUniform(MVP);
-        int colorTexture = TEXTURE_SLOT_0;
-        shader->SetUniform(colorTexture);
-      }
-
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
 
-      glMatrixMode(GL_PROJECTION);            
-      glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
-      glMatrixMode(GL_MODELVIEW);
-      glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView()));
-
-      //glColor3f(1, 0, 0);
-
-      //renderSector.Generate();
-      renderSector.GetBuffer().Draw();
+      REGISTRY_CORE.GetWorld().Draw();
 
       RenderCheckErrors();
 
@@ -203,6 +163,8 @@ void Game::Update()
   }
 
   REGISTRY_GRAPHIC.GetWindow().GetMouse().Update();
+
+  REGISTRY_CORE.GetWorld().Update();
 }
 
 void Game::Draw()
