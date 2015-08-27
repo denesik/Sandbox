@@ -105,7 +105,9 @@ int Game::Run()
 
     double tick = glfwGetTime();
 
-    glEnable(GL_TEXTURE);
+    glEnable(GL_TEXTURE_2D);
+
+    RenderCheckErrors();
 
     FpsCounter fps;
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())

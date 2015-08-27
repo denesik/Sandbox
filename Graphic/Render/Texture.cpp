@@ -47,7 +47,7 @@ const glm::uvec2 & Texture::GetSize()
 
 void Texture::Set(TextureSlot slot)
 {
-  //glActiveTexture(GL_TEXTURE0 + slot);
+  glActiveTexture(GL_TEXTURE0 + slot);
   glBindTexture(GL_TEXTURE_2D, mTextureId);
 }
 
