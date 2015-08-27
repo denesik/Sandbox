@@ -61,7 +61,16 @@ int Game::Run()
   {
     REGISTRY_GRAPHIC.GetCamera().Resize(REGISTRY_GRAPHIC.GetWindow().GetSize());
 
-    Shader shader("Graphic/Shaders/t");
+    std::unique_ptr<Shader> shader;
+
+    try
+    {
+      shader.reset(new Shader("Graphic/Shaders/t"));
+    }
+    catch (const char* msg)
+    {
+      std::cout << msg << std::endl;
+    }
 
     REGISTRY_GRAPHIC.GetTextureManager().LoadTexture({ "Textures/stone.png", "Textures/sand.png" });
     REGISTRY_GRAPHIC.GetTextureManager().Compile();
@@ -111,10 +120,13 @@ int Game::Run()
       glm::mat4 model; 
       glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * REGISTRY_GRAPHIC.GetCamera().GetView() * model;
 
-      shader.Use();
-      shader.SetUniform(MVP);
-      int colorTexture = TEXTURE_SLOT_0;
-      shader.SetUniform(colorTexture);
+      if (shader)
+      {
+        shader->Use();
+        shader->SetUniform(MVP);
+        int colorTexture = TEXTURE_SLOT_0;
+        shader->SetUniform(colorTexture);
+      }
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Очистка экрана
 

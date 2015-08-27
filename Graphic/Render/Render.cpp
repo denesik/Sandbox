@@ -24,7 +24,14 @@ Render::Render(void)
 
   RenderCheckErrors();
 
-  mShader.reset(new Shader("Graphic/Shaders/t"));
+  try
+  {
+    mShader.reset(new Shader("Graphic/Shaders/t"));
+  }
+  catch (const char* msg)
+  {
+    std::cout << msg << std::endl;
+  }
 }
 
 Render::~Render(void)

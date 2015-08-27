@@ -58,8 +58,8 @@ private:
     assert(index == SIZE);
   }
   ~SectorFaceGenerator() {};
-  SectorFaceGenerator(const SectorFaceGenerator &);
-  SectorFaceGenerator& operator=(const SectorFaceGenerator &);
+  SectorFaceGenerator(const SectorFaceGenerator &) = delete;
+  SectorFaceGenerator& operator=(const SectorFaceGenerator &) = delete;
 };
 
 
