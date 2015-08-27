@@ -63,6 +63,8 @@
     <ClInclude Include="Graphic\Render\Atlas.h" />
     <ClInclude Include="Graphic\Render\Bitmap.h" />
     <ClInclude Include="Graphic\Render\BufferArray.h" />
+    <ClInclude Include="Graphic\Render\BufferArrayGL1.h" />
+    <ClInclude Include="Graphic\Render\BufferArrayGL3.h" />
     <ClInclude Include="Graphic\Render\Camera.h" />
     <ClInclude Include="Graphic\Render\Color.h" />
     <ClInclude Include="Graphic\Render\Cube.h" />
@@ -76,6 +78,7 @@
     <ClInclude Include="Graphic\Window\Keyboard.h" />
     <ClInclude Include="Graphic\Window\Mouse.h" />
     <ClInclude Include="Graphic\Window\Window.h" />
+    <ClInclude Include="IBufferArrayGL.h" />
     <ClInclude Include="lodepng\lodepng.h" />
     <ClInclude Include="RegistryCore.h" />
   </ItemGroup>

@@ -123,9 +123,6 @@
     <ClInclude Include="Graphic\Render\Bitmap.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic\Render\BufferArray.h">
-      <Filter>Graphic\Render</Filter>
-    </ClInclude>
     <ClInclude Include="Graphic\Render\Camera.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
@@ -172,6 +169,18 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Graphic\Render\RenderSector.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\BufferArrayGL3.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\BufferArray.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="IBufferArrayGL.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\BufferArrayGL1.h">
       <Filter>Graphic\Render</Filter>
     </ClInclude>
   </ItemGroup>
