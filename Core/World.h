@@ -54,12 +54,9 @@ private:
   struct WorldSector
   {
     WorldSector(const glm::ivec3 &pos)
-      : sector(pos), renderSector(sector)
-    {
-      renderSector.Generate();
-    };
+      : sector(pos)
+    {};
     Sector sector;
-    RenderSector renderSector;
     unsigned int refCount = 1;
     Timer timer;
 

@@ -73,7 +73,7 @@ void World::Draw()
 {
   for (auto &sector : mMap)
   {
-    REGISTRY_GRAPHIC.GetRender().DrawSector(sector.second.renderSector);
+    REGISTRY_GRAPHIC.GetRender().DrawSector(sector.second.sector.GetRenderSector());
   }
 }
 

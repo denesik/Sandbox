@@ -8,27 +8,28 @@
 
 #include "Cube.h"
 #include "BufferArray.h"
-#include "..\..\core\Sector.h"
+#include "..\..\core\Block.h"
+class Sector;
 
 class RenderSector
 {
 public:
-  RenderSector(const Sector &sector);
+  RenderSector(Sector &sector, const glm::ivec3 &pos);
   ~RenderSector();
-
-  void Generate();
-
-  BufferArray<VertexVT> &GetBuffer();
 
   const glm::mat4 &GetModel() const;
 
+  void Draw();
+
 private:
 
-  const Sector &mSector;
+  Sector &mSector;
 
   BufferArray<VertexVT> mBufferStatic;
 
 private:
+
+  void Generate();
 
   const IBlock *GetBlock(const glm::ivec3 &pos);
 

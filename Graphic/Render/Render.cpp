@@ -51,7 +51,7 @@ void Render::Initialize()
   glGetError();
 }
 
-void Render::DrawSector(RenderSector &sector)
+void Render::DrawSector(RenderSector &renderSector)
 {
 //   glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * 
 //                   REGISTRY_GRAPHIC.GetCamera().GetView() * 
@@ -65,9 +65,9 @@ void Render::DrawSector(RenderSector &sector)
   glMatrixMode(GL_PROJECTION);
   glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
   glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * sector.GetModel()));
+  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * renderSector.GetModel()));
 
-  sector.GetBuffer().Draw();
+  renderSector.Draw();
 }
 
 

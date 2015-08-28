@@ -14,7 +14,7 @@
 
 
 Sector::Sector(const glm::ivec3 &pos)
-  : mPos(pos)
+  : mPos(pos), mRenderSector(*this, pos)
 {
   auto currentTime = glfwGetTime();
   for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
@@ -58,5 +58,20 @@ const glm::ivec3 & Sector::GetPos() const
 const IBlock * Sector::GetBlock(const glm::uvec3 &pos) const
 {
   return mMap[pos.z][pos.y][pos.x];
+}
+
+bool Sector::GeometryChanged() const
+{
+  return mGeometryChanged;
+}
+
+void Sector::GeometryChangedReset()
+{
+  mGeometryChanged = false;
+}
+
+RenderSector & Sector::GetRenderSector()
+{
+  return mRenderSector;
 }
 

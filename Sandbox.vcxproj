@@ -22,6 +22,7 @@
     <ClCompile Include="core\BlockSimple.cpp" />
     <ClCompile Include="core\BlocksLibrary.cpp" />
     <ClCompile Include="Core\Creature.cpp" />
+    <ClCompile Include="Core\SectorFactory.cpp" />
     <ClCompile Include="Core\Physics.cpp" />
     <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="core\Sector.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="Core\Physics.h" />
     <ClInclude Include="Core\Player.h" />
     <ClInclude Include="core\Sector.h" />
+    <ClInclude Include="Core\SectorFactory.h" />
     <ClInclude Include="Core\SectorLoader.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\World.h" />

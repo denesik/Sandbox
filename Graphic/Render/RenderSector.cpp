@@ -9,6 +9,7 @@
 #include <iostream>
 #include <assert.h>
 #include <glm\gtc\matrix_transform.hpp>
+#include "..\..\core\Sector.h"
 
 
 class SectorFaceGenerator  
@@ -64,8 +65,8 @@ private:
 
 
 
-RenderSector::RenderSector(const Sector &sector)
-  : mSector(sector), mModel(glm::translate({}, sector.GetPos() * static_cast<int>(SECTOR_SIZE)))
+RenderSector::RenderSector(Sector &sector, const glm::ivec3 &pos)
+  : mSector(sector), mModel(glm::translate({}, pos * static_cast<int>(SECTOR_SIZE)))
 {
   mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
   mBufferStatic.EnableAttribute(ATTRIBUTE_TEXTURE, sizeof(VertexVT::texture), offsetof(VertexVT, texture));
@@ -81,7 +82,7 @@ void RenderSector::Generate()
   auto &vertex = mBufferStatic.Vertex();
   auto &index = mBufferStatic.Index();
 
-  //auto currentTime = glfwGetTime();
+  auto currentTime = glfwGetTime();
 
   vertex.clear();
   index.clear();
@@ -141,21 +142,26 @@ void RenderSector::Generate()
   }
 
 
-  //std::cout << "RenderGen: " << glfwGetTime() - currentTime << std::endl;
+  std::cout << "RenderGen: " << glfwGetTime() - currentTime << std::endl;
 
-  //currentTime = glfwGetTime();
+  currentTime = glfwGetTime();
   mBufferStatic.Compile();
-  //std::cout << "RenderCompile: " << glfwGetTime() - currentTime << std::endl;
-}
-
-BufferArray<VertexVT> & RenderSector::GetBuffer()
-{
-  return mBufferStatic;
+  std::cout << "RenderCompile: " << glfwGetTime() - currentTime << std::endl;
 }
 
 const glm::mat4 & RenderSector::GetModel() const
 {
   return mModel;
+}
+
+void RenderSector::Draw()
+{
+  if (mSector.GeometryChanged())
+  {
+    Generate();
+    mSector.GeometryChangedReset();
+  }
+  mBufferStatic.Draw();
 }
 
 const IBlock * RenderSector::GetBlock(const glm::ivec3 &pos)

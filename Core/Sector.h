@@ -8,6 +8,7 @@
 
 
 #include "Block.h"
+#include "..\Graphic\Render\RenderSector.h"
 
 
 enum
@@ -27,10 +28,20 @@ public:
   /// Вернуть позицию сектора в системе координат сектора.
   const IBlock *GetBlock(const glm::uvec3 &pos) const;
 
+  bool GeometryChanged() const;
+
+  void GeometryChangedReset();
+
+  RenderSector &GetRenderSector();
+
 private:
   IBlock *mMap[SECTOR_SIZE][SECTOR_SIZE][SECTOR_SIZE];
 
   glm::ivec3 mPos;
+
+  bool mGeometryChanged = true;
+
+  RenderSector mRenderSector;
 
 private:
   Sector(const Sector &) = delete;
