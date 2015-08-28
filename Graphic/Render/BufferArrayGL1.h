@@ -31,6 +31,10 @@ protected:
 
   const std::vector<unsigned int> &mIndexBuffer;
 
+private:
+
+  unsigned int mList;
+
 };
 
 template<class VertexType>
@@ -38,11 +42,13 @@ BufferArrayGL1<VertexType>::BufferArrayGL1(const std::vector<VertexType> &vertex
   const std::vector<unsigned int> &indexBuffer)
   : mVertexBuffer(vertexBuffer), mIndexBuffer(indexBuffer)
 {
+  mList = glGenLists(1);
 }
 
 template<class VertexType>
 BufferArrayGL1<VertexType>::~BufferArrayGL1()
 {
+  glDeleteLists(mList, 1);
 }
 
 template<class VertexType>
@@ -54,23 +60,25 @@ void BufferArrayGL1<VertexType>::EnableAttribute(AttributeType type, unsigned in
 template<class VertexType>
 void BufferArrayGL1<VertexType>::Compile()
 {
- 
+  glNewList(mList, GL_COMPILE);
+  glBegin(GL_TRIANGLES);
+  for (unsigned int i = 0; i < mIndexBuffer.size(); i += 3)
+  {
+    glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].texture));
+    glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].vertex));
+    glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 1]].texture));
+    glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 1]].vertex));
+    glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 2]].texture));
+    glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 2]].vertex));
+  }
+  glEnd();
+  glEndList();
 }
 
 template<class VertexType>
 void BufferArrayGL1<VertexType>::Draw()
 {
-  for (unsigned int i = 0; i < mIndexBuffer.size(); i += 3)
-  {
-    glBegin(GL_TRIANGLES);
-      glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].texture));
-      glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].vertex));
-      glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 1]].texture));
-      glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 1]].vertex));
-      glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 2]].texture));
-      glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 2]].vertex));
-    glEnd();
-  }
+  glCallList(mList);
 }
 
 #endif // BufferArrayGL1_h__

@@ -26,6 +26,7 @@
     <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="Core\Player.h" />
     <ClInclude Include="core\Sector.h" />
     <ClInclude Include="Core\SectorLoader.h" />
+    <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />

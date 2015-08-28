@@ -12,6 +12,7 @@
 #include "../Graphic/Render/RenderSector.h"
 #include "SectorLoader.h"
 #include "Player.h"
+#include "Timer.h"
 
 namespace std
 {
@@ -43,7 +44,7 @@ public:
 
   void Draw();
 
-  void AddPlayer(Player *player);
+  void AddPlayer(Player &player);
 
   /// Вернуть позицию сектора по мировой позиции.
   glm::ivec3 GetSectorPos(const glm::vec3 &pos);
@@ -60,6 +61,7 @@ private:
     Sector sector;
     RenderSector renderSector;
     unsigned int refCount = 1;
+    Timer timer;
 
   private:
     WorldSector(const WorldSector &) = delete;
@@ -70,10 +72,10 @@ private:
 
   struct WorldPlayer
   {
-    WorldPlayer(Player *p, World &world)
-      : player(p), sectorLoader(world, world.GetSectorPos(p->GetPosition()), 5)
+    WorldPlayer(Player &p, World &world)
+      : player(p), sectorLoader(world, world.GetSectorPos(p.GetPosition()), 5)
     {}
-    Player *player;
+    Player &player;
     SectorLoader sectorLoader;
   private:
     WorldPlayer(const WorldPlayer &) = delete;

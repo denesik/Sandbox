@@ -30,6 +30,8 @@ protected:
 
   const std::vector<unsigned int> &mIndexBuffer;
 
+private:
+
   unsigned int mVao = 0;
   unsigned int mVbo = 0;
   unsigned int mVbi = 0;

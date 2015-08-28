@@ -53,19 +53,19 @@ void Render::Initialize()
 
 void Render::DrawSector(RenderSector &sector)
 {
-  glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * 
-                  REGISTRY_GRAPHIC.GetCamera().GetView() * 
-                  sector.GetModel();
+//   glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * 
+//                   REGISTRY_GRAPHIC.GetCamera().GetView() * 
+//                   sector.GetModel();
+// 
+//   mShader->Use();
+//   mShader->SetUniform(MVP);
+//   int colorTexture = TEXTURE_SLOT_0;
+//   mShader->SetUniform(colorTexture);
 
-  mShader->Use();
-  mShader->SetUniform(MVP);
-  int colorTexture = TEXTURE_SLOT_0;
-  mShader->SetUniform(colorTexture);
-
-//   glMatrixMode(GL_PROJECTION);
-//   glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
-//   glMatrixMode(GL_MODELVIEW);
-//   glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * sector.GetModel()));
+  glMatrixMode(GL_PROJECTION);
+  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
+  glMatrixMode(GL_MODELVIEW);
+  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * sector.GetModel()));
 
   sector.GetBuffer().Draw();
 }

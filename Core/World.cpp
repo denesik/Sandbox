@@ -40,11 +40,10 @@ void World::UnloadSector(const glm::ivec3 &pos)
     if (sector->second.refCount)
     {
       --sector->second.refCount;
-    }
-
-    if (!sector->second.refCount)
-    {
-      mMap.erase(sector);
+      if (!sector->second.refCount)
+      {
+        sector->second.timer.Start();
+      }
     }
   }
 }
@@ -53,7 +52,20 @@ void World::Update()
 {
   for (auto &i : mPlayers)
   {
-    i.sectorLoader.SetPos(GetSectorPos(i.player->GetPosition()));
+    i.sectorLoader.SetPos(GetSectorPos(i.player.GetPosition()));
+  }
+
+  for (auto sector = mMap.begin(); sector != mMap.end();)
+  {
+    /// Удаляем сектор, если счетчик ссылок == 0 и прошло заданное кол-во времени.
+    if (!sector->second.refCount && sector->second.timer.Elapsed() > 1000)
+    {
+      sector = mMap.erase(sector);
+    }
+    else
+    {
+      ++sector;
+    }
   }
 }
 
@@ -65,7 +77,7 @@ void World::Draw()
   }
 }
 
-void World::AddPlayer(Player *player)
+void World::AddPlayer(Player &player)
 {
   mPlayers.emplace_back(player, *this);
 }
