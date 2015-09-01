@@ -28,7 +28,7 @@ Bitmap::Bitmap(const glm::uvec2 &size, const Color &color)
   : mSize(size)
 {
   mData.resize(mSize.x * mSize.y * sizeof(color));
-  for(unsigned int i = 0; i < mData.size(); i += sizeof(color))
+  for (decltype(mData.size()) i = 0; i < mData.size(); i += sizeof(color))
   {
     memcpy(&mData[i], &color, sizeof(color));
   }

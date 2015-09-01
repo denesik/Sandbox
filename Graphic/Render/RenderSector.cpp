@@ -99,12 +99,12 @@ void RenderSector::Generate()
         Model::Side sides = Model::EMPTY;
         if (block)
         {
-          if (!mSector.GetBlock({ pos.z, pos.y, pos.x + 1 })) sides |= Model::RIGHT;
-          if (!mSector.GetBlock({ pos.z, pos.y, pos.x - 1 })) sides |= Model::LEFT;
-          if (!mSector.GetBlock({ pos.z, pos.y + 1, pos.x })) sides |= Model::TOP;
-          if (!mSector.GetBlock({ pos.z, pos.y - 1, pos.x })) sides |= Model::BOTTOM;
-          if (!mSector.GetBlock({ pos.z + 1, pos.y, pos.x })) sides |= Model::FRONT;
-          if (!mSector.GetBlock({ pos.z - 1, pos.y, pos.x })) sides |= Model::BACK;
+          if (!mSector.GetBlock({ pos.x + 1, pos.y, pos.z })) sides |= Model::RIGHT;
+          if (!mSector.GetBlock({ pos.x - 1, pos.y, pos.z })) sides |= Model::LEFT;
+          if (!mSector.GetBlock({ pos.x, pos.y + 1, pos.z })) sides |= Model::BACK;
+          if (!mSector.GetBlock({ pos.x, pos.y - 1, pos.z })) sides |= Model::FRONT;
+          if (!mSector.GetBlock({ pos.x, pos.y, pos.z + 1 })) sides |= Model::TOP;
+          if (!mSector.GetBlock({ pos.x, pos.y, pos.z - 1 })) sides |= Model::BOTTOM;
           
           if (sides)
           {
@@ -128,10 +128,10 @@ void RenderSector::Generate()
     {
       if (!GetBlock({ pos.x + 1, pos.y, pos.z })) sides |= Model::RIGHT;
       if (!GetBlock({ pos.x - 1, pos.y, pos.z })) sides |= Model::LEFT;
-      if (!GetBlock({ pos.x, pos.y + 1, pos.z })) sides |= Model::TOP;
-      if (!GetBlock({ pos.x, pos.y - 1, pos.z })) sides |= Model::BOTTOM;
-      if (!GetBlock({ pos.x, pos.y, pos.z + 1 })) sides |= Model::FRONT;
-      if (!GetBlock({ pos.x, pos.y, pos.z - 1 })) sides |= Model::BACK;
+      if (!GetBlock({ pos.x, pos.y + 1, pos.z })) sides |= Model::BACK;
+      if (!GetBlock({ pos.x, pos.y - 1, pos.z })) sides |= Model::FRONT;
+      if (!GetBlock({ pos.x, pos.y, pos.z + 1 })) sides |= Model::TOP;
+      if (!GetBlock({ pos.x, pos.y, pos.z - 1 })) sides |= Model::BOTTOM;
 
       if (sides)
       {

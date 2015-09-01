@@ -83,6 +83,7 @@ int Game::Run()
 
     REGISTRY_CORE.GetWorld().AddPlayer(REGISTRY_CORE.GetPlayer());
     FpsCounter fps;
+    FpsCounter tps;
 
     RenderCheckErrors();
 
@@ -94,10 +95,11 @@ int Game::Run()
     while (!REGISTRY_GRAPHIC.GetWindow().WindowShouldClose())
     {
       fps.Update();
-      REGISTRY_GRAPHIC.GetWindow().SetTitle(std::to_string(fps.GetCount()) + " fps");
+      REGISTRY_GRAPHIC.GetWindow().SetTitle(std::to_string(fps.GetCount()) + " fps, " + std::to_string(tps.GetCount()) + " tps");
 
       for (int loops = 0; glfwGetTime() > tick && loops < MAX_FRAMESKIP; ++loops)
       {
+        tps.Update();
         Update();
         tick += SKIP_TICKS / 1000.0;
       }

@@ -13,6 +13,9 @@
     <Filter Include="Graphic\Window">
       <UniqueIdentifier>{45b94841-6599-4c91-9413-e5753e4a6c3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\MapGen">
+      <UniqueIdentifier>{d71c5212-5b3b-4ccb-83c2-a50a45eea5f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\Sector.cpp">
@@ -99,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="Core\SectorFactory.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MapGen\PerlinNoise.cpp">
+      <Filter>Core\MapGen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="Core\SectorFactory.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MapGen\PerlinNoise.h">
+      <Filter>Core\MapGen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

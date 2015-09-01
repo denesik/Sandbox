@@ -62,7 +62,7 @@ void BufferArrayGL1<VertexType>::Compile()
 {
   glNewList(mList, GL_COMPILE);
   glBegin(GL_TRIANGLES);
-  for (unsigned int i = 0; i < mIndexBuffer.size(); i += 3)
+  for (decltype(mIndexBuffer.size()) i = 0; i < mIndexBuffer.size(); i += 3)
   {
     glTexCoord2fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].texture));
     glVertex3fv(reinterpret_cast<const GLfloat *>(&mVertexBuffer[mIndexBuffer[i + 0]].vertex));

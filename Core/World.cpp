@@ -52,7 +52,9 @@ void World::Update()
 {
   for (auto &i : mPlayers)
   {
-    i.sectorLoader.SetPos(GetSectorPos(i.player.GetPosition()));
+    auto pos = GetSectorPos(i.player.GetPosition());
+    pos.z = 0;
+    i.sectorLoader.SetPos(pos);
   }
 
   for (auto sector = mMap.begin(); sector != mMap.end();)

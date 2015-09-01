@@ -10,25 +10,44 @@
 
 #include <GLFW\glfw3.h>
 #include <iostream>
+#include "MapGen\PerlinNoise.h"
 
-
+static PerlinNoise noise(0);
 
 Sector::Sector(const glm::ivec3 &pos)
   : mPos(pos), mRenderSector(*this, pos)
 {
   auto currentTime = glfwGetTime();
-  for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
   for (unsigned int y = 0; y < SECTOR_SIZE; ++y)
   for (unsigned int x = 0; x < SECTOR_SIZE; ++x)
   {
-    if (true)//(y == 0)
+//     for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
+//     {
+//       if (z == 0)
+//       {
+//         mMap[z][y][x] = x % 2 ? REGISTRY_CORE.GetBlocksLibrary().Create("block1") :
+//           REGISTRY_CORE.GetBlocksLibrary().Create("block2");
+//       }
+//       else
+//       {
+//         mMap[z][y][x] = nullptr;
+//       }
+//     }
+    float tx = mPos.x * SECTOR_SIZE + static_cast<int>(x);
+    float ty = mPos.y * SECTOR_SIZE + static_cast<int>(y);
+    float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f) / 2.0f;
+    unsigned int zh = glm::round(h * (SECTOR_SIZE - 1));
+    for (unsigned int z = 0; z < SECTOR_SIZE; ++z)
     {
-      mMap[z][y][x] = x % 2 ? REGISTRY_CORE.GetBlocksLibrary().Create("block1") :
-        REGISTRY_CORE.GetBlocksLibrary().Create("block2");
-    }
-    else
-    {
-      mMap[z][y][x] = nullptr;
+      if (z <= zh)
+      {
+        mMap[z][y][x] = x % 2 ? REGISTRY_CORE.GetBlocksLibrary().Create("block1") :
+                                REGISTRY_CORE.GetBlocksLibrary().Create("block2");
+      }
+      else
+      {
+        mMap[z][y][x] = nullptr;
+      }
     }
   }
 
