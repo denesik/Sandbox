@@ -65,7 +65,7 @@ private:
 
 
 
-RenderSector::RenderSector(Sector &sector, const glm::ivec3 &pos)
+RenderSector::RenderSector(const Sector &sector, const glm::ivec3 &pos)
   : mSector(sector), mModel(glm::translate({}, pos * static_cast<int>(SECTOR_SIZE)))
 {
   mBufferStatic.EnableAttribute(ATTRIBUTE_VERTEX, sizeof(VertexVT::vertex), offsetof(VertexVT, vertex));
@@ -156,12 +156,17 @@ const glm::mat4 & RenderSector::GetModel() const
 
 void RenderSector::Draw()
 {
-  if (mSector.GeometryChanged())
+  if (mChanged)
   {
     Generate();
-    mSector.GeometryChangedReset();
+    mChanged = false;
   }
   mBufferStatic.Draw();
+}
+
+void RenderSector::Changed()
+{
+  mChanged = true;
 }
 
 const IBlock * RenderSector::GetBlock(const glm::ivec3 &pos)

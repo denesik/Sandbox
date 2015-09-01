@@ -67,7 +67,7 @@ void Cube::SetTexture(Side side, const std::string &name)
   glm::vec4 pos = static_cast<glm::vec4>(std::get<1>(texture));// + 0.5f;
   
   glm::vec2 scale(1.0f / static_cast<glm::vec2>(mTexture->GetSize()));
-  glm::vec4 coord(pos.x * scale.x, pos.y * scale.y, (pos.x + pos.z) * scale.x, (pos.y + pos.w) * scale.y);
+  glm::vec4 coord(pos.x * scale.x, pos.y * scale.y, (pos.x + pos.z - 1) * scale.x, (pos.y + pos.w - 1) * scale.y);
 
   for (unsigned int i = 0; i < 6; ++i)
   {

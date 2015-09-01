@@ -43,6 +43,7 @@ Sector::Sector(const glm::ivec3 &pos)
 //   mMap[0][0][3] = REGISTRY_CORE.GetBlocksLibrary().Create("block2");
 
   std::cout << "SectorGen: " << glfwGetTime() - currentTime << std::endl;
+  mRenderSector.Changed();
 }
 
 
@@ -58,16 +59,6 @@ const glm::ivec3 & Sector::GetPos() const
 const IBlock * Sector::GetBlock(const glm::uvec3 &pos) const
 {
   return mMap[pos.z][pos.y][pos.x];
-}
-
-bool Sector::GeometryChanged() const
-{
-  return mGeometryChanged;
-}
-
-void Sector::GeometryChangedReset()
-{
-  mGeometryChanged = false;
 }
 
 RenderSector & Sector::GetRenderSector()
