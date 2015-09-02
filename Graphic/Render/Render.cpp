@@ -4,8 +4,8 @@
 // ============================================================================
 #include "Render.h"
 
-#include "RenderErrorChecker.h"
 #include <GL/glew.h>
+#include "RenderErrorChecker.h"
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -14,6 +14,9 @@
 
 Render::Render(void)
 {
+  glGetIntegerv(GL_MAJOR_VERSION, &mVersion.major);
+  glGetIntegerv(GL_MINOR_VERSION, &mVersion.minor);
+
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
 
@@ -53,23 +56,32 @@ void Render::Initialize()
 
 void Render::DrawSector(RenderSector &renderSector)
 {
-//   glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() * 
-//                   REGISTRY_GRAPHIC.GetCamera().GetView() * 
-//                   sector.GetModel();
-// 
-//   mShader->Use();
-//   mShader->SetUniform(MVP);
-//   int colorTexture = TEXTURE_SLOT_0;
-//   mShader->SetUniform(colorTexture);
+  if (REGISTRY_GRAPHIC.GetRender().GetVersion().major < 3)
+  {
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * renderSector.GetModel()));
+  }
+  else
+  {
+    glm::mat4 MVP = REGISTRY_GRAPHIC.GetCamera().GetProject() *
+      REGISTRY_GRAPHIC.GetCamera().GetView() *
+      renderSector.GetModel();
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetProject()));
-  glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(glm::value_ptr(REGISTRY_GRAPHIC.GetCamera().GetView() * renderSector.GetModel()));
+    mShader->Use();
+    mShader->SetUniform(MVP);
+    int colorTexture = TEXTURE_SLOT_0;
+    mShader->SetUniform(colorTexture);
+  }
 
   renderSector.Draw();
 }
 
+const Render::Version &Render::GetVersion() const
+{
+  return mVersion;
+}
 
 
 

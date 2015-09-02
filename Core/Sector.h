@@ -9,7 +9,7 @@
 
 #include "Block.h"
 #include "..\Graphic\Render\RenderSector.h"
-
+#include <array>
 
 enum
 {
@@ -31,7 +31,10 @@ public:
   RenderSector &GetRenderSector();
 
 private:
-  IBlock *mMap[SECTOR_SIZE][SECTOR_SIZE][SECTOR_SIZE];
+  template <class T, size_t S>
+  using Map = std::array<std::array<std::array<T, S>, S>, S>;
+
+  Map<IBlock *, SECTOR_SIZE> mMap;
 
   glm::ivec3 mPos;
 

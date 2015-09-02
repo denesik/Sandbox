@@ -17,6 +17,13 @@
 class Render
 {
 public:
+  struct Version
+  {
+    int major = 0;
+    int minor = 0;
+  };
+
+public:
 
   Render();
   ~Render();
@@ -25,9 +32,13 @@ public:
 
   void DrawSector(RenderSector &sector);
 
+  const Version &GetVersion() const;
+
 private:
 
   std::unique_ptr<Shader> mShader;
+   
+  Version mVersion;
 
 };
 

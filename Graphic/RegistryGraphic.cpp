@@ -4,6 +4,7 @@
 // ============================================================================
 #include "RegistryGraphic.h"
 
+
 #include "Render/RenderErrorChecker.h"
 #include <iostream>
 

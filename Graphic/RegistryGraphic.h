@@ -13,6 +13,7 @@
 #include "Render/TextureManager.h"
 #include "Render/Camera.h"
 
+
 #define REGISTRY_GRAPHIC RegistryGraphic::Instatce()
 
 class RegistryGraphic

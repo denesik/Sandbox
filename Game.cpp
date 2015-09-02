@@ -79,7 +79,14 @@ int Game::Run()
     block2->SetModel(cube2);
     REGISTRY_CORE.GetBlocksLibrary().Registry("block2", block2);
 
-    glEnable(GL_TEXTURE_2D);
+    if (REGISTRY_GRAPHIC.GetRender().GetVersion().major < 3)
+    {
+      glEnable(GL_TEXTURE_2D);
+    }
+    
+
+    Sector sector({});
+    RenderSector rsector(sector, {});
 
     REGISTRY_CORE.GetWorld().AddPlayer(REGISTRY_CORE.GetPlayer());
     FpsCounter fps;

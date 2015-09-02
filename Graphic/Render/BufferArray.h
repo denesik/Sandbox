@@ -15,6 +15,7 @@
 #include "BufferArrayGL1.h"
 
 
+
 template<class VertexType>
 class BufferArray
 {
@@ -50,7 +51,16 @@ private:
 template<class VertexType>
 BufferArray<VertexType>::BufferArray()
 {
-  mBuffer.reset(new BufferArrayGL1<VertexType>(mVertexBuffer, mIndexBuffer));
+  int major = 0;
+  glGetIntegerv(GL_MAJOR_VERSION, &major);
+  if (major < 3)
+  {
+    mBuffer.reset(new BufferArrayGL1<VertexType>(mVertexBuffer, mIndexBuffer));
+  }
+  else
+  {
+    mBuffer.reset(new BufferArrayGL3<VertexType>(mVertexBuffer, mIndexBuffer));
+  }
 }
 
 template<class VertexType>
