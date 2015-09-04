@@ -83,6 +83,8 @@
     <ClInclude Include="Graphic\Render\Shader.h" />
     <ClInclude Include="Graphic\Render\Texture.h" />
     <ClInclude Include="Graphic\Render\TextureManager.h" />
+    <ClInclude Include="Graphic\Render\Vertex.h" />
+    <ClInclude Include="Graphic\Render\VertexTools.h" />
     <ClInclude Include="Graphic\Window\Keyboard.h" />
     <ClInclude Include="Graphic\Window\Mouse.h" />
     <ClInclude Include="Graphic\Window\Window.h" />
@@ -145,7 +147,7 @@
     <LibraryPath>e:\libs\glew\lib;e:\libs\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>e:\libs\glm\include;e:\libs\glew\include;e:\libs\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>e:\boost_1_58_0_msvc12\;e:\libs\glm\include;e:\libs\glew\include;e:\libs\glfw\include;$(IncludePath)</IncludePath>
     <LibraryPath>e:\libs\glew\lib;e:\libs\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -154,6 +156,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

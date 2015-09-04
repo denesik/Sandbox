@@ -210,5 +210,11 @@
     <ClInclude Include="Core\MapGen\PerlinNoise.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
+    <ClInclude Include="Graphic\Render\Vertex.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Render\VertexTools.h">
+      <Filter>Graphic\Render</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
