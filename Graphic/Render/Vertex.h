@@ -33,6 +33,7 @@ VERTEX
   (glm::vec3, vertex, ATTRIBUTE_VERTEX)
   (glm::vec2, texture, ATTRIBUTE_TEXTURE)
   (glm::vec3, normal, ATTRIBUTE_NORMAL)
+  (glm::vec3, color, ATTRIBUTE_COLOR)
 )
 
 
